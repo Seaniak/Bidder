@@ -2,9 +2,11 @@ package web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import web.entities.Post;
 import web.services.PostService;
 
+import java.util.Base64;
 import java.util.Date;
 
 @RestController
@@ -23,6 +25,9 @@ public class PostController {
   public Post publishPost(@RequestBody Post post) {
     if (post.getDateCreated() == null)
       post.setDateCreated(new Date());
+
+//    FileUploader.handleFileUpload(post.getImageName(), post.getImageData());
+
     return postService.insertPost(post);
   }
 

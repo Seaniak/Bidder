@@ -1,33 +1,24 @@
 <template>
   <div id="home-header">
-    <div>
-      <h1>Logfolio</h1>
-      <v-btn
-              icon
-              absolute
-              @click="toggleMenu"
-      >
-        <v-icon medium>more_vert</v-icon>
-      </v-btn>
-      <transition
-              name="animate-route"
-              mode="out-in"
-              enter-active-class="animated pulse"
-              leave-active-class="animated pulse"
-      >
-
+    <h1>Logfolio</h1>
+    <v-btn
+            icon
+            absolute
+            @click="toggleMenu"
+    >
+      <v-icon medium>more_vert</v-icon>
+    </v-btn>
+    <transition
+            name="animate-route"
+            mode="out-in"
+            enter-active-class="animated pulse"
+            leave-active-class="animated pulse"
+    >
       <v-card v-show="showMenu" width="150">
         <v-card-title v-if="!$store.state.loggedIn" @click="logIn">Log in</v-card-title>
         <v-card-title v-else @click="logOut">Log out</v-card-title>
       </v-card>
-      </transition>
-
-    </div>
-    <v-text-field
-            label="Search for post"
-            v-model="searchInput"
-    ></v-text-field>
-
+    </transition>
   </div>
 </template>
 
@@ -44,11 +35,11 @@
       toggleMenu() {
         this.showMenu = !this.showMenu
       },
-      logIn(){
+      logIn() {
         this.showMenu = false
         this.$router.push({name: 'login'})
       },
-      logOut(){
+      logOut() {
         this.showMenu = false
         this.$store.commit('logOut', false)
       }

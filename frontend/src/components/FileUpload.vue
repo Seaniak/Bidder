@@ -22,7 +22,10 @@
         reader.readAsDataURL(image);  // read file to this format
         reader.onload = (r) => { // when file is loaded
           let imageData = r.target.result;
-          this.$emit('uploadImage', imageData)
+          this.$emit('uploadImage', {
+            imageSrc: imageData,
+            imageName: e.target.files[0].name
+          })
         }
       }
     }

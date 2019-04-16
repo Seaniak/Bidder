@@ -1,9 +1,6 @@
 package web.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -15,17 +12,31 @@ public class Post {
 
   private String title;
   private String body;
-  private String image;
+
+  @Transient
+  private String imageName;
+
+  private String imageData;
+
+  public String getImageData() {
+    return imageData;
+  }
+
+  public void setImageData(String imageData) {
+    this.imageData = imageData;
+  }
+
+
 
   public Post() {
   }
 
-  public String getImage() {
-    return image;
+  public String getImageName() {
+    return imageName;
   }
 
-  public void setImage(String image) {
-    this.image = image;
+  public void setImageName(String image) {
+    this.imageName = image;
   }
 
   private Date dateCreated;

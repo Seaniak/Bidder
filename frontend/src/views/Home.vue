@@ -9,8 +9,8 @@
                   mode="out-in"
                   enter-active-class="animated fadeIn"
                   leave-active-class="animated fadeOut">
-            <h3 v-if="posts.length === 0" key="no-posts">No posts found</h3>
-            <Post v-else v-for="(post, index) in posts"
+            <h3 v-if="$store.state.filteredItems.length === 0" key="no-posts">No posts found</h3>
+            <Post v-else v-for="(post, index) in $store.state.filteredItems"
                   :key="index"
                   :post="post"
             />
@@ -42,13 +42,7 @@
         searchInput: ''
       }
     },
-    computed: {
-      posts() {
-        let filter = new RegExp(this.searchInput, "i")
-        return this.$store.state.posts.filter(p => p.title.match(filter) || p.body.match(filter))
-      }
-    },
-    components: {
+       components: {
       Post,
       HomeHeader
     }

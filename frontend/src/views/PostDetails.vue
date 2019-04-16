@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <figure>
-      <img width="100%" :src="post.image" alt="poster">
+      <img width="100%" :src="post.imageData" alt="poster">
     </figure>
     <h1>{{post.title}}</h1>
     <p>{{post.body}}</p>

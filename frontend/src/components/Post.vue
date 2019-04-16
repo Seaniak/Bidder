@@ -5,7 +5,7 @@
       <p>{{ post.body }}</p>
     </div>
     <figure>
-      <img :src="post.image" alt="poster">
+      <img :src="post.imageData" alt="poster">
     </figure>
   </div>
 </template>

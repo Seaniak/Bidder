@@ -1,28 +1,29 @@
 <template>
-  <v-bottom-nav
-          :value="true"
-          fixed
-          color="#eee"
-  >
+  <nav id="bottom-nav">
     <v-btn
             to="/"
-            color="teal"
-            flat
-            value="home"
+            icon
+            :active-class="null"
     >
-      <span>Home</span>
-      <v-icon medium>home</v-icon>
-    </v-btn>
-    <v-btn
-            to="/about"
-            color="teal"
-            flat
-            value="about"
-    >
-      <span>About</span>
-      <v-icon medium>account_box</v-icon>
+      <v-icon
+              color="white"
+              large>keyboard_arrow_left
+      </v-icon>
     </v-btn>
 
+    <div>
+      <component :is="currentNavigation"></component>
+    </div>
+
+    <v-btn
+            icon
+            @click.stop="toggleDrawer"
+    >
+      <v-icon
+              color="white"
+              medium>menu
+      </v-icon>
+    </v-btn>
     <v-btn
             v-if="$store.state.loggedIn"
             to="/upload"
@@ -31,38 +32,65 @@
             value="newPost"
     >
       <span>New post</span>
-      <v-icon medium>note_add</v-icon>
+      <v-icon dark medium>note_add</v-icon>
     </v-btn>
-  </v-bottom-nav>
+    <NavigationDrawer
+            :toggleDrawer="drawer"/>
+  </nav>
 </template>
 
 <script>
+  import NavigationDrawer from './NavigationDrawer'
+  import HomeNav from './navbar/HomeNav'
+  import LoginNav from './navbar/LoginNav'
+
   export default {
-    name: "Navigation"
+    name: "Navigation",
+    components: {
+      NavigationDrawer
+    },
+    data() {
+      return {
+        drawer: false,
+      }
+    },
+    methods:{
+      toggleDrawer(){
+        if(this.drawer) {
+          this.drawer = false
+        }
+
+        this.drawer = true
+      }
+    },
+    computed: {
+      currentNavigation() {
+        switch (this.$route.path) {
+          case '/':
+            return HomeNav
+            break
+          case '/login':
+            return LoginNav
+            break
+          default:
+            return HomeNav
+        }
+      }
+
+    }
   }
 </script>
 
 <style scoped>
-  #nav {
+  #bottom-nav {
     display: flex;
     justify-content: space-around;
     width: 100vw;
     position: fixed;
     bottom: 0;
-    padding: 20px 0;
+    height: 10vh;
     border-top: solid 1px #7c7e70;
-    background-color: ;
+    background-color: teal;
   }
 
-  #nav a {
-    flex: 1;
-    font-weight: bold;
-    font-size: 1.2em;
-    text-decoration: none;
-    color: #f5f5f5;
-  }
-
-  #nav a.router-link-exact-active {
-    color: #42b983;
-  }
 </style>

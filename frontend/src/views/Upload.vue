@@ -25,17 +25,17 @@
         </v-btn>
       </div>
     </form>
-      <v-btn
-              v-if="post"
-              dark
-              fab
-              absolute
-              small
-              color="red"
-              class="remove-btn darken-2"
-              @click="deletePost">
-        <v-icon dark large>remove</v-icon>
-      </v-btn>
+    <v-btn
+            v-if="post"
+            dark
+            fab
+            absolute
+            small
+            color="red"
+            class="remove-btn darken-2"
+            @click="deletePost">
+      <v-icon dark large>remove</v-icon>
+    </v-btn>
   </v-container>
 </template>
 
@@ -50,6 +50,7 @@
     data() {
       return {
         imageSrc: '',
+        imageName: '',
         title: '',
         info: ''
       }
@@ -76,7 +77,8 @@
         this.$store.commit('addPost', {
           title: this.title,
           body: this.info,
-          image: this.imageSrc
+          imageData: this.imageSrc,
+          imageName: this.imageName
         })
         this.returnHome()
       },
@@ -87,7 +89,8 @@
           id: this.post.id,
           title: this.title,
           body: this.info,
-          image: this.imageSrc
+          imageData: this.imageSrc,
+          imageName: this.imageName
         }
 
         this.$store.commit('updatePost', editedPost)
@@ -98,9 +101,10 @@
         this.returnHome()
       },
       handleImage(imageData) {
-        this.imageSrc = imageData
+        this.imageName = imageData.imageName
+        this.imageSrc = imageData.imageSrc
       },
-      returnHome(){
+      returnHome() {
         this.$router.push({name: 'home'})
       }
     }

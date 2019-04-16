@@ -7,9 +7,14 @@ export default new Vuex.Store({
   state: {
     profilePicture: '',
     loggedIn: false,
+    filteredItems: [],
     posts: []
   },
   mutations: {
+    filterItems(state, searchInput = '') {
+      let filter = new RegExp(searchInput, "i")
+      state.filteredItems = state.posts.filter(p => p.title.match(filter) || p.body.match(filter))
+    },
     setProfilePicture(state, value) {
       state.profilePicture = value;
     },
@@ -117,6 +122,7 @@ export default new Vuex.Store({
           })
           .then((res) => {
             context.commit('getPosts', res)
+            context.commit('filterItems')
           })
           .catch(e => console.log(e))
     },
