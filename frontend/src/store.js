@@ -16,6 +16,7 @@ export default new Vuex.Store({
     addPost(state, value) {
       fetch('/api/posts', {
         method: 'POST',
+        mode: 'cors',
         headers: {
           "Content-Type": "application/json"
         },
@@ -38,6 +39,7 @@ export default new Vuex.Store({
 
       fetch('/api/posts/' + value.id, {
         method: 'PUT',
+        mode: 'cors',
         headers: {
           "Content-Type": "application/json"
         },
@@ -57,6 +59,7 @@ export default new Vuex.Store({
 
       fetch('/api/posts/' + value.id, {
         method: 'DELETE',
+        mode: 'cors',
         headers: {
           "Content-Type": "application/json"
         },
@@ -67,11 +70,13 @@ export default new Vuex.Store({
       console.log('Deleting post: ', value.id)
 
     },
-    logIn(state, value) {
-      state.loggedIn = value
-    },
     logOut(state, value) {
-      state.loggedIn = value
+      fetch('/logout')
+          .then(res => {
+            if (res.url.includes('logout')) {
+              state.loggedIn = value
+            }
+          })
     },
     getPosts(state, value) {
       state.posts = value
@@ -79,22 +84,27 @@ export default new Vuex.Store({
     },
     getUser(state, user) {
       console.log('Fetching user')
-      fetch('/api/users', {
-        method: 'POST',
+
+      const transformRequest = (jsonData = {}) =>
+          Object.entries(jsonData)
+              .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+              .join('&');
+
+      fetch('/login', {
+        method: "POST",
+        body: transformRequest({username: user.username, password: user.password}),
         headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       })
-          .then((res) => {
-            return res.json();
-          })
-          .then((res) => {
-            if (res !== null) {
-              state.loggedIn = true
-            }
-          })
-          .catch(e => console.log(e))
+          .then(function (response) {
+            console.log(response);
+
+            let successfulLogin = !response.url.includes("error");
+            console.log("the login result is: ", successfulLogin);
+
+            state.loggedIn = successfulLogin;
+          });
 
     }
   },

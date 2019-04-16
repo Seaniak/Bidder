@@ -2,7 +2,6 @@ package web.configs;
 
 import org.springframework.context.annotation.Configuration;
 import web.entities.User;
-import web.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
