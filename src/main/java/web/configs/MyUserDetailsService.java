@@ -26,7 +26,7 @@ public class MyUserDetailsService implements UserDetailsService {
   @PostConstruct
   private void createDefaultUsers() {
     if (userService.findByUsername("user") == null) {
-      addUser("user", "password");
+      addUser("user", "password", "anemail@something.com");
     }
   }
 
@@ -39,8 +39,8 @@ public class MyUserDetailsService implements UserDetailsService {
     return toUserDetails(user);
   }
 
-  public void addUser(String name, String password) {
-    User u = new User(name, encoder.encode(password));
+  public void addUser(String name, String password, String email) {
+    User u = new User(name, encoder.encode(password), email);
     try {
       userService.insertUser(u);
     } catch (Exception ex) {

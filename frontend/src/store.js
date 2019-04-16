@@ -8,7 +8,8 @@ export default new Vuex.Store({
     profilePicture: '',
     loggedIn: false,
     filteredItems: [],
-    posts: []
+    posts: [],
+    user: []
   },
   mutations: {
     filterItems(state, searchInput = '') {
@@ -35,12 +36,30 @@ export default new Vuex.Store({
           })
           .catch(e => console.log(e))
     },
+    addUserToDb(state, value){
+      fetch('/api/users', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(value)
+      })
+          .then(res => {
+            return res.json()
+          })
+          .then(res => {
+            state.posts.push(res)
+          })
+          .catch(e => console.log(e))
+    },
     updatePost(state, value) {
       for (let post of state.posts)
         if (post.id === value.id) {
           let index = state.posts.indexOf(post)
           state.posts[index] = value
         }
+
 
       fetch('/api/posts/' + value.id, {
         method: 'PUT',
