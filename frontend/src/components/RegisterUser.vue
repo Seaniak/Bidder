@@ -1,7 +1,7 @@
 <template>
    <v-app>
       <v-container>
-         <h1></h1>
+         <h1>Registration</h1>
          <v-form mx-auto v-model="valid" ref="form">
             <v-text-field
                     placeholder="Enter username"
