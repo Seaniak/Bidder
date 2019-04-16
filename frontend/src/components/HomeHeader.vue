@@ -3,7 +3,6 @@
     <div>
       <h1>Logfolio</h1>
       <v-btn
-              dark
               icon
               absolute
               @click="toggleMenu"
@@ -25,7 +24,6 @@
 
     </div>
     <v-text-field
-            dark
             label="Search for post"
             v-model="searchInput"
     ></v-text-field>

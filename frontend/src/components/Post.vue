@@ -29,7 +29,7 @@
   #post {
     display: flex;
     text-decoration: none;
-    color: whitesmoke;
+    color: var(--main-font-color);
     width: 100%;
     animation-duration: 200ms;
     border-bottom: solid 1px #7c7e70;

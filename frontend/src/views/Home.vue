@@ -45,7 +45,7 @@
     computed: {
       posts() {
         let filter = new RegExp(this.searchInput, "i")
-        return this.$store.state.posts.filter(p => p.title.match(filter))
+        return this.$store.state.posts.filter(p => p.title.match(filter) || p.body.match(filter))
       }
     },
     components: {

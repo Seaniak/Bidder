@@ -4,14 +4,12 @@
     <h1>{{ post ? 'Edit post' : 'Upload Post' }}</h1>
     <form @submit="handleSubmit">
       <v-text-field
-              dark
               label="Title"
               v-model="title"
               class="mt-4"
       ></v-text-field>
       <v-textarea
               name="Details"
-              dark
               label="Details"
               v-model="info"
       ></v-textarea>

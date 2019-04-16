@@ -4,12 +4,10 @@
     <v-form @submit="logIn">
       <v-text-field
               class="mt-5"
-              dark
               v-model="username"
               label="Username"
       ></v-text-field>
       <v-text-field
-              dark
               v-model="password"
               :append-icon="showPassword ? 'visibility' : 'visibility_off'"
               @click:append="showPassword = !showPassword"

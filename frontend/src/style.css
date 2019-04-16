@@ -5,6 +5,8 @@
     /* global css variables.
        variable names starts with double dashes.
        --main-color: blue */
+    --main-background: whitesmoke;
+    --main-font-color: #192337;
 }
 
 * {
@@ -14,7 +16,7 @@
 
 body {
     margin: 0;
-    background-color: #2c3e50;
+    background-color: var(--main-background);
 }
 
 #app {
@@ -22,7 +24,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #f5f5f5;
+    color: var(--main-font-color);
     padding-bottom: 80px;
 }
 

@@ -12,6 +12,12 @@ module.exports = {
         ws: true,
         changeOrigin: true,
         secure: false
+      },
+      "/logout": {
+        target: "http://localhost:8070",
+        ws: true,
+        changeOrigin: true,
+        secure: false
       }
     }
   },

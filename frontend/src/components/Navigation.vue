@@ -1,9 +1,8 @@
 <template>
   <v-bottom-nav
           :value="true"
-          dark
           fixed
-          color="#2c3e50"
+          color="#eee"
   >
     <v-btn
             to="/"
@@ -52,7 +51,7 @@
     bottom: 0;
     padding: 20px 0;
     border-top: solid 1px #7c7e70;
-    background-color: #2c3e50;
+    background-color: ;
   }
 
   #nav a {
