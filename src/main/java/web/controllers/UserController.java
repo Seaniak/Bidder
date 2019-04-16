@@ -23,6 +23,17 @@ public class UserController {
     return null;
   }
 
+/*  @PostMapping
+  public String addNewUser(@RequestBody User user) {
+    User u = userService.findByUsername(user.getUsername());
+      if (u.getUsername() == null && u.getEmail() == null) {
+        userService.insertUser(u);
+        return u.getUsername() + " registered successfully.";
+      } else {
+        return "A user with that username or email already exists.";
+      }
+    }*/
+
   @PutMapping("/{id}")
   public void updateUser(
           @PathVariable Long id,

@@ -29,13 +29,6 @@
                     :rules="emailRules"
                     required
             ></v-text-field>
-            <v-checkbox
-                    label="Do you agree?"
-                    v-model="checkbox"
-                    :rules="[(v) => !!v || 'You must agree to continue!']"
-                    required
-            ></v-checkbox>
-
             <v-btn @click="submit" :class="{ red: !valid, green: valid }">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
          </v-form>
@@ -52,6 +45,7 @@
             username: '',
             password: '',
             showPassword: false,
+            responseFromDb: '',
             nameRules: [
                (v) => !!v || 'Name is required',
                (v) => v && v.length <= 10 || 'Name must be less than 10 characters'
@@ -66,17 +60,24 @@
                (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
             ],
             select: null,
-            checkbox: true
          }
       },
       methods: {
          submit () {
             if(this.$refs.form.validate()) {
-               this.$store.state.users
+               this.addUserToDb();
             }
          },
          clear () {
             this.$refs.form.reset()
+         },
+         addUserToDb() {
+            this.$store.commit('addUserToDb', {
+               username: this.username,
+               password: this.password,
+               email: this.email
+            });
+            this.responseFromDb = this.$store.state.responseFromDb;
          }
       }
    }

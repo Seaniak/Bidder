@@ -9,7 +9,7 @@ export default new Vuex.Store({
     loggedIn: false,
     filteredItems: [],
     posts: [],
-    user: []
+    addUserResponseFromDb: ''
   },
   mutations: {
     filterItems(state, searchInput = '') {
@@ -46,10 +46,12 @@ export default new Vuex.Store({
         body: JSON.stringify(value)
       })
           .then(res => {
-            return res.json()
+            console.log(res);
+            return res.headers
           })
           .then(res => {
-            state.posts.push(res)
+            console.log(res);
+            state.addUserResponseFromDb = res
           })
           .catch(e => console.log(e))
     },
