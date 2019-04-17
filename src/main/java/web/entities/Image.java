@@ -7,17 +7,17 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 @Entity
-public class Bid {
+public class Image {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private Timestamp time;
-	private long userId;
-	private int sum;
+	private long acutionId;
+	private boolean thumbnail;
+	private String path;
 
-	public Bid(){
+	public Image(){
 
 	}
 
@@ -29,27 +29,27 @@ public class Bid {
 		this.id = id;
 	}
 
-	public Timestamp getTime() {
-		return time;
+	public long getAcutionId() {
+		return acutionId;
 	}
 
-	public void setTime(Timestamp time) {
-		this.time = time;
+	public void setAcutionId(long acutionId) {
+		this.acutionId = acutionId;
 	}
 
-	public long getUserId() {
-		return userId;
+	public boolean isThumbnail() {
+		return thumbnail;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setThumbnail(boolean thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 
-	public int getSum() {
-		return sum;
+	public String getPath() {
+		return path;
 	}
 
-	public void setSum(int sum) {
-		this.sum = sum;
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

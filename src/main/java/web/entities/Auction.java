@@ -7,17 +7,21 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 @Entity
-public class Bid {
+public class Auction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private Timestamp time;
 	private long userId;
-	private int sum;
+	private String title;
+	private String desctiption;
+	private Timestamp createTime;
+	private Timestamp endTime;
+	private int startSum;
+	private int reservedSum;
 
-	public Bid(){
+	public Auction(){
 
 	}
 
@@ -29,14 +33,6 @@ public class Bid {
 		this.id = id;
 	}
 
-	public Timestamp getTime() {
-		return time;
-	}
-
-	public void setTime(Timestamp time) {
-		this.time = time;
-	}
-
 	public long getUserId() {
 		return userId;
 	}
@@ -45,11 +41,51 @@ public class Bid {
 		this.userId = userId;
 	}
 
-	public int getSum() {
-		return sum;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setSum(int sum) {
-		this.sum = sum;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDesctiption() {
+		return desctiption;
+	}
+
+	public void setDesctiption(String desctiption) {
+		this.desctiption = desctiption;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	public Timestamp getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Timestamp endTime) {
+		this.endTime = endTime;
+	}
+
+	public int getStartSum() {
+		return startSum;
+	}
+
+	public void setStartSum(int startSum) {
+		this.startSum = startSum;
+	}
+
+	public int getReservedSum() {
+		return reservedSum;
+	}
+
+	public void setReservedSum(int reservedSum) {
+		this.reservedSum = reservedSum;
 	}
 }
