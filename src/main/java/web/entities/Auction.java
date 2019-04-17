@@ -15,7 +15,7 @@ public class Auction {
 
 	private long userId;
 	private String title;
-	private String desctiption;
+	private String description;
 	private Timestamp createTime;
 	private Timestamp endTime;
 	private int startSum;
@@ -49,12 +49,12 @@ public class Auction {
 		this.title = title;
 	}
 
-	public String getDesctiption() {
-		return desctiption;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesctiption(String desctiption) {
-		this.desctiption = desctiption;
+	public void setDescription(String description) {
+		this.description= description;
 	}
 
 	public Timestamp getCreateTime() {
