@@ -55,6 +55,9 @@ export default new Vuex.Store({
           })
           .catch(e => console.log(e))
     },
+    clearResponseFromDb(state, value = '') {
+      state.addUserResponseFromDb = value;
+    },
     updatePost(state, value) {
       for (let post of state.auctions)
         if (post.id === value.id) {

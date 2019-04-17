@@ -1,14 +1,31 @@
 <template>
-   <v-app>
       <v-container>
-         <h1></h1>
+         <v-flex >
+
+         <h1>Register account</h1>
          <v-form mx-auto v-model="valid" ref="form">
+            <v-text-field
+                    placeholder="Enter first name"
+                    label="Name"
+                    v-model="name"
+                    :rules="nameRules"
+                    :counter="25"
+                    required
+            ></v-text-field>
+            <v-text-field
+                    placeholder="Enter surname"
+                    label="Surname"
+                    v-model="surname"
+                    :rules="surnameRules"
+                    :counter="25"
+                    required
+            ></v-text-field>
             <v-text-field
                     placeholder="Enter username"
                     label="Username"
                     v-model="username"
-                    :rules="nameRules"
-                    :counter="10"
+                    :rules="usernameRules"
+                    :counter="20"
                     required
             ></v-text-field>
             <v-text-field
@@ -16,7 +33,7 @@
                     label="Password"
                     v-model="password"
                     :rules="passwordRules"
-                    :counter="10"
+                    :counter="30"
                     required
                     :type="showPassword ? 'text' : 'password'"
                     :append-icon="showPassword ? 'visibility' : 'visibility_off'"
@@ -32,35 +49,50 @@
             <v-btn @click="submit" :class="{ red: !valid, green: valid }">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
          </v-form>
+         </v-flex>
       </v-container>
-   </v-app>
 </template>
 
 <script>
+
    export default {
       name: "RegisterUser",
       data () {
          return {
             valid: false,
+            name: '',
+            surname: '',
             username: '',
             password: '',
+            email: '',
             showPassword: false,
             responseFromDb: '',
+            select: null,
             nameRules: [
                (v) => !!v || 'Name is required',
-               (v) => v && v.length <= 10 || 'Name must be less than 10 characters'
+               (v) => v && v.length <= 25 || 'Name must be less than 25 characters'
+            ],
+            surnameRules: [
+               (v) => !!v || 'Surname is required',
+               (v) => v && v.length <= 25 || 'Surname must be less than 25 characters'
+            ],
+            usernameRules: [
+               (v) => !!v || 'Username is required',
+               (v) => v && v.length <= 20 || 'Username must be less than 20 characters'
             ],
             passwordRules: [
                (v) => !!v || 'Password is required',
-               (v) => v && v.length <= 10 || 'Password must be less than 10 characters'
+               (v) => v && v.length >= 10 || 'Password must be longer than 10 and shorter than 30 characters'
             ],
-            email: '',
             emailRules: [
                (v) => !!v || 'E-mail is required',
-               (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+               (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+               (v) => v && v.length <= 35 || 'Password must be less than 35 characters'
             ],
-            select: null,
          }
+      },
+      mounted() {
+         this.$store.commit('clearResponseFromDb');
       },
       methods: {
          submit () {
@@ -73,11 +105,12 @@
          },
          addUserToDb() {
             this.$store.commit('addUserToDb', {
+               name: this.name,
+               surname: this.surname,
                username: this.username,
                password: this.password,
                email: this.email
             });
-            this.responseFromDb = this.$store.state.responseFromDb;
          }
       }
    }

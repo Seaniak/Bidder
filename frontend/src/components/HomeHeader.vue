@@ -1,6 +1,6 @@
 <template>
   <div id="home-header">
-    <h1>Logfolio</h1>
+    <h1>Bidder</h1>
     <v-btn
             icon
             absolute

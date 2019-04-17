@@ -1,4 +1,5 @@
 <template>
+  <v-app>
   <div id="app">
     <transition
             name="animate-route"
@@ -10,6 +11,7 @@
     </transition>
     <Navigation/>
   </div>
+  </v-app>
 </template>
 
 <script>
