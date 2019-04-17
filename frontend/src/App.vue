@@ -10,16 +10,19 @@
       <router-view :key="$route.fullPath"/>
     </transition>
     <Navigation/>
+    <NavigationDrawer/>
   </div>
   </v-app>
 </template>
 
 <script>
   import Navigation from '@/components/Navigation'
+  import NavigationDrawer from '@/components/NavigationDrawer'
 
   export default {
     components: {
-      Navigation
+      Navigation,
+      NavigationDrawer
     },
     created() {
       this.$store.dispatch('getPosts');

@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     profilePicture: '',
     loggedIn: false,
+    openNavDrawer: null,
     filteredItems: [],
     auctions: [],
     addUserResponseFromDb: ''
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     filterItems(state, searchInput = '') {
       let filter = new RegExp(searchInput, "i")
       state.filteredItems = state.auctions.filter(p => p.title.match(filter) || p.body.match(filter))
+    },
+    openDrawer(state, value){
+      state.openNavDrawer = value;
     },
     setProfilePicture(state, value) {
       state.profilePicture = value;

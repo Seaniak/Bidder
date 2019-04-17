@@ -1,12 +1,23 @@
 <template>
   <v-navigation-drawer
-          v-model="drawer"
+          v-model="$store.state.openNavDrawer"
           fixed
           right
+          clipped
           temporary
   >
     <div class="nav-title my-3">
-      <h2>Navigering</h2>
+      <v-layout row align-center justify-center>
+        <v-btn
+                id="closeDrawer"
+                absolute
+                icon
+                @click.stop="$store.state.openNavDrawer = !$store.state.openNavDrawer"
+        >
+          <v-icon large>keyboard_arrow_right</v-icon>
+        </v-btn>
+        <h2>Navigering</h2>
+      </v-layout>
     </div>
     <v-btn
             id="aboutBtn"
@@ -20,23 +31,18 @@
 
 <script>
   export default {
-    name: "NavigationDrawer",
-    props: ['toggleDrawer'],
-    computed: {
-      drawer: {
-        get() {
-          return this.toggleDrawer
-        },
-        set() {
-        }
-      }
-    }
+    name: "NavigationDrawer"
   }
 </script>
 
 <style scoped>
   .nav-title {
-    border-bottom: solid 1px #333;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #bbb;
+  }
+
+  #closeDrawer {
+    left: 0px;
   }
 
   #aboutBtn {

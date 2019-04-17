@@ -18,7 +18,7 @@
     <v-btn
             icon
             id="toggleDrawer"
-            @click.stop="drawer = !drawer"
+            @click.stop="$store.state.openNavDrawer = !$store.state.openNavDrawer"
     >
       <v-icon
               color="white"
@@ -35,27 +35,15 @@
       <span>New post</span>
       <v-icon dark medium>note_add</v-icon>
     </v-btn>
-    <NavigationDrawer
-            @closeDrawer="drawer = null"
-            :toggleDrawer="drawer"/>
   </nav>
 </template>
 
 <script>
-  import NavigationDrawer from './NavigationDrawer'
   import HomeNav from './navbar/HomeNav'
   import LoginNav from './navbar/LoginNav'
 
   export default {
     name: "Navigation",
-    components: {
-      NavigationDrawer
-    },
-    data() {
-      return {
-        drawer: null,
-      }
-    },
     computed: {
       currentNavigation() {
         switch (this.$route.path) {
@@ -69,7 +57,6 @@
             return HomeNav
         }
       }
-
     }
   }
 </script>
