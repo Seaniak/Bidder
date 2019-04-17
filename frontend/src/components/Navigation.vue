@@ -17,7 +17,8 @@
 
     <v-btn
             icon
-            @click.stop="toggleDrawer"
+            id="toggleDrawer"
+            @click.stop="drawer = !drawer"
     >
       <v-icon
               color="white"
@@ -35,6 +36,7 @@
       <v-icon dark medium>note_add</v-icon>
     </v-btn>
     <NavigationDrawer
+            @closeDrawer="drawer = null"
             :toggleDrawer="drawer"/>
   </nav>
 </template>
@@ -51,16 +53,7 @@
     },
     data() {
       return {
-        drawer: false,
-      }
-    },
-    methods:{
-      toggleDrawer(){
-        if(this.drawer) {
-          this.drawer = false
-        }
-
-        this.drawer = true
+        drawer: null,
       }
     },
     computed: {

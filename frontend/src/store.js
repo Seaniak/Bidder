@@ -37,7 +37,7 @@ export default new Vuex.Store({
           .catch(e => console.log(e))
     },
     addUserToDb(state, value){
-      fetch('/api/users', {
+      fetch('/api/register', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -47,11 +47,11 @@ export default new Vuex.Store({
       })
           .then(res => {
             console.log(res);
-            return res.headers
+            return res.json()
           })
           .then(res => {
             console.log(res);
-            state.addUserResponseFromDb = res
+            state.addUserResponseFromDb = res.message
           })
           .catch(e => console.log(e))
     },

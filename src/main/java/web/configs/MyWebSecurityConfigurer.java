@@ -30,6 +30,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/api/users/*", "/upload").hasRole("USER")
             .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/register").permitAll()
             .antMatchers("/api/**").hasRole("USER")
             .and().formLogin()
             .loginPage("/login")

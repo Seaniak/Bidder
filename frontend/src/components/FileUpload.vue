@@ -18,6 +18,9 @@
       upload(e) {
         let image = e.target.files[0]; // array with files
 
+        let data = new FormData();
+        data.append('file', image)
+
         let reader = new FileReader();
         reader.readAsDataURL(image);  // read file to this format
         reader.onload = (r) => { // when file is loaded

@@ -29,17 +29,17 @@ public class FileUploader {
     }
   }
 
-  public static String handleFileUpload(MultipartFile file) {
-    String filePath = uploadDirectory + file.getOriginalFilename();
-    File targetLocation = new File(filePath);
-    try {
-      file.transferTo(targetLocation);
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-
-    return filePath;
-  }
+//  public static String handleFileUpload(@RequestParam List<MultipartFile> file) {
+//    String filePath = uploadDirectory + file.getOriginalFilename();
+//    File targetLocation = new File(filePath);
+//    try {
+//      file.transferTo(targetLocation);
+//    } catch (Exception ex) {
+//      ex.printStackTrace();
+//    }
+//
+//    return filePath;
+//  }
 
   public static boolean handleFileUpload(String fileName, String file) {
 

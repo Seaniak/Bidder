@@ -2,46 +2,44 @@ package web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import web.configs.MyUserDetailsService;
 import web.entities.User;
 import web.services.UserService;
 
 @RestController
-@RequestMapping("/api/users")
 public class UserController {
 
   @Autowired
   private UserService userService;
 
-  @PostMapping()
-  public User users(@RequestBody User user) {
-    User u = userService.findByUsername(user.getUsername());
-    if (u == null) {
-      return null;
-    } else if (u.getPassword().equals(user.getPassword())) {
-      return u;
+  @Autowired
+  MyUserDetailsService myUserDetailsService;
+
+  @PostMapping("/api/register")
+  public Object addNewUser(@RequestBody User user) {
+    if(userService.findByUsername(user.getUsername()) != null){
+      return new Object() {
+        public String message = "A user with that username or email already exists.";
+      };
+    }
+
+    if (user.getUsername() != null && user.getEmail() != null) {
+      myUserDetailsService.addUser(user.getUsername(), user.getPassword(), user.getEmail());
+      return new Object() {
+        public String message = user.getUsername() + " registered successfully.";
+      };
     }
     return null;
   }
 
-/*  @PostMapping
-  public String addNewUser(@RequestBody User user) {
-    User u = userService.findByUsername(user.getUsername());
-      if (u.getUsername() == null && u.getEmail() == null) {
-        userService.insertUser(u);
-        return u.getUsername() + " registered successfully.";
-      } else {
-        return "A user with that username or email already exists.";
-      }
-    }*/
-
-  @PutMapping("/{id}")
+  @PutMapping("/api/users/{id}")
   public void updateUser(
           @PathVariable Long id,
           @RequestBody User user) {
     userService.insertUser(user);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/api/users/{id}")
   public void deleteUser(
           @PathVariable Long id,
           @RequestBody User user) {
