@@ -24,7 +24,7 @@ public class UserController {
     }
 
     if (user.getUsername() != null && user.getEmail() != null) {
-      myUserDetailsService.addUser(user.getUsername(), user.getPassword(), user.getEmail());
+      myUserDetailsService.addUser(user.getUsername(), user.getPassword(), user.getEmail(), user.getName(), user.getSurname());
       return new Object() {
         public String message = user.getUsername() + " registered successfully.";
       };

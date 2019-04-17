@@ -8,19 +8,19 @@ export default new Vuex.Store({
     profilePicture: '',
     loggedIn: false,
     filteredItems: [],
-    posts: [],
+    auctions: [],
     addUserResponseFromDb: ''
   },
   mutations: {
     filterItems(state, searchInput = '') {
       let filter = new RegExp(searchInput, "i")
-      state.filteredItems = state.posts.filter(p => p.title.match(filter) || p.body.match(filter))
+      state.filteredItems = state.auctions.filter(p => p.title.match(filter) || p.body.match(filter))
     },
     setProfilePicture(state, value) {
       state.profilePicture = value;
     },
     addPost(state, value) {
-      fetch('/api/posts', {
+      fetch('/api/auctions', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -32,11 +32,11 @@ export default new Vuex.Store({
             return res.json()
           })
           .then(res => {
-            state.posts.push(res)
+            state.auctions.push(res)
           })
           .catch(e => console.log(e))
     },
-    addUserToDb(state, value){
+    addUserToDb(state, value) {
       fetch('/api/register', {
         method: 'POST',
         mode: 'cors',
@@ -56,14 +56,14 @@ export default new Vuex.Store({
           .catch(e => console.log(e))
     },
     updatePost(state, value) {
-      for (let post of state.posts)
+      for (let post of state.auctions)
         if (post.id === value.id) {
-          let index = state.posts.indexOf(post)
-          state.posts[index] = value
+          let index = state.auctions.indexOf(post)
+          state.auctions[index] = value
         }
 
 
-      fetch('/api/posts/' + value.id, {
+      fetch('/api/auctions/' + value.id, {
         method: 'PUT',
         mode: 'cors',
         headers: {
@@ -73,17 +73,17 @@ export default new Vuex.Store({
       })
           .catch(e => console.log(e))
 
-      console.log('Updating post: ', value.id)
+      console.log('Updating auction: ', value.id)
 
     },
     deletePost(state, value) {
-      for (let post of state.posts)
+      for (let post of state.auctions)
         if (post.id === value.id) {
-          let index = state.posts.indexOf(post)
-          state.posts.splice(index, 1);
+          let index = state.auctions.indexOf(post)
+          state.auctions.splice(index, 1);
         }
 
-      fetch('/api/posts/' + value.id, {
+      fetch('/api/auctions/' + value.id, {
         method: 'DELETE',
         mode: 'cors',
         headers: {
@@ -93,23 +93,23 @@ export default new Vuex.Store({
       })
           .catch(e => console.log(e))
 
-      console.log('Deleting post: ', value.id)
+      console.log('Deleting auction: ', value.id)
 
     },
     logOut(state, value) {
       fetch('/logout')
           .then(res => {
             if (res.url.includes('logout')) {
-              state.loggedIn = value
+              state.loggedIn = value;
             }
           })
     },
-    getPosts(state, value) {
-      state.posts = value
-      console.log(state.posts)
+    getAuctions(state, value) {
+      state.posts = value;
+      console.log(state.auctions)
     },
     getUser(state, user) {
-      console.log('Fetching user')
+      console.log('Fetching user');
 
       const transformRequest = (jsonData = {}) =>
           Object.entries(jsonData)
@@ -136,13 +136,13 @@ export default new Vuex.Store({
   },
   actions: {
     getPosts(context) {
-      console.log('Fetching posts')
-      fetch('/api/posts')
+      console.log('Fetching auctions')
+      fetch('/api/auctions')
           .then((res) => {
             return res.json();
           })
           .then((res) => {
-            context.commit('getPosts', res)
+            context.commit('getAuctions', res)
             context.commit('filterItems')
           })
           .catch(e => console.log(e))
