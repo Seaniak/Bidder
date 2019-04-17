@@ -46,7 +46,6 @@
                     :rules="emailRules"
                     required
             ></v-text-field>
-            <v-btn @click="submit" :class="{ red: !valid, green: valid }">submit</v-btn>
             <v-btn @click="clear">clear</v-btn>
          </v-form>
          </v-flex>
@@ -55,8 +54,6 @@
 
 <script>
    import { eventBus } from "@/main";
-
-
 
    export default {
       name: "RegisterUser",
@@ -117,6 +114,7 @@
                password: this.password,
                email: this.email
             });
+            this.$router.push({name: 'registerSuccess'})
          }
       }
    }

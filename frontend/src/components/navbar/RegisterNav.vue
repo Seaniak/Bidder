@@ -1,4 +1,5 @@
 <template>
+   <!-- :class="{ red: !valid, green: valid }" -->
    <v-btn @click="registerClicked" dark flat>Register</v-btn>
 </template>
 
@@ -7,6 +8,10 @@
 
    export default {
       name: "RegisterNav",
+      data() {
+         return {
+         }
+      },
       methods: {
          registerClicked() {
             eventBus.$emit('submitRegisterClicked')

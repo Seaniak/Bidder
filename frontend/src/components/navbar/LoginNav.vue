@@ -1,19 +1,18 @@
 <template>
-  <v-text-field
-          dark
-  ></v-text-field>
+   <v-container>
+      <v-btn @click="loginClicked" dark flat>Login</v-btn>
+   </v-container>
 </template>
 
 <script>
-  export default {
-    name: "RegisterNav",
-    data(){
-      return {
+   export default {
+      name: "LoginNav",
+      methods: {
+         loginClicked() {
+            this.$router.push({name: 'login'})
+         }
       }
-    },
-    watch: {
-    }
-  }
+   }
 </script>
 
 <style scoped>

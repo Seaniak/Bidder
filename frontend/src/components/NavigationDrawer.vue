@@ -26,6 +26,13 @@
       <span>About</span>
       <v-icon medium>account_box</v-icon>
     </v-btn>
+    <v-btn
+            id="registerBtn"
+            to="/register"
+    >
+      <span>Register</span>
+      <v-icon medium>account_box</v-icon>
+    </v-btn>
   </v-navigation-drawer>
 </template>
 

@@ -49,14 +49,17 @@
       currentNavigation() {
         switch (this.$route.path) {
           case '/':
-            return HomeNav
-            break
+            return HomeNav;
+            break;
           case '/login':
-            return LoginNav
-            break
+            return LoginNav;
+            break;
           case '/register':
-            return RegisterNav
-            break
+            return RegisterNav;
+            break;
+          case '/register-success':
+            return LoginNav;
+            break;
           default:
             return HomeNav
         }
