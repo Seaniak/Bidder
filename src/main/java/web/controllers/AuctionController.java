@@ -19,6 +19,12 @@ public class AuctionController {
     return auctionService.getAllAuctions();
   }
 
+  @GetMapping("/{id}")
+  public Auction auction(@PathVariable Long id) {
+    return auctionService.getAuction(id);
+  }
+
+
   @PostMapping
   public Auction publishAuction(@RequestBody Auction auction) {
     if (auction.getCreateTime() == null)

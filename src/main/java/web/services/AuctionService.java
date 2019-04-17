@@ -24,4 +24,8 @@ public class AuctionService {
   public void deleteAuction(Auction auction){
     auctionRepo.delete(auction);
   }
+
+  public Auction getAuction(long id){
+    return auctionRepo.getOne(id);
+  }
 }
