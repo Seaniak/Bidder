@@ -1,10 +1,18 @@
 <template>
-  <v-btn dark flat>Log in</v-btn>
+  <v-text-field
+          dark
+  ></v-text-field>
 </template>
 
 <script>
   export default {
-    name: "LoginNav"
+    name: "RegisterNav",
+    data(){
+      return {
+      }
+    },
+    watch: {
+    }
   }
 </script>
 

@@ -54,6 +54,9 @@
 </template>
 
 <script>
+   import { eventBus } from "@/main";
+
+
 
    export default {
       name: "RegisterUser",
@@ -93,6 +96,9 @@
       },
       mounted() {
          this.$store.commit('clearResponseFromDb');
+         eventBus.$on('submitRegisterClicked', () => {
+            this.submit();
+         });
       },
       methods: {
          submit () {

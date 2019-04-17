@@ -39,8 +39,9 @@
 </template>
 
 <script>
-  import HomeNav from './navbar/HomeNav'
-  import LoginNav from './navbar/LoginNav'
+  import HomeNav from './navbar/HomeNav';
+  import LoginNav from './navbar/LoginNav';
+  import RegisterNav from'./navbar/RegisterNav';
 
   export default {
     name: "Navigation",
@@ -52,6 +53,9 @@
             break
           case '/login':
             return LoginNav
+            break
+          case '/register':
+            return RegisterNav
             break
           default:
             return HomeNav

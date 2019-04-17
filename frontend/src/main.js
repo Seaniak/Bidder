@@ -5,7 +5,9 @@ import store from "./store";
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
+
+export const eventBus = new Vue();
 
 Vue.config.productionTip = false;
 
