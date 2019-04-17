@@ -44,16 +44,6 @@
 
   export default {
     name: "Navigation",
-    data() {
-      return {
-        drawer: null,
-      }
-    },
-    methods:{
-      openDrawer(){
-        this.$store.commit('openDrawer', true)
-      }
-    },
     computed: {
       currentNavigation() {
         switch (this.$route.path) {
@@ -67,7 +57,6 @@
             return HomeNav
         }
       }
-
     }
   }
 </script>

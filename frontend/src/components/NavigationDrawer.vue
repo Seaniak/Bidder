@@ -31,18 +31,7 @@
 
 <script>
   export default {
-    name: "NavigationDrawer",
-    computed: {
-      drawer: {
-        get() {
-          return this.$store.state.openNavDrawer
-        },
-        set() {
-          this.$store.commit('openDrawer', false)
-
-        }
-      }
-    }
+    name: "NavigationDrawer"
   }
 </script>
 
@@ -51,9 +40,11 @@
     padding-bottom: 10px;
     border-bottom: solid 1px #bbb;
   }
-#closeDrawer{
-  left: 0px;
-}
+
+  #closeDrawer {
+    left: 0px;
+  }
+
   #aboutBtn {
     color: var(--main-font-color);
   }
