@@ -13,12 +13,17 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private long acutionId;
+	private long auctionId;
 	private boolean thumbnail;
 	private String path;
 
 	public Image(){
+	}
 
+	public Image(Auction auction, boolean thumbnail, String path) {
+		this.auctionId = auction.getId();
+		this.thumbnail = thumbnail;
+		this.path = path;
 	}
 
 	public long getId() {
@@ -29,12 +34,12 @@ public class Image {
 		this.id = id;
 	}
 
-	public long getAcutionId() {
-		return acutionId;
+	public long getAuctionId() {
+		return auctionId;
 	}
 
-	public void setAcutionId(long acutionId) {
-		this.acutionId = acutionId;
+	public void setAuctionId(long auctionId) {
+		this.auctionId = auctionId;
 	}
 
 	public boolean isThumbnail() {
