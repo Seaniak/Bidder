@@ -4,6 +4,9 @@
       <img width="100%" :src="auction.imageData" alt="thumbnail">
     </figure>
     <h1>{{auction.title}}</h1>
+        <h1>{{auction.title}}</h1>
+    <h1>{{auction.title}}</h1>
+
     <p>{{auction.body}}</p>
     <!--<v-btn
             v-if="$store.state.loggedIn"
