@@ -10,17 +10,16 @@
   </div>
 </template>
 
-<script> 
-  export default {
-    name: "AuctionCard",
-    props: ['auction'],
-    methods: {
-      seeAuctionDetails() {
-        this.$router.push({
-          name: 'auctionDetails',
-          params: {routeId: this.auction.id, auction: this.auction}
-        })
-      }
+<script>
+export default {
+  name: "AuctionCard",
+  props: ["auction"],
+  methods: {
+    seeAuctionDetails() {
+      this.$router.push({
+        name: "auctionDetails",
+        params: { auction: this.auction }
+      });
     }
   }
 };
