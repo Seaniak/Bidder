@@ -19,7 +19,8 @@
       </v-flex>
       <v-flex column xs12 align-start="true">
         <h5>Beskrivning</h5>
-        <p>{{ auction.description }}</p>
+        <h5>Beskrivning</h5>
+
         <p>{{ auction.description }}</p>
       </v-flex>
     </v-layout>

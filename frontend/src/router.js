@@ -47,13 +47,13 @@ export default new Router({
       path: "/register",
       name: "register",
       component: () =>
-          import(/* webpackChunkName: "register" */ "./views/Register.vue")
+        import(/* webpackChunkName: "register" */ "./views/Register.vue")
     },
     {
       path: "/register-success",
       name: "registerSuccess",
       component: () =>
-          import(/* webpackChunkName: "registerSuccess" */ "./views/RegistrationSuccess.vue")
-    },
+        import(/* webpackChunkName: "registerSuccess" */ "./views/RegistrationSuccess.vue")
+    }
   ]
 });
