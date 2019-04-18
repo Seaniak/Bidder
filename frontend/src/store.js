@@ -38,7 +38,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getAutcions(context) {
+    getAuctions(context) {
       console.log('Fetching auctions')
       fetch('/api/auctions')
           .then((res) => {

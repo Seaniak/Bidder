@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <figure>
-      <img width="100%" :src="post.imageData" alt="poster">
+      <img width="100%" :src="auction.imageData" alt="thumbnail">
     </figure>
-    <h1>{{post.title}}</h1>
-    <p>{{post.body}}</p>
+    <h1>{{auction.title}}</h1>
+    <p>{{auction.body}}</p>
     <v-btn
             v-if="$store.state.loggedIn"
             fab
@@ -12,7 +12,7 @@
             color="teal"
             fixed
             medium
-            @click="updatePost">
+            @click="updateAuction">
       <v-icon dark>create</v-icon>
     </v-btn>
   </v-container>
@@ -20,13 +20,13 @@
 
 <script>
   export default {
-    name: "PostDetails",
-    props: ['post'],
+    name: "AuctionDetails",
+    props: ['auction'],
     methods: {
-      updatePost() {
+      updateAuction() {
         this.$router.push({
           name: 'upload',
-          params: {post: this.post}
+          params: {auction: this.auction}
         })
       }
     }

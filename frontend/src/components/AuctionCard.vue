@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    name: "Auction",
+    name: "AuctionCard",
     props: ['auction'],
     methods: {
       seeAuctionDetails() {

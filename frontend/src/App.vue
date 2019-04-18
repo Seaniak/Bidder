@@ -25,7 +25,7 @@
       NavigationDrawer
     },
     async created() {
-      this.$store.dispatch('getAutcions');
+      this.$store.dispatch('getAuctions');
 
       // TODO: check cookie if user already is logged in
       let response = await fetch('/login');
