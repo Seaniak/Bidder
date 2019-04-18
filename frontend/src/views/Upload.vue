@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      imageData: [],
+      imageData: null,
       title: "",
       description: ""
     };

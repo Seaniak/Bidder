@@ -5,7 +5,7 @@
       <p>{{ auction.body }}</p>
     </div>
     <figure>
-      <img :src="auction.imageData" alt="thumbnail">
+      <img :src="auction.imageData" alt="thumbnail" />
     </figure>
   </div>
 </template>
@@ -23,29 +23,30 @@
       }
     }
   }
+};
 </script>
 
 <style scoped>
-  #auction {
-    display: flex;
-    text-decoration: none;
-    color: var(--main-font-color);
-    width: 100%;
-    animation-duration: 200ms;
-    border-bottom: solid 1px #7c7e70;
-  }
+#auction {
+  display: flex;
+  text-decoration: none;
+  color: var(--main-font-color);
+  width: 100%;
+  animation-duration: 200ms;
+  border-bottom: solid 1px #7c7e70;
+}
 
-  #auction-text {
-    padding-left: 3%;
-    text-align: start;
-    flex: 4;
-  }
+#auction-text {
+  padding-left: 3%;
+  text-align: start;
+  flex: 4;
+}
 
-  figure {
-    flex: 2;
-  }
+figure {
+  flex: 2;
+}
 
-  img {
-    width: 100%;
-  }
+img {
+  width: 100%;
+}
 </style>

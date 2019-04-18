@@ -19,7 +19,7 @@
             <Auction
               v-else
               v-for="(auction, index) in $store.state.filteredItems"
-              :key="index"
+              :key="index + 0"
               :auction="auction"
             />
           </transition-group>

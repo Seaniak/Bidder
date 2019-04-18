@@ -3,18 +3,16 @@
 </template>
 
 <script>
-  import {eventBus} from "@/main";
+import { eventBus } from "@/main";
 
-  export default {
-    name: "LoginNav",
-    methods: {
-      loginClicked() {
-        eventBus.$emit('nav-login-clicked')
-      }
+export default {
+  name: "LoginNav",
+  methods: {
+    loginClicked() {
+      eventBus.$emit("nav-login-clicked");
     }
   }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
