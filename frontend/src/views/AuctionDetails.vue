@@ -5,21 +5,17 @@
     </figure>
     <h1>{{auction.title}}</h1>
     <p>{{auction.body}}</p>
-    <v-btn
-            v-if="$store.state.loggedIn"
-            fab
-            dark
-            color="teal"
-            fixed
-            medium
-            @click="updateAuction">
-      <v-icon dark>create</v-icon>
-    </v-btn>
+    <p>{{auction}}</p>
   </v-container>
 </template>
 
 <script>
   export default {
+    data(){
+      return {
+        id: this.auction.id
+      }
+    },
     name: "AuctionDetails",
     props: ['auction'],
     methods: {
@@ -29,7 +25,13 @@
           params: {auction: this.auction}
         })
       }
-    }
+    },
+    mounted() {
+      if(this.id == null) {
+        this.id = this.$route.params.routeId;
+        console.log(this.id);
+      } else  console.log('existing props');
+	}
   }
 </script>
 

@@ -18,7 +18,7 @@
       seeAuctionDetails() {
         this.$router.push({
           name: 'auctionDetails',
-          params: {auction: this.auction}
+          params: {routeId: this.auction.id, auction: this.auction}
         })
       }
     }
