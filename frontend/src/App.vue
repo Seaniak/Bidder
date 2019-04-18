@@ -31,8 +31,7 @@ import NavigationDrawer from "@/components/NavigationDrawer";
       let response = await fetch('/login');
       console.log(response)
     }
-  }
-};
+  };
 </script>
 
 <style src="./style.css"></style>

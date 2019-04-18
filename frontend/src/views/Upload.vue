@@ -77,9 +77,7 @@ import FileUpload from "@/components/FileUpload";
       handleImage(imageData) {
         this.imageData = imageData
       }
-    }
-  }
-};
+    };
 </script>
 
 <style scoped>

@@ -135,7 +135,7 @@
             this.$router.push({name: 'registerSuccess'})
          }
       }
-    },
+    }
     clear() {
       this.$refs.form.reset();
     },

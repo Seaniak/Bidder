@@ -25,8 +25,7 @@
         // }
       }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>

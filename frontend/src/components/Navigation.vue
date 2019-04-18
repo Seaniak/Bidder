@@ -45,8 +45,7 @@
         }
       }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
