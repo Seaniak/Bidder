@@ -1,37 +1,37 @@
 <template>
   <v-app>
-  <div id="app">
-    <transition
-            name="animate-route"
-            mode="out-in"
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-    >
-      <router-view :key="$route.fullPath"/>
-    </transition>
-    <Navigation/>
-    <NavigationDrawer/>
-  </div>
+    <div id="app">
+      <transition
+        name="animate-route"
+        mode="out-in"
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+      >
+        <router-view :key="$route.fullPath" />
+      </transition>
+      <Navigation />
+      <NavigationDrawer />
+    </div>
   </v-app>
 </template>
 
 <script>
-  import Navigation from '@/components/Navigation'
-  import NavigationDrawer from '@/components/NavigationDrawer'
+import Navigation from "@/components/Navigation";
+import NavigationDrawer from "@/components/NavigationDrawer";
 
-  export default {
-    components: {
-      Navigation,
-      NavigationDrawer
-    },
-    async created() {
-      this.$store.dispatch('getAuctions');
+export default {
+  components: {
+    Navigation,
+    NavigationDrawer
+  },
+  async created() {
+    this.$store.dispatch("getAuctions");
 
-      // TODO: check cookie if user already is logged in
-      let response = await fetch('/login');
-      console.log(response)
-    }
+    // TODO: check cookie if user already is logged in
+    let response = await fetch("/login");
+    console.log(response);
   }
+};
 </script>
 
 <style src="./style.css"></style>
