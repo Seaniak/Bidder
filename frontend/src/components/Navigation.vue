@@ -25,16 +25,6 @@
               medium>menu
       </v-icon>
     </v-btn>
-    <v-btn
-            v-if="$store.state.loggedIn"
-            to="/upload"
-            color="teal"
-            flat
-            value="newPost"
-    >
-      <span>New post</span>
-      <v-icon dark medium>note_add</v-icon>
-    </v-btn>
   </nav>
 </template>
 
@@ -58,7 +48,7 @@
             return RegisterNav;
             break;
           case '/register-success':
-            return LoginNav;
+            return;
             break;
           default:
             return HomeNav

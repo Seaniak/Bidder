@@ -14,17 +14,13 @@
               :type="showPassword ? 'text' : 'password'"
               label="Password"
       ></v-text-field>
-      <v-btn
-              class="mt-5"
-              type="submit"
-      >
-        Log in
-      </v-btn>
     </v-form>
   </v-container>
 </template>
 
 <script>
+  import {eventBus} from "@/main";
+
   export default {
     name: "login",
     data() {
@@ -34,9 +30,12 @@
         showPassword: false
       }
     },
+    created() {
+      eventBus.$on('nav-login-clicked', () => this.logIn())
+    },
     methods: {
       logIn(e) {
-        e.preventDefault()
+        if (e !== undefined) e.preventDefault()
         this.$router.push({name: 'home'})
 
         let user = {
@@ -44,7 +43,22 @@
           password: this.password
         }
 
-        this.$store.commit('getUser', user)
+        const transformRequest = (jsonData = {}) =>
+            Object.entries(jsonData)
+                .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+                .join('&');
+
+        fetch('/login', {
+          method: "POST",
+          body: transformRequest({username: user.username, password: user.password}),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+            .then(res => {
+              let successfulLogin = !res.url.includes("error");
+              this.$store.commit('loginUser', successfulLogin);
+            });
       }
     }
   }

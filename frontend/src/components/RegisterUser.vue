@@ -107,13 +107,31 @@
             this.$refs.form.reset()
          },
          addUserToDb() {
-            this.$store.commit('addUserToDb', {
+            let user = {
                name: this.name,
                surname: this.surname,
                username: this.username,
                password: this.password,
                email: this.email
-            });
+            };
+
+            fetch('/api/register', {
+               method: 'POST',
+               mode: 'cors',
+               headers: {
+                  "Content-Type": "application/json"
+               },
+               body: JSON.stringify(user)
+            })
+                    .then(res => {
+                       console.log(res);
+                       return res.json()
+                    })
+                    .then(res => {
+                       console.log(res);
+                       this.$store.commit('addUserToDb', res.message)
+                    })
+                    .catch(e => console.log(e))
             this.$router.push({name: 'registerSuccess'})
          }
       }

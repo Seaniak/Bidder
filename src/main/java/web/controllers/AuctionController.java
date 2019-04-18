@@ -1,5 +1,7 @@
 package web.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import web.entities.Auction;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/auctions")
 public class AuctionController {
+  private static Logger LOG = LoggerFactory.getLogger(AuctionController.class);
+
 
   @Autowired
   private AuctionService auctionService;
@@ -23,6 +27,8 @@ public class AuctionController {
   public Auction publishAuction(@RequestBody Auction auction) {
     if (auction.getCreateTime() == null)
       auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+
+    auction.getFiles().forEach(f -> LOG.info(f.toString()));
 
 //    FileUploader.handleFileUpload(post.getImageName(), post.getImageData());
 

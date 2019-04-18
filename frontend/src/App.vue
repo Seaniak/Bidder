@@ -24,8 +24,12 @@
       Navigation,
       NavigationDrawer
     },
-    created() {
-      this.$store.dispatch('getPosts');
+    async created() {
+      this.$store.dispatch('getAutcions');
+
+      // TODO: check cookie if user already is logged in
+      let response = await fetch('/login');
+      console.log(response)
     }
   }
 </script>

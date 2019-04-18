@@ -12,33 +12,74 @@
                 id="closeDrawer"
                 absolute
                 icon
-                @click.stop="$store.state.openNavDrawer = !$store.state.openNavDrawer"
+                @click.stop="toggleDrawer"
         >
           <v-icon large>keyboard_arrow_right</v-icon>
         </v-btn>
         <h2>Navigering</h2>
       </v-layout>
     </div>
-    <v-btn
-            id="aboutBtn"
-            to="/about"
-    >
-      <span>About</span>
-      <v-icon medium>account_box</v-icon>
-    </v-btn>
-    <v-btn
-            id="registerBtn"
-            to="/register"
-    >
-      <span>Register</span>
-      <v-icon medium>account_box</v-icon>
-    </v-btn>
+    <v-layout column>
+      <v-btn v-if="!$store.state.loggedIn"
+             to="/login"
+             flat
+      >
+        <span>Logga in</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn v-else
+             flat
+             @click="logout"
+      >
+        <span>Logga ut</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn
+              id="aboutBtn"
+              to="/about"
+              flat
+      >
+        <span>About</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn
+              id="registerBtn"
+              to="/register"
+              flat
+      >
+        <span>Register</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn
+              v-if="$store.state.loggedIn"
+              to="/upload"
+              flat
+      >
+        <span>Skapa auktion</span>
+        <v-icon dark medium>note_add</v-icon>
+      </v-btn>
+    </v-layout>
   </v-navigation-drawer>
 </template>
 
 <script>
   export default {
-    name: "NavigationDrawer"
+    name: "NavigationDrawer",
+    methods: {
+      toggleDrawer() {
+        this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer
+      },
+      logout() {
+        fetch('/logout')
+            .then(res => {
+              if (res.url.includes('logout')) {
+                this.$store.commit('logoutUser', false)
+              }
+            })
+        this.toggleDrawer()
+        this.$router.push({name: 'home'})
+      }
+    }
   }
 </script>
 

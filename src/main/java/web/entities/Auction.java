@@ -1,10 +1,10 @@
 package web.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Auction {
@@ -20,6 +20,17 @@ public class Auction {
 	private Timestamp endTime;
 	private int startSum;
 	private int reservedSum;
+	@Transient
+	private List<MultipartFile> files;
+
+	public List<MultipartFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<MultipartFile> files) {
+		this.files = files;
+	}
+
 
 	public Auction(){
 

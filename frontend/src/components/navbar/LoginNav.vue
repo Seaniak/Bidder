@@ -1,18 +1,18 @@
 <template>
-   <v-container>
-      <v-btn @click="loginClicked" dark flat>Login</v-btn>
-   </v-container>
+  <v-btn @click="loginClicked" dark flat>Login</v-btn>
 </template>
 
 <script>
-   export default {
-      name: "LoginNav",
-      methods: {
-         loginClicked() {
-            this.$router.push({name: 'login'})
-         }
+  import {eventBus} from "@/main";
+
+  export default {
+    name: "LoginNav",
+    methods: {
+      loginClicked() {
+        eventBus.$emit('nav-login-clicked')
       }
-   }
+    }
+  }
 </script>
 
 <style scoped>

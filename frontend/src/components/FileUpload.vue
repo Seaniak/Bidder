@@ -16,20 +16,15 @@
     name: "FileUpload",
     methods: {
       upload(e) {
-        let image = e.target.files[0]; // array with files
+        let images = e.target.files; // array with files
 
-        let data = new FormData();
-        data.append('file', image)
+          this.$emit('uploadImage', images)
 
-        let reader = new FileReader();
-        reader.readAsDataURL(image);  // read file to this format
-        reader.onload = (r) => { // when file is loaded
-          let imageData = r.target.result;
-          this.$emit('uploadImage', {
-            imageSrc: imageData,
-            imageName: e.target.files[0].name
-          })
-        }
+        // let reader = new FileReader();
+        // reader.readAsDataURL(image);  // read file to this format
+        // reader.onload = (r) => { // when file is loaded
+        //   let imageData = r.target.result;
+        // }
       }
     }
   }
