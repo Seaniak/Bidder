@@ -29,7 +29,7 @@ export default new Router({
       // enable props to be passed to route
       props: true,
       component: () =>
-        import(/* webpackChunkName: "postDetails" */ "./views/AuctionDetails.vue")
+        import(/* webpackChunkName: "auctionDetails" */ "./views/AuctionDetails.vue")
     },
     {
       path: "/about",

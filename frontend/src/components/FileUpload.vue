@@ -14,17 +14,46 @@
 <script>
   export default {
     name: "FileUpload",
+    data() {
+      return {
+        files: []
+      }
+    },
     methods: {
       upload(e) {
         let images = e.target.files; // array with files
 
-          this.$emit('uploadImage', images)
+        for (let image of images) {
+          this.readImage(image)
+        }
+        this.$emit('uploadImage', this.files)
+      },
+      readImage(imageFile) {
+        let reader = new FileReader();
+        reader.readAsDataURL(imageFile);  // read file to this format
+        reader.onload = e => { // when file is loaded
 
-        // let reader = new FileReader();
-        // reader.readAsDataURL(image);  // read file to this format
-        // reader.onload = (r) => { // when file is loaded
-        //   let imageData = r.target.result;
-        // }
+          let image = new Image();
+          image.onload = () => {
+            this.convertImage(image)
+          }
+        }
+      },
+      convertImage(image) {
+        let canvas = document.createElement('canvas');
+        canvas.width = 800;
+        canvas.height = 600;
+
+        let context = canvas.getContext('2d');
+
+        context.drawImage(image,
+            canvas.width / 2 - image.width / 2,
+            canvas.height / 2 - image.height / 2
+        );
+
+        image.src = canvas.toDataURL('image/png');
+
+        this.files.push(image);
       }
     }
   }

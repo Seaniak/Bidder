@@ -36,7 +36,7 @@
     },
     data() {
       return {
-        imageData: null,
+        imageData: [],
         title: '',
         description: ''
       }
