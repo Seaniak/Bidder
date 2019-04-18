@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import web.configs.MyAuctionDetailsService;
 import web.entities.Auction;
 import web.services.AuctionService;
 import java.sql.Timestamp;
@@ -18,21 +19,27 @@ public class AuctionController {
   @Autowired
   private AuctionService auctionService;
 
+  @Autowired
+  private MyAuctionDetailsService myAuctionDetailsService;
+
   @GetMapping
   public Iterable<Auction> auctions() {
     return auctionService.getAllAuctions();
   }
 
   @PostMapping
-  public Auction publishAuction(@RequestBody Auction auction) {
-    if (auction.getCreateTime() == null)
-      auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+  public void publishAuction(@RequestBody Auction auction) {
+    if (auction != null)
+      //auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+    myAuctionDetailsService.addAuction(auction.getId(), auction.getTitle(), auction.getDescription(), auction.getCreateTime(),
+            auction.getEndTime(), auction.getStartSum(), auction.getReservedSum(), auction.getCategory(),
+            auction.getAuctionCondition());
 
     //auction.getFiles().forEach(f -> LOG.info(f.toString()));
 
 //    FileUploader.handleFileUpload(post.getImageName(), post.getImageData());
 
-    return auctionService.insertAuction(auction);
+    //return auctionService.insertAuction(auction);
   }
 
   @PutMapping("/{id}")

@@ -9,6 +9,19 @@ import java.util.List;
 @Entity
 public class Auction {
 
+	public Auction(long userId, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+				   int reservedSum, String category, String auctionCondition) {
+		this.userId = userId;
+		this.title = title;
+		this.description = description;
+		this.createTime = createTime;
+		this.endTime = endTime;
+		this.startSum = startSum;
+		this.reservedSum = reservedSum;
+		this.category = category;
+		this.auctionCondition = auctionCondition;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -117,4 +130,6 @@ public class Auction {
 	public void setAuctionCondition(String auctionCondition) {
 		this.auctionCondition = auctionCondition;
 	}
+
+
 }

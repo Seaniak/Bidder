@@ -66,8 +66,9 @@
             category: ['Fordon', 'Teknik', 'Konst', 'Hus', 'Inredning'],
             startingTime: new Date(Date.now()).getTime(),
             endingTime: new Date(Date.now()).getTime(),
-            startingBid: null,
-            acceptedBid: null
+            startingBid: 0,
+            acceptedBid: 0,
+            userId: this.$store.state.loggedInUserId
          }
       },
       mounted() {
@@ -77,11 +78,9 @@
          });
       },
       methods: {
-
          handleSubmit() {
             //e.preventDefault();
             console.log('Inside handle submit');
-            // if no input, don't submit
             /*!this.title.length || !this.description.length || !this.itemCondition.length ||
                    this.category != null || this.startingBid < 0 || this.acceptedBid < this.startingBid*/
             if (false) {
@@ -89,7 +88,7 @@
                return;
             }
 
-            let data = {
+            let auctionData = {
             title: this.title,
             description: this.description,
             auction_condition: this.itemCondition,
@@ -98,8 +97,9 @@
             reserved_sum: this.acceptedBid,
             create_time: this.startingTime,
             end_time: this.endingTime,
-            user_id: this.$store.state.loggedInUserId};
-            console.log(data);
+            user_id: this.userId
+            };
+            console.log(auctionData);
 
             fetch('/api/auctions', {
                method: 'POST',
@@ -107,7 +107,7 @@
                headers: {
                   "Content-Type": "application/json"
                },
-               body: JSON.stringify(data)
+               body: JSON.stringify(auctionData)
             })
                 .then(res => {
                    return res.json()
