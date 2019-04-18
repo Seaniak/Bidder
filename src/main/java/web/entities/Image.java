@@ -21,6 +21,11 @@ public class Image {
 
 	}
 
+	public Image(String path, boolean thumbnail) {
+		this.thumbnail = thumbnail;
+		this.path = path;
+	}
+
 	public long getId() {
 		return id;
 	}

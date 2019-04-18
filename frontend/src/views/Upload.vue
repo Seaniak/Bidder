@@ -54,6 +54,8 @@
           return;
         }
 
+        let imagePaths = [];
+
         // send all images to server
         for (let file of this.files) {
           let fileData = new FormData();
@@ -63,16 +65,34 @@
             method: 'POST',
             body: fileData
           })
-          console.log(response.text())
-        }
 
-        let data = new FormData();
-        data.append('title', this.title);
-        data.append('description', this.description);
+          response = await response.text();
+
+          console.log(response)
+          imagePaths.push(response)
+
+          // when all image paths has been received from
+          // the server, a call to post is made
+          if (imagePaths.length === this.files.length) {
+            this.postAuction(imagePaths)
+            this.$router.push({name: 'home'})
+          }
+        }
+      },
+      postAuction(imagePaths) {
+        // let data = new FormData();
+        // data.append('title', this.title);
+        // data.append('description', this.description);
+        // data.append('imagePaths', imagePaths);
+
+        let data = {
+          title: this.title,
+          description: this.description,
+          imagePaths: imagePaths
+        }
 
         fetch('/api/auctions', {
           method: 'POST',
-          mode: 'cors',
           headers: {
             "Content-Type": "application/json"
           },
@@ -85,8 +105,6 @@
               this.$store.commit('addAuction', res)
             })
             .catch(e => console.log(e))
-
-        this.$router.push({name: 'home'})
       },
       handleImage(imageData) {
         this.previewImages = imageData.previewImages

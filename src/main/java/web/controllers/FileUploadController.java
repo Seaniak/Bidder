@@ -36,6 +36,6 @@ public class FileUploadController {
     } catch (Exception e) {
       return null;
     }
-    return filename;
+    return uploadDirectory + filename;
   }
 }
