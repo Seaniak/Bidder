@@ -50,7 +50,7 @@
 
         fetch('/login', {
           method: "POST",
-          body: transformRequest({username: user.username, password: user.password}),
+          body: transformRequest({username: user.username, password: user.password, userId: user.id}),
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
@@ -58,6 +58,7 @@
             .then(res => {
               let successfulLogin = !res.url.includes("error");
               this.$store.commit('loginUser', successfulLogin);
+              this.$store.commit('setLoggedInUserId', this.userId)
             });
       }
     }

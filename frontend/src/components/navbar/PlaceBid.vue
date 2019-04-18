@@ -6,7 +6,7 @@
    import {eventBus} from "@/main";
 
    export default {
-      name: "PlaceBid.vue",
+      name: "PlaceBid",
       methods: {
          placeBidClicked() {
             // eventBus.$emit('nav-placebid-clicked')

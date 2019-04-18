@@ -28,7 +28,7 @@ public class AuctionController {
     if (auction.getCreateTime() == null)
       auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
 
-    auction.getFiles().forEach(f -> LOG.info(f.toString()));
+    //auction.getFiles().forEach(f -> LOG.info(f.toString()));
 
 //    FileUploader.handleFileUpload(post.getImageName(), post.getImageData());
 

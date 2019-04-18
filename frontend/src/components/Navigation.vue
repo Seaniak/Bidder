@@ -32,7 +32,8 @@
   import HomeNav from './navbar/HomeNav';
   import LoginNav from './navbar/LoginNav';
   import RegisterNav from'./navbar/RegisterNav';
-  import UploadAuction from "./navbar/UploadAuction";
+  import UploadAuction from "./navbar/UploadAuctionNav";
+  import GoToLoginPageNav from "./navbar/GoToLoginPageNav";
 
   export default {
     name: "Navigation",
@@ -49,7 +50,7 @@
             return RegisterNav;
             break;
           case '/register-success':
-            return;
+            return GoToLoginPageNav;
             break;
           case '/upload':
             return UploadAuction;
