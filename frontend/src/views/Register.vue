@@ -1,17 +1,15 @@
 <template>
-   <v-container>
-      <RegisterUser />
-   </v-container>
+  <v-container>
+    <RegisterUser />
+  </v-container>
 </template>
 
 <script>
-   import RegisterUser from "../components/RegisterUser";
-   export default {
-      name: "Register.vue",
-      components: {RegisterUser}
-   }
+import RegisterUser from "../components/RegisterUser";
+export default {
+  name: "Register.vue",
+  components: { RegisterUser }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -24,6 +24,12 @@ module.exports = {
         ws: true,
         changeOrigin: true,
         secure: false
+      },
+      "/auctions/:id": {
+        target: "http://localhost:8070",
+        ws: true,
+        changeOrigin: true,
+        secure: false
       }
     }
   },

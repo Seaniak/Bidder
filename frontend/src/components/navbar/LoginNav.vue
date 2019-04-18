@@ -3,11 +3,9 @@
 </template>
 
 <script>
-  export default {
-    name: "LoginNav"
-  }
+export default {
+  name: "LoginNav"
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

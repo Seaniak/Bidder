@@ -50,9 +50,9 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/Register.vue")
     },
     {
-      path: '/auctions/:id',
-      name: 'auctions',
-      component: () => import('./views/Auction.vue')
+      path: "/auctions/:id",
+      name: "auctions",
+      component: () => import("./views/Auction.vue")
     }
   ]
 });

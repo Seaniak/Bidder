@@ -1,31 +1,31 @@
 <template>
   <div id="app">
     <transition
-            name="animate-route"
-            mode="out-in"
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
+      name="animate-route"
+      mode="out-in"
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
     >
-      <router-view :key="$route.fullPath"/>
+      <router-view :key="$route.fullPath" />
     </transition>
-    <Navigation/>
-    <NavigationDrawer/>
+    <Navigation />
+    <NavigationDrawer />
   </div>
 </template>
 
 <script>
-  import Navigation from '@/components/Navigation'
-  import NavigationDrawer from '@/components/NavigationDrawer'
+import Navigation from "@/components/Navigation";
+import NavigationDrawer from "@/components/NavigationDrawer";
 
-  export default {
-    components: {
-      Navigation,
-      NavigationDrawer
-    },
-    created() {
-      this.$store.dispatch('getPosts');
-    }
+export default {
+  components: {
+    Navigation,
+    NavigationDrawer
+  },
+  created() {
+    this.$store.dispatch("getPosts");
   }
+};
 </script>
 
 <style src="./style.css"></style>
