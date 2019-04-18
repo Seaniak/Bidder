@@ -15,36 +15,34 @@
     >
       <v-icon color="white" medium>menu </v-icon>
     </v-btn>
-    <v-btn
-      v-if="$store.state.loggedIn"
-      to="/upload"
-      color="teal"
-      flat
-      value="newPost"
-    >
-      <span>New post</span>
-      <v-icon dark medium>note_add</v-icon>
-    </v-btn>
   </nav>
 </template>
 
 <script>
-import HomeNav from "./navbar/HomeNav";
-import LoginNav from "./navbar/LoginNav";
+  import HomeNav from './navbar/HomeNav';
+  import LoginNav from './navbar/LoginNav';
+  import RegisterNav from'./navbar/RegisterNav';
 
-export default {
-  name: "Navigation",
-  computed: {
-    currentNavigation() {
-      switch (this.$route.path) {
-        case "/":
-          return HomeNav;
-          break;
-        case "/login":
-          return LoginNav;
-          break;
-        default:
-          return HomeNav;
+  export default {
+    name: "Navigation",
+    computed: {
+      currentNavigation() {
+        switch (this.$route.path) {
+          case '/':
+            return HomeNav;
+            break;
+          case '/login':
+            return LoginNav;
+            break;
+          case '/register':
+            return RegisterNav;
+            break;
+          case '/register-success':
+            return;
+            break;
+          default:
+            return HomeNav
+        }
       }
     }
   }

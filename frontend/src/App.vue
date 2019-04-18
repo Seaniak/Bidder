@@ -1,4 +1,5 @@
 <template>
+  <v-app>
   <div id="app">
     <transition
       name="animate-route"
@@ -11,19 +12,25 @@
     <Navigation />
     <NavigationDrawer />
   </div>
+  </v-app>
 </template>
 
 <script>
 import Navigation from "@/components/Navigation";
 import NavigationDrawer from "@/components/NavigationDrawer";
 
-export default {
-  components: {
-    Navigation,
-    NavigationDrawer
-  },
-  created() {
-    this.$store.dispatch("getPosts");
+  export default {
+    components: {
+      Navigation,
+      NavigationDrawer
+    },
+    async created() {
+      this.$store.dispatch('getAutcions');
+
+      // TODO: check cookie if user already is logged in
+      let response = await fetch('/login');
+      console.log(response)
+    }
   }
 };
 </script>

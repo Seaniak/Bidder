@@ -3,21 +3,16 @@
     <v-container>
       <v-layout>
         <v-flex xs12 sm6 md6 class="ml-auto mr-auto">
-          <HomeHeader @searchInput="searchInput = $event" />
+          <h1>Bidder</h1>
           <transition-group
-            name="animate-route"
-            mode="out-in"
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-          >
-            <h3 v-if="$store.state.filteredItems.length === 0" key="no-posts">
-              No posts found
-            </h3>
-            <Post
-              v-else
-              v-for="(post, index) in $store.state.filteredItems"
-              :key="index"
-              :post="post"
+                  name="animate-route"
+                  mode="out-in"
+                  enter-active-class="animated fadeIn"
+                  leave-active-class="animated fadeOut">
+            <h3 v-if="$store.state.filteredItems.length === 0" key="no-posts">No posts found</h3>
+            <Auction v-else v-for="(post, index) in $store.state.filteredItems"
+                     :key="index"
+                     :post="post"
             />
           </transition-group>
           <v-btn
@@ -37,31 +32,25 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Post from "@/components/Post.vue";
-import HomeHeader from "@/components/HomeHeader.vue";
+  // @ is an alias to /src
+  import Auction from "@/components/Auction.vue";
 
-export default {
-  name: "home",
-  data() {
-    return {
-      searchInput: ""
-    };
-  },
-  components: {
-    Post,
-    HomeHeader
-  }
-};
+  export default {
+    name: "home",
+    components: {
+      Auction
+    }
+  };
 </script>
 
 <style scoped>
-#upArrow {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-}
-h3 {
-  animation-duration: 100ms;
-}
+  #upArrow {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+  }
+
+  h3 {
+    animation-duration: 100ms;
+  }
 </style>

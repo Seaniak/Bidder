@@ -1,108 +1,82 @@
 <template>
   <v-container>
-    <h1>{{ post ? "Edit post" : "Upload Post" }}</h1>
+    <h1>Skapa auktion</h1>
     <form @submit="handleSubmit">
-      <v-text-field label="Title" v-model="title" class="mt-4"></v-text-field>
-      <v-textarea name="Details" label="Details" v-model="info"></v-textarea>
+      <v-text-field
+              label="Title"
+              v-model="title"
+              class="mt-4"
+      ></v-text-field>
+      <v-textarea
+              name="Details"
+              label="Details"
+              v-model="description"
+      ></v-textarea>
       <div>
         <div id="postImage">
           <FileUpload @uploadImage="handleImage($event)" />
         </div>
-        <img
-          v-if="imageSrc.length"
-          width="60%"
-          :src="imageSrc"
-          alt="profile picture"
-        />
+        <img v-if="imageData" width="60%" :src="imageData" alt="profile picture">
       </div>
       <div id="submitBtnDiv">
         <v-btn dark fab medium color="teal" id="submitBtn" type="submit">
-          <v-icon dark large>{{ post ? "create" : "add" }}</v-icon>
+          <v-icon dark large>add</v-icon>
         </v-btn>
       </div>
     </form>
-    <v-btn
-      v-if="post"
-      dark
-      fab
-      absolute
-      small
-      color="red"
-      class="remove-btn darken-2"
-      @click="deletePost"
-    >
-      <v-icon dark large>remove</v-icon>
-    </v-btn>
   </v-container>
 </template>
 
 <script>
 import FileUpload from "@/components/FileUpload";
 
-export default {
-  components: {
-    FileUpload
-  },
-  props: ["post"],
-  data() {
-    return {
-      imageSrc: "",
-      imageName: "",
-      title: "",
-      info: ""
-    };
-  },
-  mounted() {
-    if (this.post) {
-      this.imageSrc = this.post.image;
-      this.title = this.post.title;
-      this.info = this.post.body;
-    }
-  },
-  methods: {
-    handleSubmit(e) {
-      e.preventDefault();
-
-      if (this.post) {
-        this.editPost();
-        return;
+  export default {
+    components: {
+      FileUpload
+    },
+    data() {
+      return {
+        imageData: null,
+        title: '',
+        description: ''
       }
-      // if no input, don't submit
-      if (!this.imageSrc.length || !this.title.length || !this.info.length) {
-        return;
-      }
-      this.$store.commit("addPost", {
-        title: this.title,
-        body: this.info,
-        imageData: this.imageSrc,
-        imageName: this.imageName
-      });
-      this.returnHome();
+    },
+    mounted() {
     },
     editPost() {
       console.log(this.post.id);
 
-      let editedPost = {
-        id: this.post.id,
-        title: this.title,
-        body: this.info,
-        imageData: this.imageSrc,
-        imageName: this.imageName
-      };
+        // if no input, don't submit
+        if (!this.title.length || !this.description.length) {
+          return;
+        }
 
-      this.$store.commit("updatePost", editedPost);
-      this.returnHome();
-    },
-    deletePost() {
-      this.$store.commit("deletePost", this.post);
-      this.returnHome();
-    },
-    handleImage(imageData) {
-      this.imageName = imageData.imageName;
-      this.imageSrc = imageData.imageSrc;
-    },
-    returnHome() {
-      this.$router.push({ name: "home" });
+        let data = new FormData();
+        data.append('title', this.title);
+        data.append('description', this.description);
+        data.append('files', this.imageData);
+
+        fetch('/api/auctions', {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+            .then(res => {
+              return res.json()
+            })
+            .then(res => {
+              this.$store.commit('addAuction', res)
+            })
+            .catch(e => console.log(e))
+
+        this.$router.push({name: 'home'})
+      },
+      handleImage(imageData) {
+        this.imageData = imageData
+      }
     }
   }
 };
