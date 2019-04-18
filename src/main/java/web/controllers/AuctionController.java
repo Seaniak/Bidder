@@ -32,12 +32,14 @@ public class AuctionController {
     if (auction.getCreateTime() == null)
       auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
 
+    Auction auctionFromDb = auctionService.insertAuction(auction);
+
     for (String image : auction.getImagePaths()) {
-      Image img = new Image(image, false);
+      Image img = new Image(auctionFromDb.getId(), image, false);
       imageService.insertImage(img);
     }
 
-    return auctionService.insertAuction(auction);
+    return auctionFromDb;
   }
 
   @PutMapping("/{id}")

@@ -88,6 +88,7 @@
         let data = {
           title: this.title,
           description: this.description,
+          category: 'default',
           imagePaths: imagePaths
         }
 
@@ -103,6 +104,7 @@
             })
             .then(res => {
               this.$store.commit('addAuction', res)
+              this.$store.commit('filterItems')
             })
             .catch(e => console.log(e))
       },
