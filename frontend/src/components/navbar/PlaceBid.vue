@@ -1,5 +1,5 @@
 <template>
-      <v-btn @click="placeBidClicked" dark flat>Login</v-btn>
+      <v-btn @click="placeBidClicked" dark flat>Placera bud</v-btn>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <v-text-field
           dark
           id="nav-search"
-          label="Search for post"
+          label="Sök efter auktioner"
           v-model="searchInput"
   ></v-text-field>
 </template>

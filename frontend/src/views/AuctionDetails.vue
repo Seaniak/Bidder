@@ -5,7 +5,7 @@
     </figure>
     <h1>{{auction.title}}</h1>
     <p>{{auction.body}}</p>
-    <v-btn
+    <!--<v-btn
             v-if="$store.state.loggedIn"
             fab
             dark
@@ -14,7 +14,7 @@
             medium
             @click="updateAuction">
       <v-icon dark>create</v-icon>
-    </v-btn>
+    </v-btn>-->
   </v-container>
 </template>
 

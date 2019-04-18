@@ -9,7 +9,7 @@
                   mode="out-in"
                   enter-active-class="animated fadeIn"
                   leave-active-class="animated fadeOut">
-            <h3 v-if="$store.state.filteredItems.length === 0" key="no-auctions">No auction found</h3>
+            <h3 v-if="$store.state.filteredItems.length === 0" key="no-auctions">Inga auktioner hittades</h3>
             <Auction v-else v-for="(auction, index) in $store.state.filteredItems"
                      :key="index"
                      :auction="auction"
