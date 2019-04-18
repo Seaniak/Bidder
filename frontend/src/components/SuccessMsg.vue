@@ -15,10 +15,10 @@
 
          <v-card-actions>
             <router-link to="/">
-            <v-btn flat color="orange">Create auction</v-btn>
+            <v-btn flat color="orange">Skapa auktion</v-btn>
             </router-link>
             <router-link to="/about">
-            <v-btn flat color="orange">Browse auctions</v-btn>
+            <v-btn flat color="orange">Bläddra bland auktioner</v-btn>
             </router-link>
          </v-card-actions>
 
@@ -37,7 +37,7 @@
       name: "SuccessMsg.vue",
       data() {
          return {
-            successCardText: 'Welcome to Bidder, we are glad to have you here lorem and so ipsum.'
+            successCardText: 'Välkommen till Bidder, må du buda i lorem ipsum.'
          }
       },
    }

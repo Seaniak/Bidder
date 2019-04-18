@@ -1,6 +1,6 @@
 <template>
    <!-- :class="{ red: !valid, green: valid }" -->
-   <v-btn @click="registerClicked" dark flat>Register</v-btn>
+   <v-btn @click="registerClicked" dark flat>bekräfta registrering</v-btn>
 </template>
 
 <script>

@@ -5,14 +5,14 @@
       <v-text-field
               class="mt-5"
               v-model="username"
-              label="Username"
+              label="Användarnamn"
       ></v-text-field>
       <v-text-field
               v-model="password"
               :append-icon="showPassword ? 'visibility' : 'visibility_off'"
               @click:append="showPassword = !showPassword"
               :type="showPassword ? 'text' : 'password'"
-              label="Password"
+              label="Lösenord"
       ></v-text-field>
     </v-form>
   </v-container>

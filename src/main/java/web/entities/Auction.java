@@ -20,6 +20,8 @@ public class Auction {
 	private Timestamp endTime;
 	private int startSum;
 	private int reservedSum;
+	private String category;
+	private String auctionCondition;
 	@Transient
 	private List<MultipartFile> files;
 
@@ -98,5 +100,21 @@ public class Auction {
 
 	public void setReservedSum(int reservedSum) {
 		this.reservedSum = reservedSum;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getAuctionCondition() {
+		return auctionCondition;
+	}
+
+	public void setAuctionCondition(String auctionCondition) {
+		this.auctionCondition = auctionCondition;
 	}
 }

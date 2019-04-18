@@ -39,7 +39,7 @@
               to="/about"
               flat
       >
-        <span>About</span>
+        <span>Om oss</span>
         <v-icon medium>account_box</v-icon>
       </v-btn>
       <v-btn
@@ -47,7 +47,7 @@
               to="/register"
               flat
       >
-        <span>Register</span>
+        <span>Registera konto</span>
         <v-icon medium>account_box</v-icon>
       </v-btn>
       <v-btn
