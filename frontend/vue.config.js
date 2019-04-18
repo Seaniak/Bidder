@@ -27,6 +27,6 @@ module.exports = {
       }
     }
   },
-  baseUrl: "",
+  publicPath: "",
   outputDir: "../src/main/resources/static"
 };

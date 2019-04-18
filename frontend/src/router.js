@@ -24,12 +24,12 @@ export default new Router({
         import(/* webpackChunkName: "upload" */ "./views/Upload.vue")
     },
     {
-      path: "/auctions/:routeId",
+      path: "/auction-details",
       name: "auctionDetails",
       // enable props to be passed to route
       props: true,
       component: () =>
-        import(/* webpackChunkName: "auctionDetails" */ "./views/AuctionDetails.vue")
+        import(/* webpackChunkName: "postDetails" */ "./views/AuctionDetails.vue")
     },
     {
       path: "/about",
@@ -47,13 +47,13 @@ export default new Router({
       path: "/register",
       name: "register",
       component: () =>
-          import(/* webpackChunkName: "register" */ "./views/Register.vue")
+        import(/* webpackChunkName: "register" */ "./views/Register.vue")
     },
     {
       path: "/register-success",
       name: "registerSuccess",
       component: () =>
-          import(/* webpackChunkName: "registerSuccess" */ "./views/RegistrationSuccess.vue")
-    },
+        import(/* webpackChunkName: "registerSuccess" */ "./views/RegistrationSuccess.vue")
+    }
   ]
 });

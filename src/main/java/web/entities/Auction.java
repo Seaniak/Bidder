@@ -29,6 +29,8 @@ public class Auction {
 		this.imagePaths = imagePaths;
 	}
 
+	private String category;
+	private String auctionCondition;
 	@Transient
 	private String[] imagePaths;
 
@@ -98,5 +100,21 @@ public class Auction {
 
 	public void setReservedSum(int reservedSum) {
 		this.reservedSum = reservedSum;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getAuctionCondition() {
+		return auctionCondition;
+	}
+
+	public void setAuctionCondition(String auctionCondition) {
+		this.auctionCondition = auctionCondition;
 	}
 }
