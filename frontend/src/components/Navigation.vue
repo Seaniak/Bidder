@@ -32,6 +32,7 @@
   import HomeNav from './navbar/HomeNav';
   import LoginNav from './navbar/LoginNav';
   import RegisterNav from'./navbar/RegisterNav';
+  import UploadAuction from "./navbar/UploadAuction";
 
   export default {
     name: "Navigation",
@@ -49,6 +50,9 @@
             break;
           case '/register-success':
             return;
+            break;
+          case '/upload':
+            return UploadAuction;
             break;
           default:
             return HomeNav

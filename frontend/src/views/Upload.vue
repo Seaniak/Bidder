@@ -1,24 +1,53 @@
 <template>
-  <v-container>
+  <v-container column>
     <h1>Skapa auktion</h1>
     <form @submit="handleSubmit">
       <v-text-field
-              label="Title"
+              label="Titel"
               v-model="title"
               class="mt-4"
       ></v-text-field>
       <v-textarea
-              name="Details"
-              label="Details"
+              name="Beskrivning"
+              label="Beskrivning"
               v-model="description"
       ></v-textarea>
+      <v-textarea
+              name="Skick"
+              label="Skick"
+              v-model="itemCondition"
+      ></v-textarea>
+      <v-textarea
+              name="Budstart"
+              label="Budstart"
+              placeholder="0"
+              v-model="startingBid"
+      ></v-textarea>
+      <v-textarea
+              name="Accepterat pris"
+              label="Accepterat pris"
+              placeholder="0"
+              v-model="acceptedBid"
+      ></v-textarea>
+      <v-layout wrap align-center>
+        <v-flex column xs12 sm6 >
+          <v-select
+                  :items="category"
+                  ref="selectedCategory"
+                  label="Kategori"
+          ></v-select>
+        </v-flex>
+      </v-layout>
       <div>
         <div id="postImage">
+        <h4>Lägg till bild</h4>
           <FileUpload @uploadImage="handleImage($event)"/>
         </div>
         <img v-if="imageData" width="60%" :src="imageData" alt="profile picture">
       </div>
+
       <div id="submitBtnDiv">
+      <h4>Lägg upp auktion</h4>
         <v-btn dark fab medium color="teal" id="submitBtn" type="submit">
           <v-icon dark large>add</v-icon>
         </v-btn>
@@ -28,7 +57,8 @@
 </template>
 
 <script>
-  import FileUpload from '@/components/FileUpload'
+  import FileUpload from '@/components/FileUpload';
+  import { eventBus } from "@/main";
 
   export default {
     components: {
@@ -38,23 +68,39 @@
       return {
         imageData: null,
         title: '',
-        description: ''
+        description: '',
+        itemCondition: '',
+        category: ['Fordon', 'Teknik', 'Konst', 'Hus', 'Inredning'],
+        startingTime: new Date(),
+        endingTime: new Date(),
+        startingBid: null,
+        acceptedBid: null
       }
     },
     mounted() {
+        eventBus.$on('uploadAuctionClicked', () => {
+          this.submit();
+        });
     },
     methods: {
       handleSubmit(e) {
-        e.preventDefault()
+        e.preventDefault();
 
         // if no input, don't submit
-        if (!this.title.length || !this.description.length) {
+        if (!this.title.length || !this.description.length || !this.itemCondition.length ||
+                this.category != null || this.startingBid < 0 || this.acceptedBid < this.startingBid) {
           return;
         }
 
         let data = new FormData();
         data.append('title', this.title);
         data.append('description', this.description);
+        data.append('auction_condition', this.itemCondition);
+        data.append('category', this.$refs.selectedCategory.innerText);
+        data.append('start-sum', this.startingBid);
+        data.append('reserved-sum', this.acceptedBid);
+        data.append('create-time', this.startingTime);
+        data.append('end-time', this.endingTime);
         data.append('files', this.imageData);
 
         fetch('/api/auctions', {
@@ -71,7 +117,7 @@
             .then(res => {
               this.$store.commit('addAuction', res)
             })
-            .catch(e => console.log(e))
+            .catch(e => console.log(e));
 
         this.$router.push({name: 'home'})
       },
