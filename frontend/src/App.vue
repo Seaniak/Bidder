@@ -28,8 +28,8 @@
       this.$store.dispatch('getAuctions');
 
       // TODO: check cookie if user already is logged in
-      let response = await fetch('/login');
-      console.log(response)
+      // let response = await fetch('/login');
+      // console.log(response)
     }
   }
 </script>

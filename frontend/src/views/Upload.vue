@@ -16,7 +16,9 @@
         <div id="postImage">
           <FileUpload @uploadImage="handleImage($event)"/>
         </div>
-        <img v-if="imageData" width="60%" :src="imageData" alt="profile picture">
+        <div v-if="previewImages[0]">
+          <img v-for="image of previewImages" width="60%" :src="image" :key="image + 1" alt="profile picture">
+        </div>
       </div>
       <div id="submitBtnDiv">
         <v-btn dark fab medium color="teal" id="submitBtn" type="submit">
@@ -36,15 +38,15 @@
     },
     data() {
       return {
-        imageData: [],
+        previewImages: [],
+        files: [],
         title: '',
         description: ''
       }
     },
-    mounted() {
-    },
+    computed: {},
     methods: {
-      handleSubmit(e) {
+      async handleSubmit(e) {
         e.preventDefault()
 
         // if no input, don't submit
@@ -52,10 +54,21 @@
           return;
         }
 
+        // send all images to server
+        for (let file of this.files) {
+          let fileData = new FormData();
+          fileData.append('file', file)
+
+          let response = await fetch('/api/upload', {
+            method: 'POST',
+            body: fileData
+          })
+          console.log(response.text())
+        }
+
         let data = new FormData();
         data.append('title', this.title);
         data.append('description', this.description);
-        data.append('files', this.imageData);
 
         fetch('/api/auctions', {
           method: 'POST',
@@ -76,7 +89,8 @@
         this.$router.push({name: 'home'})
       },
       handleImage(imageData) {
-        this.imageData = imageData
+        this.previewImages = imageData.previewImages
+        this.files = imageData.files
       }
     }
   }
