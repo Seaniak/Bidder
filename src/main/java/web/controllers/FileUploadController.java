@@ -13,8 +13,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/upload")
 public class FileUploadController {
-  private static String currentWorkingDirectory = System.getProperty("user.dir");
-  private static String uploadDirectory = currentWorkingDirectory + "/src/main/resources/static/uploads/";
+//  private static String currentWorkingDirectory = System.getProperty("user.dir");
+  private static String uploadDirectory = "static/uploads/";
 
   @PostConstruct
   public void createFolderIfMissing() {
