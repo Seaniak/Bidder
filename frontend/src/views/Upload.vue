@@ -1,7 +1,6 @@
 <template>
   <v-container>
-
-    <h1>{{ post ? 'Edit post' : 'Upload Post' }}</h1>
+    <h1>Skapa auktion</h1>
     <form @submit="handleSubmit">
       <v-text-field
               label="Title"
@@ -11,31 +10,22 @@
       <v-textarea
               name="Details"
               label="Details"
-              v-model="info"
+              v-model="description"
       ></v-textarea>
       <div>
         <div id="postImage">
           <FileUpload @uploadImage="handleImage($event)"/>
         </div>
-        <img v-if="imageSrc.length" width="60%" :src="imageSrc" alt="profile picture">
+        <div v-if="previewImages[0]">
+          <img v-for="image of previewImages" width="60%" :src="image" :key="image + 1" alt="profile picture">
+        </div>
       </div>
       <div id="submitBtnDiv">
         <v-btn dark fab medium color="teal" id="submitBtn" type="submit">
-          <v-icon dark large>{{ post ? 'create' : 'add' }}</v-icon>
+          <v-icon dark large>add</v-icon>
         </v-btn>
       </div>
     </form>
-    <v-btn
-            v-if="post"
-            dark
-            fab
-            absolute
-            small
-            color="red"
-            class="remove-btn darken-2"
-            @click="deletePost">
-      <v-icon dark large>remove</v-icon>
-    </v-btn>
   </v-container>
 </template>
 
@@ -46,66 +36,81 @@
     components: {
       FileUpload
     },
-    props: ['post'],
     data() {
       return {
-        imageSrc: '',
-        imageName: '',
+        previewImages: [],
+        files: [],
         title: '',
-        info: ''
+        description: ''
       }
     },
-    mounted() {
-      if (this.post) {
-        this.imageSrc = this.post.image
-        this.title = this.post.title
-        this.info = this.post.body
-      }
-    },
+    computed: {},
     methods: {
-      handleSubmit(e) {
+      async handleSubmit(e) {
         e.preventDefault()
 
-        if (this.post) {
-          this.editPost()
-          return;
-        }
         // if no input, don't submit
-        if (!this.imageSrc.length || !this.title.length || !this.info.length) {
+        if (!this.title.length || !this.description.length) {
           return;
         }
-        this.$store.commit('addPost', {
-          title: this.title,
-          body: this.info,
-          imageData: this.imageSrc,
-          imageName: this.imageName
-        })
-        this.returnHome()
-      },
-      editPost() {
-        console.log(this.post.id)
 
-        let editedPost = {
-          id: this.post.id,
+        let imagePaths = [];
+
+        // send all images to server
+        for (let file of this.files) {
+          let fileData = new FormData();
+          fileData.append('file', file)
+
+          let response = await fetch('/api/upload', {
+            method: 'POST',
+            body: fileData
+          })
+
+          response = await response.text();
+
+          console.log(response)
+          imagePaths.push(response)
+
+          // when all image paths has been received from
+          // the server, a call to post is made
+          if (imagePaths.length === this.files.length) {
+            this.postAuction(imagePaths)
+            this.$router.push({name: 'home'})
+          }
+        }
+      },
+      postAuction(imagePaths) {
+        // let data = new FormData();
+        // data.append('title', this.title);
+        // data.append('description', this.description);
+        // data.append('imagePaths', imagePaths);
+
+        let data = {
           title: this.title,
-          body: this.info,
-          imageData: this.imageSrc,
-          imageName: this.imageName
+          description: this.description,
+          category: 'default',
+          imagePaths: imagePaths
         }
 
-        this.$store.commit('updatePost', editedPost)
-        this.returnHome()
-      },
-      deletePost() {
-        this.$store.commit('deletePost', this.post)
-        this.returnHome()
+        fetch('/api/auctions', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+            .then(res => {
+              return res.json()
+            })
+            .then(res => {
+              this.$store.commit('addAuction', res)
+              this.$store.commit('filterItems')
+            })
+            .catch(e => console.log(e))
       },
       handleImage(imageData) {
-        this.imageName = imageData.imageName
-        this.imageSrc = imageData.imageSrc
-      },
-      returnHome() {
-        this.$router.push({name: 'home'})
+        this.previewImages = imageData.previewImages
+        this.files = imageData.files
       }
     }
   }

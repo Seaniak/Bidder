@@ -1,13 +1,18 @@
 <template>
-  <v-btn dark flat>Log in</v-btn>
+  <v-btn @click="loginClicked" dark flat>Logga in</v-btn>
 </template>
 
 <script>
-  export default {
-    name: "LoginNav"
+import { eventBus } from "@/main";
+
+export default {
+  name: "LoginNav",
+  methods: {
+    loginClicked() {
+      eventBus.$emit("nav-login-clicked");
+    }
   }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

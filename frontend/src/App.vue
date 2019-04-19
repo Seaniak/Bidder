@@ -1,4 +1,5 @@
 <template>
+  <v-app>
   <div id="app">
     <transition
             name="animate-route"
@@ -9,18 +10,26 @@
       <router-view :key="$route.fullPath"/>
     </transition>
     <Navigation/>
+    <NavigationDrawer/>
   </div>
+  </v-app>
 </template>
 
 <script>
   import Navigation from '@/components/Navigation'
+  import NavigationDrawer from '@/components/NavigationDrawer'
 
   export default {
     components: {
-      Navigation
+      Navigation,
+      NavigationDrawer
     },
-    created() {
-      this.$store.dispatch('getPosts');
+    async created() {
+      this.$store.dispatch('getAuctions');
+
+      // TODO: check cookie if user already is logged in
+      // let response = await fetch('/login');
+      // console.log(response)
     }
   }
 </script>

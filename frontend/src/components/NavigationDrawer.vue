@@ -1,45 +1,75 @@
 <template>
   <v-navigation-drawer
-          v-model="drawer"
-          fixed
-          right
-          temporary
+    v-model="$store.state.openNavDrawer"
+    fixed
+    right
+    clipped
+    temporary
   >
     <div class="nav-title my-3">
-      <h2>Navigering</h2>
+      <v-layout row align-center justify-center>
+        <v-btn id="closeDrawer" absolute icon @click.stop="toggleDrawer">
+          <v-icon large>keyboard_arrow_right</v-icon>
+        </v-btn>
+        <h2>Navigering</h2>
+      </v-layout>
     </div>
-    <v-btn
-            id="aboutBtn"
-            to="/about"
-    >
-      <span>About</span>
-      <v-icon medium>account_box</v-icon>
-    </v-btn>
+    <v-layout column>
+      <v-btn v-if="!$store.state.loggedIn" to="/login" flat>
+        <span>Logga in</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn v-else flat @click="logout">
+        <span>Logga ut</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn id="aboutBtn" to="/about" flat>
+        <span>Om oss</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn id="registerBtn" to="/register" flat>
+        <span>Registera konto</span>
+        <v-icon medium>account_box</v-icon>
+      </v-btn>
+      <v-btn v-if="$store.state.loggedIn" to="/upload" flat>
+        <span>Skapa auktion</span>
+        <v-icon dark medium>note_add</v-icon>
+      </v-btn>
+    </v-layout>
   </v-navigation-drawer>
 </template>
 
 <script>
-  export default {
-    name: "NavigationDrawer",
-    props: ['toggleDrawer'],
-    computed: {
-      drawer: {
-        get() {
-          return this.toggleDrawer
-        },
-        set() {
+export default {
+  name: "NavigationDrawer",
+  methods: {
+    toggleDrawer() {
+      this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer;
+    },
+    logout() {
+      fetch("/logout").then(res => {
+        if (res.url.includes("logout")) {
+          this.$store.commit("logoutUser", false);
         }
-      }
+      });
+      this.toggleDrawer();
+      this.$router.push({ name: "home" });
     }
   }
+};
 </script>
 
 <style scoped>
-  .nav-title {
-    border-bottom: solid 1px #333;
-  }
+.nav-title {
+  padding-bottom: 10px;
+  border-bottom: solid 1px #bbb;
+}
 
-  #aboutBtn {
-    color: var(--main-font-color);
-  }
+#closeDrawer {
+  left: 0px;
+}
+
+#aboutBtn {
+  color: var(--main-font-color);
+}
 </style>

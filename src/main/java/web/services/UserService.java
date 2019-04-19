@@ -11,7 +11,7 @@ public class UserService {
   @Autowired
   private UserRepo userRepo;
 
-//  public List<Post> getAllPosts(){
+//  public List<Auction> getAllPosts(){
 //    return postRepo.findAll();
 //  }
 
