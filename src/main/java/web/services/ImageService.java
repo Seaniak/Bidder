@@ -15,6 +15,10 @@ public class ImageService {
   @Autowired
   private ImageRepo imageRepo;
 
+  public List<Image> getAuctionImages(Long auctionId){
+    return imageRepo.getAuctionImages(auctionId);
+  }
+
   public List<Image> getAllImages(){
     return imageRepo.findAll();
   }

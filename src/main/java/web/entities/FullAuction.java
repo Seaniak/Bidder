@@ -1,31 +1,33 @@
 package web.entities;
 
-
-
+import javax.persistence.OneToMany;
 import java.util.List;
 
 public class FullAuction extends Auction {
 
-	private List<Image> images;
-	private List<Bid> bids;
+  @OneToMany
+  private List<Image> images;
+  @OneToMany
+  private List<Bid> bids;
 
-	public FullAuction(){
+  public FullAuction(List<Image> images, List<Bid> bids) {
+    this.images = images;
+    this.bids = bids;
+  }
 
-	}
+  public List<Image> getImages() {
+    return images;
+  }
 
-	public List<Image> getImages() {
-		return images;
-	}
+  public void setImages(List<Image> images) {
+    this.images = images;
+  }
 
-	public void setImages(List<Image> images) {
-		this.images = images;
-	}
+  public List<Bid> getBids() {
+    return bids;
+  }
 
-	public List<Bid> getBids() {
-		return bids;
-	}
-
-	public void setBids(List<Bid> bids) {
-		this.bids = bids;
-	}
+  public void setBids(List<Bid> bids) {
+    this.bids = bids;
+  }
 }

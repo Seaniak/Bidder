@@ -80,11 +80,6 @@
         }
       },
       postAuction(imagePaths) {
-        // let data = new FormData();
-        // data.append('title', this.title);
-        // data.append('description', this.description);
-        // data.append('imagePaths', imagePaths);
-
         let data = {
           title: this.title,
           description: this.description,

@@ -1,10 +1,8 @@
 package web.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Auction {
@@ -22,6 +20,39 @@ public class Auction {
 	private Timestamp endTime;
 	private int startSum;
 	private int reservedSum;
+
+	@Transient
+	private String[] imagePaths;
+
+	@OneToMany
+	private List<Image> images;
+	@OneToMany
+	private List<Bid> bids;
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public List<Bid> getBids() {
+		return bids;
+	}
+
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
+	}
+
+	public String[] getImagePaths() {
+		return imagePaths;
+	}
+
+	public void setImagePaths(String[] imagePaths) {
+		this.imagePaths = imagePaths;
+	}
+
 
 	public Auction(long userId, String title, String description, String category, String condition, Timestamp createTime, Timestamp endTime, int startSum, int reservedSum) {
 		this.userId = userId;

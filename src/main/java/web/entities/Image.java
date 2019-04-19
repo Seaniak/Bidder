@@ -1,60 +1,69 @@
 package web.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 public class Image {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-	private long auctionId;
-	private boolean thumbnail;
-	private String path;
+  private long auctionId;
+  private boolean thumbnail;
+  private String path;
 
-	public Image(){
-	}
+  @ManyToOne
+  @JoinColumn
+  private FullAuction fullAuction;
 
-	public Image(Auction auction, boolean thumbnail, String path) {
-		this.auctionId = auction.getId();
-		this.thumbnail = thumbnail;
-		this.path = path;
-	}
+  public Image() {
+  }
 
-	public long getId() {
-		return id;
-	}
+  public FullAuction getFullAuction() {
+    return fullAuction;
+  }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+  public void setFullAuction(FullAuction fullAuction) {
+    this.fullAuction = fullAuction;
+  }
 
-	public long getAuctionId() {
-		return auctionId;
-	}
+  public Image(Auction auction, boolean thumbnail, String path) {
+    this.auctionId = auction.getId();
+    this.thumbnail = thumbnail;
+    this.path = path;
+  }
 
-	public void setAuctionId(long auctionId) {
-		this.auctionId = auctionId;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public boolean isThumbnail() {
-		return thumbnail;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public void setThumbnail(boolean thumbnail) {
-		this.thumbnail = thumbnail;
-	}
+  public long getAuctionId() {
+    return auctionId;
+  }
 
-	public String getPath() {
-		return path;
-	}
+  public void setAuctionId(long auctionId) {
+    this.auctionId = auctionId;
+  }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+  public boolean isThumbnail() {
+    return thumbnail;
+  }
+
+  public void setThumbnail(boolean thumbnail) {
+    this.thumbnail = thumbnail;
+  }
+
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
+  }
 }
