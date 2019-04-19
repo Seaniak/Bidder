@@ -15,19 +15,19 @@
        <v-textarea
                name="Skick"
                label="Skick"
-               v-model="itemCondition"
+               v-model="auction_condition"
        ></v-textarea>
        <v-textarea
                name="Budstart"
                label="Budstart"
                placeholder="0"
-               v-model="startingBid"
+               v-model="start_sum"
        ></v-textarea>
        <v-textarea
                name="Accepterat pris"
                label="Accepterat pris"
                placeholder="0"
-               v-model="acceptedBid"
+               v-model="reserved_sum"
        ></v-textarea>
        <v-layout wrap align-center>
           <v-flex column xs12 sm6>
@@ -69,12 +69,12 @@
         files: [],
         title: '',
         description: '',
-         itemCondition: '',
+         auction_condition: '',
          category: ['Fordon', 'Teknik', 'Konst', 'Hus', 'Inredning'],
          startingTime: new Date(Date.now()).getTime(),
          endingTime: new Date(Date.now()).getTime(),
-         startingBid: 0,
-         acceptedBid: 0,
+         start_sum: 0,
+         reserved_sum: 0,
          userId: this.$store.state.loggedInUserId
       }
     },
@@ -129,12 +129,12 @@
            title: this.title,
            description: this.description,
            category: this.category[0],
-           auction_condition: this.itemCondition,
-           start_sum: this.startingBid,
-           reserved_sum: this.acceptedBid,
+           auction_condition: this.auction_condition,
+           start_sum: this.start_sum,
+           reserved_sum: this.reserved_sum,
            create_time: this.startingTime,
            end_time: this.endingTime,
-           user_id: this.userId
+           user_id: this.userId,
            imagePaths: imagePaths
         }
 
