@@ -1,8 +1,6 @@
 <template>
    <v-container>
-   <v-btn @click="uploadAuctionBtnClicked" dark fab medium color="teal" id="submitBtn" type="submit">
-      <v-icon dark large>add</v-icon>
-   </v-btn>
+      <v-btn @click="uploadAuctionBtnClicked" dark flat>skapa auktion</v-btn>
    </v-container>
 </template>
 
