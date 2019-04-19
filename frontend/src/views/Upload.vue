@@ -15,19 +15,19 @@
        <v-textarea
                name="Skick"
                label="Skick"
-               v-model="auction_condition"
+               v-model="auctionCondition"
        ></v-textarea>
        <v-textarea
                name="Budstart"
                label="Budstart"
                placeholder="0"
-               v-model="start_sum"
+               v-model="startSum"
        ></v-textarea>
        <v-textarea
                name="Accepterat pris"
                label="Accepterat pris"
                placeholder="0"
-               v-model="reserved_sum"
+               v-model="reservedSum"
        ></v-textarea>
        <v-layout wrap align-center>
           <v-flex column xs12 sm6>
@@ -69,13 +69,12 @@
         files: [],
         title: '',
         description: '',
-         auction_condition: '',
+         auctionCondition: '',
          category: ['Fordon', 'Teknik', 'Konst', 'Hus', 'Inredning'],
-         startingTime: new Date(Date.now()).getTime(),
-         endingTime: new Date(Date.now()).getTime(),
-         start_sum: 0,
-         reserved_sum: 0,
-         userId: this.$store.state.loggedInUserId
+         createTime: new Date(Date.now()).getTime(),
+         endTime: new Date(Date.now()).getTime(),
+         startSum: 0,
+         reservedSum: 0
       }
     },
     computed: {},
@@ -87,6 +86,7 @@
      },
     methods: {
       async handleSubmit(e) {
+         if (e !== undefined)
         e.preventDefault()
 
         // if no input, don't submit
@@ -129,14 +129,13 @@
            title: this.title,
            description: this.description,
            category: this.category[0],
-           auction_condition: this.auction_condition,
-           start_sum: this.start_sum,
-           reserved_sum: this.reserved_sum,
-           create_time: this.startingTime,
-           end_time: this.endingTime,
-           user_id: this.userId,
+           auctionCondition: this.auctionCondition,
+           startSum: this.startSum,
+           reservedSum: this.reservedSum,
+           create_time: this.createTime,
+           end_time: this.endTime,
            imagePaths: imagePaths
-        }
+        };
 
         fetch('/api/auctions', {
           method: 'POST',

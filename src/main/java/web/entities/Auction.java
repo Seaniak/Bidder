@@ -6,9 +6,8 @@ import java.sql.Timestamp;
 @Entity
 public class Auction {
 
-	public Auction(long userId, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+	public Auction(String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
 				   int reservedSum, String category, String auctionCondition) {
-		this.userId = userId;
 		this.title = title;
 		this.description = description;
 		this.createTime = createTime;
@@ -23,7 +22,6 @@ public class Auction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private long userId;
 	private String title;
 	private String description;
 	private Timestamp createTime;
@@ -54,14 +52,6 @@ public class Auction {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
 	}
 
 	public String getTitle() {
