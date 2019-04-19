@@ -33,19 +33,19 @@ public class Auction {
 	private Timestamp endTime;
 	private int startSum;
 	private int reservedSum;
+
+	public String[] getImagePaths() {
+		return imagePaths;
+	}
+
+	public void setImagePaths(String[] imagePaths) {
+		this.imagePaths = imagePaths;
+	}
+
 	private String category;
 	private String auctionCondition;
 	@Transient
-	private List<MultipartFile> files;
-
-	public List<MultipartFile> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<MultipartFile> files) {
-		this.files = files;
-	}
-
+	private String[] imagePaths;
 
 	public Auction(){
 

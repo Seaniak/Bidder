@@ -1,14 +1,7 @@
 <template>
   <nav id="bottom-nav">
-    <v-btn
-            to="/"
-            icon
-            :active-class="null"
-    >
-      <v-icon
-              color="white"
-              large>keyboard_arrow_left
-      </v-icon>
+    <v-btn to="/" icon :active-class="null">
+      <v-icon color="white" large>keyboard_arrow_left </v-icon>
     </v-btn>
 
     <div>
@@ -16,14 +9,11 @@
     </div>
 
     <v-btn
-            icon
-            id="toggleDrawer"
-            @click.stop="$store.state.openNavDrawer = !$store.state.openNavDrawer"
+      icon
+      id="toggleDrawer"
+      @click.stop="$store.state.openNavDrawer = !$store.state.openNavDrawer"
     >
-      <v-icon
-              color="white"
-              medium>menu
-      </v-icon>
+      <v-icon color="white" medium>menu </v-icon>
     </v-btn>
   </nav>
 </template>
@@ -61,18 +51,18 @@
       }
     }
   }
+};
 </script>
 
 <style scoped>
-  #bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    width: 100vw;
-    position: fixed;
-    bottom: 0;
-    height: 10vh;
-    border-top: solid 1px #7c7e70;
-    background-color: teal;
-  }
-
+#bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  height: 10vh;
+  border-top: solid 1px #7c7e70;
+  background-color: teal;
+}
 </style>

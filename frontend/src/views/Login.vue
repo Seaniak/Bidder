@@ -3,68 +3,67 @@
     <h1>Log in</h1>
     <v-form @submit="logIn">
       <v-text-field
-              class="mt-5"
-              v-model="username"
-              label="Användarnamn"
+        class="mt-5"
+        v-model="username"
+        label="Användarnamn"
       ></v-text-field>
       <v-text-field
-              v-model="password"
-              :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-              @click:append="showPassword = !showPassword"
-              :type="showPassword ? 'text' : 'password'"
-              label="Lösenord"
+        v-model="password"
+        :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+        @click:append="showPassword = !showPassword"
+        :type="showPassword ? 'text' : 'password'"
+        label="Lösenord"
       ></v-text-field>
     </v-form>
   </v-container>
 </template>
 
 <script>
-  import {eventBus} from "@/main";
+import { eventBus } from "@/main";
 
-  export default {
-    name: "login",
-    data() {
-      return {
-        username: '',
-        password: '',
-        showPassword: false
-      }
-    },
-    created() {
-      eventBus.$on('nav-login-clicked', () => this.logIn())
-    },
-    methods: {
-      logIn(e) {
-        if (e !== undefined) e.preventDefault()
-        this.$router.push({name: 'home'})
+export default {
+  name: "login",
+  data() {
+    return {
+      username: "",
+      password: "",
+      showPassword: false
+    };
+  },
+  created() {
+    eventBus.$on("nav-login-clicked", () => this.logIn());
+  },
+  methods: {
+    logIn(e) {
+      if (e !== undefined) e.preventDefault();
+      this.$router.push({ name: "home" });
 
-        let user = {
-          username: this.username,
-          password: this.password
+      let user = {
+        username: this.username,
+        password: this.password
+      };
+
+      const transformRequest = (jsonData = {}) =>
+        Object.entries(jsonData)
+          .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+          .join("&");
+
+      fetch("/login", {
+        method: "POST",
+        body: transformRequest({
+          username: user.username,
+          password: user.password
+        }),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
         }
-
-        const transformRequest = (jsonData = {}) =>
-            Object.entries(jsonData)
-                .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
-                .join('&');
-
-        fetch('/login', {
-          method: "POST",
-          body: transformRequest({username: user.username, password: user.password, userId: user.id}),
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-            .then(res => {
-              let successfulLogin = !res.url.includes("error");
-              this.$store.commit('loginUser', successfulLogin);
-              this.$store.commit('setLoggedInUserId', this.userId)
-            });
-      }
+      }).then(res => {
+        let successfulLogin = !res.url.includes("error");
+        this.$store.commit("loginUser", successfulLogin);
+      });
     }
   }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

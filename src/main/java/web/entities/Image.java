@@ -9,47 +9,53 @@ import java.sql.Timestamp;
 @Entity
 public class Image {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-	private long acutionId;
-	private boolean thumbnail;
-	private String path;
+  private long auctionId;
+  private boolean thumbnail;
+  private String path;
 
-	public Image(){
+  public Image() {
 
-	}
+  }
 
-	public long getId() {
-		return id;
-	}
+  public Image(long auctionId, String path, boolean thumbnail) {
+    this.auctionId = auctionId;
+    this.thumbnail = thumbnail;
+    this.path = path;
+  }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public long getAcutionId() {
-		return acutionId;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public void setAcutionId(long acutionId) {
-		this.acutionId = acutionId;
-	}
+  public long getAuctionId() {
+    return auctionId;
+  }
 
-	public boolean isThumbnail() {
-		return thumbnail;
-	}
+  public void setAuctionId(long auctionId) {
+    this.auctionId = auctionId;
+  }
 
-	public void setThumbnail(boolean thumbnail) {
-		this.thumbnail = thumbnail;
-	}
+  public boolean isThumbnail() {
+    return thumbnail;
+  }
 
-	public String getPath() {
-		return path;
-	}
+  public void setThumbnail(boolean thumbnail) {
+    this.thumbnail = thumbnail;
+  }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
+  }
 }
