@@ -16,7 +16,7 @@ public class ImageService {
   private ImageRepo imageRepo;
 
   public List<Image> getAuctionImages(Long auctionId){
-    return imageRepo.getAuctionImages(auctionId);
+    return imageRepo.findAllByAuctionId(auctionId);
   }
 
   public List<Image> getAllImages(){

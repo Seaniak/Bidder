@@ -14,20 +14,8 @@ public class Bid {
   private long userId;
   private int sum;
 
-  @ManyToOne
-  @JoinColumn
-  private FullAuction fullAuction;
-
   public Bid() {
 
-  }
-
-  public FullAuction getFullAuction() {
-    return fullAuction;
-  }
-
-  public void setFullAuction(FullAuction fullAuction) {
-    this.fullAuction = fullAuction;
   }
 
   public long getId() {

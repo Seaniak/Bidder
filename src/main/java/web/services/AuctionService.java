@@ -13,6 +13,8 @@ public class AuctionService {
   @Autowired
   private AuctionRepo auctionRepo;
 
+  public Auction getAuctionById(Long id) { return auctionRepo.getAuctionById(id); }
+
   public List<Auction> getAllAuctions(){
     return auctionRepo.findAll();
   }

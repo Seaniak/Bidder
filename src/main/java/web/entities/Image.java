@@ -14,19 +14,7 @@ public class Image {
   private boolean thumbnail;
   private String path;
 
-  @ManyToOne
-  @JoinColumn
-  private FullAuction fullAuction;
-
   public Image() {
-  }
-
-  public FullAuction getFullAuction() {
-    return fullAuction;
-  }
-
-  public void setFullAuction(FullAuction fullAuction) {
-    this.fullAuction = fullAuction;
   }
 
   public Image(Auction auction, boolean thumbnail, String path) {
