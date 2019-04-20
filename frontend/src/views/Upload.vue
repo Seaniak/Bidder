@@ -142,7 +142,6 @@
                startSum: this.startSum,
                reservedSum: this.reservedSum,
                create_time: this.createTime,
-/*               end_time: this.convertDateToSql(Date.parse(this.endTime)),*/
                end_time: this.endTime,
                imagePaths: imagePaths
             };
