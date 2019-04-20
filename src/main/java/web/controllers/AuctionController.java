@@ -1,7 +1,5 @@
 package web.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import web.entities.Auction;
@@ -30,9 +28,11 @@ public class AuctionController {
   @PostMapping
   public Auction publishAuction(@RequestBody Auction auction) {
     if (auction.getCreateTime() == null)
-/*      auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));*/
-      auction.setCreateTime(Timestamp.valueOf(String.valueOf(auction.getCreateTime())));
-      auction.setEndTime(Timestamp.valueOf(String.valueOf(auction.getEndTime())));
+      auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+/*      auction.setCreateTime(Timestamp.valueOf(String.valueOf(auction.getCreateTime())));
+      auction.setEndTime(Timestamp.valueOf(String.valueOf(auction.getEndTime())));*/
+/*      auction.setEndTime(Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(auction.getEndTime())));*/
+
 
     Auction auctionFromDb = auctionService.insertAuction(auction);
 
