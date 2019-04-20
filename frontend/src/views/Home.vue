@@ -1,64 +1,45 @@
 <template>
-  <div class="home">
-    <v-container>
-      <v-layout>
-        <v-flex xs12 sm6 md6 class="ml-auto mr-auto">
-          <h1>Bidder</h1>
-          <transition-group
-            name="animate-route"
-            mode="out-in"
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-          >
+   <div class="container row">
+         <h1 class="col-12 mb-3">Bidder</h1>
             <h3
-              v-if="$store.state.filteredItems.length === 0"
-              key="no-auctions"
+                    v-if="$store.state.filteredItems.length === 0"
+                    key="no-auctions"
             >
-              Inga auktioner hittades
+               Inga auktioner hittades
             </h3>
-            <Auction
-              v-else
-              v-for="(auction, index) in $store.state.filteredItems"
-              :key="index + 0"
-              :auction="auction"
+            <Auction class="col-xs-6 col-md-6"
+                     v-else
+                     v-for="(auction, index) in $store.state.filteredItems"
+                     :key="index + 0"
+                     :auction="auction"
             />
-          </transition-group>
-          <v-btn
-            id="upArrow"
-            dark
-            fab
-            color="teal"
-            medium
-            @click="$vuetify.goTo(0)"
-          >
-            <v-icon dark large>keyboard_arrow_up</v-icon>
-          </v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+      </div>
 </template>
+<!--
+<transition-group
+                  name="animate-route"
+                  mode="out-in"
+                  enter-active-class="animated fadeIn"
+                  leave-active-class="animated fadeOut"
+>
+</transition-group>
+-->
+
 
 <script>
-// @ is an alias to /src
-import Auction from "@/components/AuctionCard.vue";
+   // @ is an alias to /src
+   import Auction from "@/components/AuctionCard.vue";
 
-export default {
-  name: "home",
-  components: {
-    Auction
-  }
-};
+   export default {
+      name: "home",
+      components: {
+         Auction
+      }
+   };
 </script>
 
 <style scoped>
-#upArrow {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-}
-
-h3 {
-  animation-duration: 100ms;
-}
+   h3 {
+      animation-duration: 100ms;
+   }
 </style>
