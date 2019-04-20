@@ -6,13 +6,21 @@
 //import { eventBus } from "@/main";
 
 export default {
-  name: "PlaceBid.vue",
+  name: "PlaceBid",
   methods: {
     placeBidClicked() {
       // eventBus.$emit('nav-placebid-clicked')
     }
   }
 };
+   export default {
+      name: "PlaceBid",
+      methods: {
+         placeBidClicked() {
+            // eventBus.$emit('nav-placebid-clicked')
+         }
+      }
+   }
 </script>
 
 <style scoped></style>

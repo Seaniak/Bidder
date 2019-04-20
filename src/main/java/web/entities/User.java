@@ -22,7 +22,8 @@ public class User {
   public User() {
   }
 
-  public User(String username, String password, String email, String name, String surname) {
+  public User(long id, String username, String password, String email, String name, String surname) {
+    this.id = id;
     this.username = username;
     this.password = password;
     this.email = email;
@@ -75,4 +76,6 @@ public class User {
   public void setSurname(String surname) {
     this.surname = surname;
   }
+
+
 }

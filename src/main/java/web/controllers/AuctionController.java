@@ -66,6 +66,10 @@ public class AuctionController {
   public Auction publishAuction(@RequestBody Auction auction) {
     if (auction.getCreateTime() == null)
       auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+/*      auction.setCreateTime(Timestamp.valueOf(String.valueOf(auction.getCreateTime())));
+      auction.setEndTime(Timestamp.valueOf(String.valueOf(auction.getEndTime())));*/
+/*      auction.setEndTime(Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(auction.getEndTime())));*/
+
 
     Auction auctionFromDb = auctionService.insertAuction(auction);
 

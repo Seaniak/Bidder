@@ -1,21 +1,27 @@
 package web.entities;
 
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
-
 import javax.persistence.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-public class Auction implements Serializable {
+public class Auction {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+	public Auction(String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+				   int reservedSum, String category, String auctionCondition) {
+		this.title = title;
+		this.description = description;
+		this.createTime = createTime;
+		this.endTime = endTime;
+		this.startSum = startSum;
+		this.reservedSum = reservedSum;
+		this.category = category;
+		this.auctionCondition = auctionCondition;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
   private long userId;
   private String title;
@@ -105,55 +111,57 @@ public class Auction implements Serializable {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	public void setDescription(String description) {
+		this.description= description;
+	}
 
-  public String getCategory() {
-    return category;
-  }
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
 
-  public void setCategory(String category) {
-    this.category = category;
-  }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-  public String getAuctionCondition() {
-    return auctionCondition;
-  }
+	public Timestamp getEndTime() {
+		return endTime;
+	}
 
-  public void setAuctionCondition(String auctionCondition) {
-    this.auctionCondition = auctionCondition;
-  }
+	public void setEndTime(Timestamp endTime) {
+		this.endTime = endTime;
+	}
 
-  public Timestamp getCreateTime() {
-    return createTime;
-  }
+	public int getStartSum() {
+		return startSum;
+	}
 
-  public void setCreateTime(Timestamp createTime) {
-    this.createTime = createTime;
-  }
+	public void setStartSum(int startSum) {
+		this.startSum = startSum;
+	}
 
-  public Timestamp getEndTime() {
-    return endTime;
-  }
+	public int getReservedSum() {
+		return reservedSum;
+	}
 
-  public void setEndTime(Timestamp endTime) {
-    this.endTime = endTime;
-  }
+	public void setReservedSum(int reservedSum) {
+		this.reservedSum = reservedSum;
+	}
 
-  public int getStartSum() {
-    return startSum;
-  }
+	public String getCategory() {
+		return category;
+	}
 
-  public void setStartSum(int startSum) {
-    this.startSum = startSum;
-  }
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
-  public int getReservedSum() {
-    return reservedSum;
-  }
+	public String getAuctionCondition() {
+		return auctionCondition;
+	}
 
-  public void setReservedSum(int reservedSum) {
-    this.reservedSum = reservedSum;
-  }
+	public void setAuctionCondition(String auctionCondition) {
+		this.auctionCondition = auctionCondition;
+	}
+
+
 }

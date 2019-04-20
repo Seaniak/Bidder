@@ -19,29 +19,38 @@
 </template>
 
 <script>
-import HomeNav from "./navbar/HomeNav";
-import LoginNav from "./navbar/LoginNav";
-import RegisterNav from "./navbar/RegisterNav";
+  import HomeNav from './navbar/HomeNav';
+  import LoginNav from './navbar/LoginNav';
+  import RegisterNav from'./navbar/RegisterNav';
+  import UploadAuction from "./navbar/UploadAuctionNav";
+  import GoToLoginPageNav from "./navbar/GoToLoginPageNav";
 
-export default {
-  name: "Navigation",
-  computed: {
-    currentNavigation() {
-      switch (this.$route.path) {
-        case "/":
-          return HomeNav;
-        case "/login":
-          return LoginNav;
-        case "/register":
-          return RegisterNav;
-        case "/register-success":
-          return;
-        default:
-          return HomeNav;
+  export default {
+    name: "Navigation",
+    computed: {
+      currentNavigation() {
+        switch (this.$route.path) {
+          case '/':
+            return HomeNav;
+            break;
+          case '/login':
+            return LoginNav;
+            break;
+          case '/register':
+            return RegisterNav;
+            break;
+          case '/register-success':
+            return GoToLoginPageNav;
+            break;
+          case '/upload':
+            return UploadAuction;
+            break;
+          default:
+            return HomeNav
+        }
       }
     }
   }
-};
 </script>
 
 <style scoped>
