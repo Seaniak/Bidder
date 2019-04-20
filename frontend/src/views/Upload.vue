@@ -91,6 +91,9 @@
          });
       },
       methods: {
+        /* convertDateToSql(milliseconds) {
+            return new Date(milliseconds).toISOString().slice(0, 19) + '000+0000';
+         },*/
          async handleSubmit(e) {
             if (e !== undefined)
                e.preventDefault()
@@ -139,6 +142,7 @@
                startSum: this.startSum,
                reservedSum: this.reservedSum,
                create_time: this.createTime,
+/*               end_time: this.convertDateToSql(Date.parse(this.endTime)),*/
                end_time: this.endTime,
                imagePaths: imagePaths
             };

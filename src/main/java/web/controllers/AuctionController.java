@@ -30,7 +30,9 @@ public class AuctionController {
   @PostMapping
   public Auction publishAuction(@RequestBody Auction auction) {
     if (auction.getCreateTime() == null)
-      auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+/*      auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));*/
+      auction.setCreateTime(Timestamp.valueOf(String.valueOf(auction.getCreateTime())));
+      auction.setEndTime(Timestamp.valueOf(String.valueOf(auction.getEndTime())));
 
     Auction auctionFromDb = auctionService.insertAuction(auction);
 
