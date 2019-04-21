@@ -24,12 +24,10 @@ export default new Router({
         import(/* webpackChunkName: "upload" */ "./views/Upload.vue")
     },
     {
-      path: "/auction-details",
+      path: "/auction/:id",
       name: "auctionDetails",
-      // enable props to be passed to route
-      props: true,
       component: () =>
-        import(/* webpackChunkName: "postDetails" */ "./views/AuctionDetails.vue")
+        import(/* webpackChunkName: "auctionDetails" */ "./views/AuctionDetails.vue")
     },
     {
       path: "/about",

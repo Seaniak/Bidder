@@ -23,7 +23,6 @@
    </div>
 </template>
 
-
 <script>
    // @ is an alias to /src
    import Auction from "@/components/AuctionCard.vue";

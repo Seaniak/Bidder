@@ -1,9 +1,6 @@
 package web.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -18,11 +15,10 @@ public class Image {
   private String path;
 
   public Image() {
-
   }
 
-  public Image(long auctionId, String path, boolean thumbnail) {
-    this.auctionId = auctionId;
+  public Image(Auction auction, boolean thumbnail, String path) {
+    this.auctionId = auction.getId();
     this.thumbnail = thumbnail;
     this.path = path;
   }

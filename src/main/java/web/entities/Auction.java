@@ -2,69 +2,102 @@ package web.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Auction {
 
-	public Auction(String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
-				   int reservedSum, String category, String auctionCondition) {
-		this.title = title;
-		this.description = description;
-		this.createTime = createTime;
-		this.endTime = endTime;
-		this.startSum = startSum;
-		this.reservedSum = reservedSum;
-		this.category = category;
-		this.auctionCondition = auctionCondition;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	private String title;
-	private String description;
-	private Timestamp createTime;
-	private Timestamp endTime;
-	private int startSum;
-	private int reservedSum;
+  private long userId;
+  private String title;
+  private String description;
+  private String category;
+  private String auctionCondition;
+  private Timestamp createTime;
+  private Timestamp endTime;
+  private int startSum;
+  private int reservedSum;
 
-	public String[] getImagePaths() {
-		return imagePaths;
-	}
+  @Transient
+  private String[] imagePaths;
 
-	public void setImagePaths(String[] imagePaths) {
-		this.imagePaths = imagePaths;
-	}
+  @Transient
+  private List<String> images;
+  @Transient
+  private List<Bid> bids;
 
-	private String category;
-	private String auctionCondition;
-	@Transient
-	private String[] imagePaths;
+  public List<String> getImages() {
+    return images;
+  }
 
-	public Auction(){
+  public void setImages(List<String> images) {
+    this.images = images;
+  }
 
-	}
+  public Auction(long userId, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+                 int reservedSum, String category, String auctionCondition) {
+    this.userId = userId;
+    this.title = title;
+    this.description = description;
+    this.createTime = createTime;
+    this.endTime = endTime;
+    this.startSum = startSum;
+    this.reservedSum = reservedSum;
+    this.category = category;
+    this.auctionCondition = auctionCondition;
+  }
 
-	public long getId() {
-		return id;
-	}
+  public Auction() {
 
-	public void setId(long id) {
-		this.id = id;
-	}
+  }
 
-	public String getTitle() {
-		return title;
-	}
+  public List<Bid> getBids() {
+    return bids;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  public void setBids(List<Bid> bids) {
+    this.bids = bids;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public String[] getImagePaths() {
+    return imagePaths;
+  }
+
+  public void setImagePaths(String[] imagePaths) {
+    this.imagePaths = imagePaths;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(long userId) {
+    this.userId = userId;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
 
 	public void setDescription(String description) {
 		this.description= description;

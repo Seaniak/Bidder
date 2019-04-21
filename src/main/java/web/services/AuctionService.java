@@ -13,8 +13,13 @@ public class AuctionService {
   @Autowired
   private AuctionRepo auctionRepo;
 
+  @Autowired
+  private ImageService imageService;
+
+  public Auction getAuctionById(Long id) { return auctionRepo.getAuctionById(id); }
+
   public List<Auction> getAllAuctions(){
-    return auctionRepo.findAll();
+       return auctionRepo.findAll();
   }
 
   public Auction insertAuction(Auction auction){

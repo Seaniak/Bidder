@@ -1,44 +1,38 @@
 <template>
   <v-container>
     <figure>
-      <img width="100%" :src="auction.imageData" alt="thumbnail" />
+      <img width="100%" src="" alt="thumbnail" />
     </figure>
     <h1>{{ auction.title }}</h1>
-    <h1>{{ auction.title }}</h1>
 
-    <p>{{ auction.body }}</p>
-    <!--<v-btn
-            v-if="$store.state.loggedIn"
-            fab
-            dark
-            color="teal"
-            fixed
-            medium
-            @click="updateAuction">
-      <v-icon dark>create</v-icon>
-    </v-btn>-->
+    <p>{{ auction.description }}</p>
   </v-container>
 </template>
 
 <script>
 export default {
   name: "AuctionDetails",
-  props: ["auction"],
-  methods: {
-    updateAuction() {
-      this.$router.push({
-        name: "upload",
-        params: { auction: this.auction }
-      });
+  data(){
+    return{
+      auction: {
+        title: 'title',
+        description: 'description lorem blabla'
+      }
     }
+  },
+  methods: {
+
+  },
+  async created(){
+    let auction = await fetch('/api/auctions/' + this.$route.params.id)
+    auction = await auction.json()
+
+    this.auction = auction;
+
+    console.log(this.auction)
   }
 };
 </script>
 
 <style scoped>
-button {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-}
 </style>
