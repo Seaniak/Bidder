@@ -13,10 +13,17 @@ public class AuctionService {
   @Autowired
   private AuctionRepo auctionRepo;
 
+  @Autowired
+  private ImageService imageService;
+
   public Auction getAuctionById(Long id) { return auctionRepo.getAuctionById(id); }
 
   public List<Auction> getAllAuctions(){
-    return auctionRepo.findAll();
+    List<Auction> auctions = auctionRepo.findAll();
+    for(Auction auction : auctions){
+      auction.setImages(imageService.getAuctionImagePaths(auction.getId()));
+    }
+    return auctions;
   }
 
   public Auction insertAuction(Auction auction){

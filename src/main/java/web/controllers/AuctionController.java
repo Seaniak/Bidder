@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 import web.entities.Auction;
+import web.entities.Bid;
 import web.entities.Image;
 import web.services.AuctionService;
+import web.services.BidService;
 import web.services.ImageService;
 
 import java.io.File;
@@ -23,9 +25,10 @@ public class AuctionController {
 
   @Autowired
   private AuctionService auctionService;
-
   @Autowired
   private ImageService imageService;
+  @Autowired
+  private BidService bidService;
 
   @GetMapping
   public Iterable<Auction> auctions() {
@@ -35,31 +38,47 @@ public class AuctionController {
   @GetMapping("/{id}")
   public Auction getOneAuction(@PathVariable Long id) {
     Auction auction = auctionService.getAuctionById(id);
+    if (auction == null) return null;
+    List<Bid> bids = bidService.getAuctionBids(auction.getId());
+    auction.setBids(bids);
 
-    List<Image> images = imageService.getAuctionImages(id);
+//    List<String> images = imageService.getAuctionImagePaths(id);
+//    List<String> imagePaths = new ArrayList<>();
 
-    List<String> imageFiles = new ArrayList<>();
-
-    for (Image image : images) {
-
-      File img = null;
-      try {
-        img = new ClassPathResource(image.getPath()).getFile();
-
-        String encodedImage = Base64.getEncoder()
-                .withoutPadding()
-                .encodeToString(Files.readAllBytes(img.toPath()));
-
-        imageFiles.add(encodedImage);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-
-    auction.setImages(imageFiles);
-    auction.setBids(new ArrayList<>());
+//    if (images.size() > 0) {
+//      for (Image image : images) {
+//        imagePaths.add(image.getPath());
+//      }
+//    }
+//    auction.setImages(imagePaths);
 
     return auction;
+  }
+
+  private void getImagesAsBase64(List<Image> images) {
+    List<String> imageFiles = new ArrayList<>();
+
+    if (images.size() > 0) {
+      for (Image image : images) {
+        File fileExists = new File(image.getPath());
+
+        if (!fileExists.exists()) continue;
+
+        File img = null;
+        try {
+
+          img = new ClassPathResource(image.getPath()).getFile();
+
+          String encodedImage = Base64.getEncoder()
+                  .withoutPadding()
+                  .encodeToString(Files.readAllBytes(img.toPath()));
+
+          imageFiles.add(encodedImage);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   @PostMapping
@@ -68,7 +87,7 @@ public class AuctionController {
       auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
 /*      auction.setCreateTime(Timestamp.valueOf(String.valueOf(auction.getCreateTime())));
       auction.setEndTime(Timestamp.valueOf(String.valueOf(auction.getEndTime())));*/
-/*      auction.setEndTime(Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(auction.getEndTime())));*/
+    /*      auction.setEndTime(Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(auction.getEndTime())));*/
 
 
     Auction auctionFromDb = auctionService.insertAuction(auction);

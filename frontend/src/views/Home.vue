@@ -5,31 +5,31 @@
         <v-flex xs12 sm6 md6 class="ml-auto mr-auto">
           <h1>Bidder</h1>
           <transition-group
-            name="animate-route"
-            mode="out-in"
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
+                  name="animate-route"
+                  mode="out-in"
+                  enter-active-class="animated fadeIn"
+                  leave-active-class="animated fadeOut"
           >
             <h3
-              v-if="$store.state.filteredItems.length === 0"
-              key="no-auctions"
+                    v-if="$store.state.filteredItems.length === 0"
+                    key="no-auctions"
             >
               Inga auktioner hittades
             </h3>
             <Auction
-              v-else
-              v-for="(auction, index) in $store.state.filteredItems"
-              :key="index + 0"
-              :auction="auction"
+                    v-else
+                    v-for="(auction, index) in $store.state.filteredItems"
+                    :key="index + 0"
+                    :auction="auction"
             />
           </transition-group>
           <v-btn
-            id="upArrow"
-            dark
-            fab
-            color="teal"
-            medium
-            @click="$vuetify.goTo(0)"
+                  id="upArrow"
+                  dark
+                  fab
+                  color="teal"
+                  medium
+                  @click="$vuetify.goTo(0)"
           >
             <v-icon dark large>keyboard_arrow_up</v-icon>
           </v-btn>
@@ -40,25 +40,25 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Auction from "@/components/AuctionCard.vue";
+  // @ is an alias to /src
+  import Auction from "@/components/AuctionCard.vue";
 
-export default {
-  name: "home",
-  components: {
-    Auction
-  }
-};
+  export default {
+    name: "home",
+    components: {
+      Auction
+    }
+  };
 </script>
 
 <style scoped>
-#upArrow {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-}
+  #upArrow {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+  }
 
-h3 {
-  animation-duration: 100ms;
-}
+  h3 {
+    animation-duration: 100ms;
+  }
 </style>

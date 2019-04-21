@@ -10,12 +10,29 @@ public class Bid {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
+  private long auctionId;
   private Timestamp time;
-  private long userId;
+  private String username;
   private int sum;
 
   public Bid() {
 
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public long getAuctionId() {
+    return auctionId;
+  }
+
+  public void setAuctionId(long auctionId) {
+    this.auctionId = auctionId;
   }
 
   public long getId() {
@@ -32,14 +49,6 @@ public class Bid {
 
   public void setTime(Timestamp time) {
     this.time = time;
-  }
-
-  public long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(long userId) {
-    this.userId = userId;
   }
 
   public int getSum() {

@@ -7,17 +7,6 @@ import java.util.List;
 @Entity
 public class Auction {
 
-	public Auction(String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
-				   int reservedSum, String category, String auctionCondition) {
-		this.title = title;
-		this.description = description;
-		this.createTime = createTime;
-		this.endTime = endTime;
-		this.startSum = startSum;
-		this.reservedSum = reservedSum;
-		this.category = category;
-		this.auctionCondition = auctionCondition;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +25,9 @@ public class Auction {
   @Transient
   private String[] imagePaths;
 
-  //  @OneToMany
-//	private List<Image> images;
   @Transient
   private List<String> images;
-  @OneToMany
+  @Transient
   private List<Bid> bids;
 
   public List<String> getImages() {
@@ -51,16 +38,17 @@ public class Auction {
     this.images = images;
   }
 
-  public Auction(long userId, String title, String description, String category, String auctionCondition, Timestamp createTime, Timestamp endTime, int startSum, int reservedSum) {
+  public Auction(long userId, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+                 int reservedSum, String category, String auctionCondition) {
     this.userId = userId;
     this.title = title;
     this.description = description;
-    this.category = category;
-    this.auctionCondition = auctionCondition;
     this.createTime = createTime;
     this.endTime = endTime;
     this.startSum = startSum;
     this.reservedSum = reservedSum;
+    this.category = category;
+    this.auctionCondition = auctionCondition;
   }
 
   public Auction() {
