@@ -42,15 +42,8 @@ public class AuctionController {
     List<Bid> bids = bidService.getAuctionBids(auction.getId());
     auction.setBids(bids);
 
-//    List<String> images = imageService.getAuctionImagePaths(id);
-//    List<String> imagePaths = new ArrayList<>();
-
-//    if (images.size() > 0) {
-//      for (Image image : images) {
-//        imagePaths.add(image.getPath());
-//      }
-//    }
-//    auction.setImages(imagePaths);
+    List<String> images = imageService.getAuctionImagePaths(id);
+    auction.setImages(images);
 
     return auction;
   }

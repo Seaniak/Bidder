@@ -19,11 +19,7 @@ public class AuctionService {
   public Auction getAuctionById(Long id) { return auctionRepo.getAuctionById(id); }
 
   public List<Auction> getAllAuctions(){
-    List<Auction> auctions = auctionRepo.findAll();
-    for(Auction auction : auctions){
-      auction.setImages(imageService.getAuctionImagePaths(auction.getId()));
-    }
-    return auctions;
+       return auctionRepo.findAll();
   }
 
   public Auction insertAuction(Auction auction){

@@ -11,4 +11,9 @@ public class RedirectController {
   public String redirect() {
     return "forward:/";
   }
+
+  @RequestMapping(value = "/auction/login.js", method = RequestMethod.GET)
+  public String errorAuctionPath(){
+    return "forward:/";
+  }
 }
