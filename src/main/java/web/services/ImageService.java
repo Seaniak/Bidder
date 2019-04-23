@@ -28,6 +28,15 @@ public class ImageService {
     return imagePaths;
   }
 
+  public List<String> getAllImagesAsBase64(Long auctionId) {
+    List<Image> images = getAuctionImages(auctionId);
+    List<String> base64images = new ArrayList<>();
+    for (Image image : images) {
+      base64images.add(image.getPath());
+    }
+    return base64images;
+  }
+
   public List<Image> getAllImages() {
     return imageRepo.findAll();
   }

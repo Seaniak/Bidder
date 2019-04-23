@@ -3,6 +3,7 @@ package web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.entities.Auction;
+import web.entities.Thumbnail;
 import web.repositories.AuctionRepo;
 
 import java.util.List;
@@ -12,21 +13,29 @@ public class AuctionService {
 
   @Autowired
   private AuctionRepo auctionRepo;
-
   @Autowired
-  private ImageService imageService;
+  private ThumbnailService thumbnailService;
 
-  public Auction getAuctionById(Long id) { return auctionRepo.getAuctionById(id); }
-
-  public List<Auction> getAllAuctions(){
-       return auctionRepo.findAll();
+  public Auction getAuctionById(Long id) {
+    return auctionRepo.getAuctionById(id);
   }
 
-  public Auction insertAuction(Auction auction){
+  public List<Auction> getAllAuctions() {
+    List<Auction> auctions = auctionRepo.findAll();
+
+    for (Auction auction : auctions) {
+      Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
+      if (thumbnail != null)
+        auction.setThumbnail(thumbnail.getImage());
+    }
+    return auctions;
+  }
+
+  public Auction insertAuction(Auction auction) {
     return auctionRepo.save(auction);
   }
 
-  public void deleteAuction(Auction auction){
+  public void deleteAuction(Auction auction) {
     auctionRepo.delete(auction);
   }
 }

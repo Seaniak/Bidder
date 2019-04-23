@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import web.entities.Auction;
 import web.entities.Bid;
 import web.entities.Image;
+import web.entities.Thumbnail;
 import web.services.AuctionService;
 import web.services.BidService;
 import web.services.ImageService;
+import web.services.ThumbnailService;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +31,8 @@ public class AuctionController {
   private ImageService imageService;
   @Autowired
   private BidService bidService;
+  @Autowired
+  private ThumbnailService thumbnailService;
 
   @GetMapping
   public Iterable<Auction> auctions() {
@@ -84,11 +88,10 @@ public class AuctionController {
 
 
     Auction auctionFromDb = auctionService.insertAuction(auction);
+    Thumbnail thumbnail = new Thumbnail(auctionFromDb.getId(), auction.getThumbnail());
 
-    for (String image : auction.getImagePaths()) {
-      Image img = new Image(auctionFromDb, false, image);
-      imageService.insertImage(img);
-    }
+    thumbnailService.insertThumbnail(thumbnail);
+
     return auctionFromDb;
   }
 

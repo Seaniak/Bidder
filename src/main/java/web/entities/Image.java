@@ -17,8 +17,8 @@ public class Image {
   public Image() {
   }
 
-  public Image(Auction auction, boolean thumbnail, String path) {
-    this.auctionId = auction.getId();
+  public Image(long auctionId, boolean thumbnail, String path) {
+    this.auctionId = auctionId;
     this.thumbnail = thumbnail;
     this.path = path;
   }
