@@ -48,17 +48,23 @@ export default {
           .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
           .join("&");
 
+      let transformedCredentials = transformRequest({
+        username: user.username,
+        password: user.password
+      })
+
       fetch("/login", {
         method: "POST",
-        body: transformRequest({
-          username: user.username,
-          password: user.password
-        }),
+        body: transformedCredentials,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         }
       }).then(res => {
         let successfulLogin = !res.url.includes("error");
+
+        // Save last logged in account in local storage
+        // for automatically login on connect
+        localStorage.setItem('remember-me', JSON.stringify(transformedCredentials));
         this.$store.commit("loginUser", successfulLogin);
       });
     }

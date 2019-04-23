@@ -1,17 +1,17 @@
 <template>
   <v-app>
-  <div id="app">
-    <transition
-            name="animate-route"
-            mode="out-in"
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-    >
-      <router-view :key="$route.fullPath"/>
-    </transition>
-    <Navigation/>
-    <NavigationDrawer/>
-  </div>
+    <div id="app">
+      <transition
+              name="animate-route"
+              mode="out-in"
+              enter-active-class="animated fadeIn"
+              leave-active-class="animated fadeOut"
+      >
+        <router-view :key="$route.fullPath"/>
+      </transition>
+      <Navigation/>
+      <NavigationDrawer/>
+    </div>
   </v-app>
 </template>
 
@@ -27,9 +27,18 @@
     async created() {
       this.$store.dispatch('getAuctions');
 
-      // TODO: check cookie if user already is logged in
-      // let response = await fetch('/login');
-      // console.log(response)
+      // Get last logged in account from local storage,
+      // and auto login on connect
+      let rememberedUser = JSON.parse(localStorage.getItem('remember-me'))
+      let response = await fetch("/login", {
+        method: "POST",
+        body: rememberedUser,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      })
+      if (!await response.url.includes('error'))
+        this.$store.commit("loginUser", true);
     }
   }
 </script>

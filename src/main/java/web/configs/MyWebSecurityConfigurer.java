@@ -38,7 +38,10 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             .and()
             .logout()
             .logoutSuccessUrl("/login?logout")
-            .permitAll()
+            .deleteCookies("JSESSIONID")
+            .and()
+            .rememberMe().key("uniqueAndSecret")
+            .tokenValiditySeconds(86400)
     ;
   }
 
