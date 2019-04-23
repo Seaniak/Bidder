@@ -46,7 +46,7 @@ public class AuctionController {
     List<Bid> bids = bidService.getAuctionBids(auction.getId());
     auction.setBids(bids);
 
-    List<String> images = imageService.getAuctionImagePaths(id);
+    List<String> images = imageService.getAuctionImageData(id);
     auction.setImages(images);
 
     return auction;
@@ -57,14 +57,14 @@ public class AuctionController {
 
     if (images.size() > 0) {
       for (Image image : images) {
-        File fileExists = new File(image.getPath());
+        File fileExists = new File(image.getImageData());
 
         if (!fileExists.exists()) continue;
 
         File img = null;
         try {
 
-          img = new ClassPathResource(image.getPath()).getFile();
+          img = new ClassPathResource(image.getImageData()).getFile();
 
           String encodedImage = Base64.getEncoder()
                   .withoutPadding()

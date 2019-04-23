@@ -18,12 +18,12 @@ public class ImageService {
     return imageRepo.findAllByAuctionId(auctionId);
   }
 
-  public List<String> getAuctionImagePaths(Long auctionId) {
+  public List<String> getAuctionImageData(Long auctionId) {
     List<Image> images = imageRepo.findAllByAuctionId(auctionId);
     List<String> imagePaths = new ArrayList<>();
 
     for (Image image : images) {
-      imagePaths.add(image.getPath());
+      imagePaths.add(image.getImageData());
     }
     return imagePaths;
   }
@@ -32,7 +32,7 @@ public class ImageService {
     List<Image> images = getAuctionImages(auctionId);
     List<String> base64images = new ArrayList<>();
     for (Image image : images) {
-      base64images.add(image.getPath());
+      base64images.add(image.getImageData());
     }
     return base64images;
   }
