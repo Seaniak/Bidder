@@ -1,19 +1,27 @@
 <template>
-  <v-container>
-    <router-link :to="'/auction/' + auction.id">
-      <!-- auction.imagePaths -->
-      <v-img :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail">
-        <div class="row">
-          <div class="column">
-            <h4 class="xs12">{{ auction.title }}</h4>
-            <h4>Nuvarande bud</h4>
-            <h4>{{ auction.createTime }}</h4>
-          </div>
-        </div>
-      </v-img>
-    </router-link>
-  </v-container>
+  <v-card
+          id="auction-card"
+          :to="'/auction/' + auction.id"
+          class="mb-3 pt-1">
 
+    <v-img
+            :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
+            aspect-ratio="2.75"
+    ></v-img>
+    <v-card-title primary-title>
+      <div class="col-12">
+        <h3>{{ auction.title }}</h3>
+      </div>
+      <div class="col-6">
+        <h5>Nuvarande bud</h5>
+        <v-icon medium>attach_money</v-icon>
+      </div>
+      <div class="col-6">
+        <h5>{{ getDateString(auction.endTime) }}</h5>
+        <v-icon medium>timelapse</v-icon>
+      </div>
+    </v-card-title>
+  </v-card>
 </template>
 
 <script>
@@ -21,6 +29,12 @@
     name: "AuctionCard",
     data() {
       return {}
+    },
+    methods: {
+      getDateString(auctionTimeStamp) {
+        let bidDate = new Date(auctionTimeStamp);
+        return (bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString());
+      }
     },
     computed: {
       defaultThumbnail() {
@@ -33,12 +47,21 @@
 </script>
 
 <style scoped>
+  * {
+    text-decoration: none;
+    color: var(--main-font-color);
+  }
+
+  #auction-card {
+    border-radius: 4px;
+    animation-duration: 200ms;
+  }
+
   #auction {
     display: flex;
     text-decoration: none;
     color: var(--main-font-color);
     width: 100%;
-    animation-duration: 200ms;
     border-bottom: solid 1px #7c7e70;
   }
 

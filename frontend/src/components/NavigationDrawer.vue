@@ -35,6 +35,10 @@
         <span>Skapa auktion</span>
         <v-icon dark medium>note_add</v-icon>
       </v-btn>
+      <v-btn v-if="$store.state.currentUser" to="/user-auctions" flat>
+        <span>Mina auktioner</span>
+        <v-icon dark medium>bookmarks</v-icon>
+      </v-btn>
     </v-layout>
   </v-navigation-drawer>
 </template>

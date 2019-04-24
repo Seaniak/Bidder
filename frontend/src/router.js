@@ -52,6 +52,12 @@ export default new Router({
       name: "registerSuccess",
       component: () =>
         import(/* webpackChunkName: "registerSuccess" */ "./views/RegistrationSuccess.vue")
+    },
+    {
+      path: "/user-auctions",
+      name: "userAuctions",
+      component: () =>
+        import(/* webpackChunkName: "userAuctions" */ "./views/UserAuctions.vue")
     }
   ]
 });
