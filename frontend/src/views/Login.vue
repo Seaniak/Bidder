@@ -63,7 +63,7 @@
 
         if (!loginRes.url.includes("error")) {
           let user = await fetch('/api/remember-me')
-          user = user.json()
+          user = await user.json()
           this.$store.commit("loginUser", user);
         }
 

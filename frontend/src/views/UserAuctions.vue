@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1>Mina auktioner</h1>
-    <AuctionCard class="col-6 col-md-4"
+    <AuctionCard class="col-12 col-md-4"
                  v-for="(auction, index) in userAuctions"
                  :key="index + 0"
                  :name="index"

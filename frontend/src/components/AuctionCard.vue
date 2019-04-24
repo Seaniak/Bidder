@@ -1,29 +1,27 @@
 <template>
-  <v-container>
-    <router-link :to="'/auction/' + auction.id">
-       <v-card>
+  <v-card
+          id="auction-card"
+          :to="'/auction/' + auction.id"
+          class="mb-3 pt-1">
 
-          <v-img
-                  :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
-                  aspect-ratio="2.75"
-          ></v-img>
-          <v-card-title primary-title>
-                   <div class="col-12">
-                      <h3>{{ auction.title }}</h3>
-                   </div>
-                   <div class="col-6">
-                      <h5>Nuvarande bud</h5>
-                      <v-icon medium>attach_money</v-icon>
-                   </div>
-                   <div class="col-6">
-                      <h5>{{ getDateString(auction.endTime) }}</h5>
-                      <v-icon medium>timelapse</v-icon>
-                   </div>
-          </v-card-title>
-       </v-card>
-    </router-link>
-  </v-container>
-
+    <v-img
+            :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
+            aspect-ratio="2.75"
+    ></v-img>
+    <v-card-title primary-title>
+      <div class="col-12">
+        <h3>{{ auction.title }}</h3>
+      </div>
+      <div class="col-6">
+        <h5>Nuvarande bud</h5>
+        <v-icon medium>attach_money</v-icon>
+      </div>
+      <div class="col-6">
+        <h5>{{ getDateString(auction.endTime) }}</h5>
+        <v-icon medium>timelapse</v-icon>
+      </div>
+    </v-card-title>
+  </v-card>
 </template>
 
 <script>
@@ -32,12 +30,12 @@
     data() {
       return {}
     },
-     methods: {
-        getDateString(auctionTimeStamp)  {
-           let bidDate = new Date(auctionTimeStamp);
-           return (bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString());
-        }
-     },
+    methods: {
+      getDateString(auctionTimeStamp) {
+        let bidDate = new Date(auctionTimeStamp);
+        return (bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString());
+      }
+    },
     computed: {
       defaultThumbnail() {
         return 'https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673'
@@ -53,6 +51,11 @@
     text-decoration: none;
     color: var(--main-font-color);
   }
+
+  #auction-card {
+    border-radius: 4px;
+  }
+
   #auction {
     display: flex;
     text-decoration: none;
