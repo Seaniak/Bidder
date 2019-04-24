@@ -25,16 +25,17 @@
     <v-data-table
             :headers="headers"
             :items="auction.bids"
-            :hide-actions=true
+            :hide-actions="bidsController"
             :must-sort=true
             :no-data-text="'Inga bud är lagda!'"
             :rows-per-page-text="'Antal bud'"
             :pagination.sync="pagination"
+            :rows-per-page-items="numbercontroll"
             class="elevation-1"
     >
       <template v-slot:items="props">
-        <td>{{  props.item.sum }}</td>
-        <td class="text-xs-right">{{  props.item.username }}</td>
+        <td>{{ props.item.sum }}</td>
+        <td class="text-xs-right">{{ props.item.username }}</td>
         <td class="text-xs-right">{{getDateString(props.item.time)}}</td>
       </template>
     </v-data-table>
@@ -46,14 +47,17 @@
 		data() {
 			return {
 				maxBid: 0,
+				bidsController: true,
+          numbercontroll: [10,20,30,{text:'Alla',value:-1}],
 				auction: 0,
 				endDateString: 0,
 				images: [],
-          pagination: {
-					  descending: true,
-			      page: 1,
-			      rowsPerPage: 20,
-			      sortBy: "sum" },
+				pagination: {
+					descending: true,
+					page: 1,
+					rowsPerPage: 10,
+					sortBy: "sum"
+				},
 				headers: [
 					{
 						text: 'Bud',
@@ -67,13 +71,12 @@
 			}
 		},
 		methods: {
-			getDateString(bidTimeStamp)  {
-		    let bidDate = new Date(bidTimeStamp);
-		    return (bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString());
-	    }
-    },
-	  computed: {
-	  },
+			getDateString(bidTimeStamp) {
+				let bidDate = new Date(bidTimeStamp);
+				return (bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString());
+			}
+		},
+		computed: {},
 		async created() {
 			let auction = await fetch('/api/auctions/' + this.$route.params.id);
 			this.auction = await auction.json();
@@ -82,7 +85,7 @@
 			this.images = await images.json();
 
 			this.maxBid = Math.max(...(await this.auction.bids.map((bid) => bid.sum)));
-
+      if(this.auction.bids.length >10) this.bidsController = false;
 
 			console.log('AuctionDetails: ', this.auction);
 			console.log('AuctionDetails images: ', this.images);
