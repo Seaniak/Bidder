@@ -13,11 +13,11 @@
          >
             Inga auktioner hittades
          </h3>
-         <Auction class="col-6 col-md-4"
-                  v-else
-                  v-for="(auction, index) in $store.state.filteredItems"
-                  :key="index + 0"
-                  :auction="auction"
+         <AuctionCard class="col-6 col-md-4"
+                      v-else
+                      v-for="(auction, index) in $store.state.filteredItems"
+                      :key="index + 0"
+                      :auction="auction"
          />
       </transition-group>
    </div>
@@ -25,12 +25,12 @@
 
 <script>
    // @ is an alias to /src
-   import Auction from "@/components/AuctionCard.vue";
+   import AuctionCard from "@/components/AuctionCard.vue";
 
    export default {
       name: "home",
       components: {
-         Auction
+         AuctionCard
       }
    };
 </script>

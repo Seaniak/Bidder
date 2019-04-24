@@ -8,11 +8,7 @@
             required
             @change="upload"/>
     <label for="file-load">
-      <v-icon
-              dark
-              large>
-        add_photo_alternate
-      </v-icon>
+      <v-icon dark>cloud_upload</v-icon>
     </label>
   </div>
 </template>

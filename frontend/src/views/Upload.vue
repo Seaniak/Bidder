@@ -91,9 +91,6 @@
       });
     },
     methods: {
-      /* convertDateToSql(milliseconds) {
-          return new Date(milliseconds).toISOString().slice(0, 19) + '000+0000';
-       },*/
       async handleSubmit() {
         // if no input, don't submit
         if (!this.title.length || !this.description.length) {
