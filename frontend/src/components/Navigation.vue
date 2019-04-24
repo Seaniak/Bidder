@@ -24,16 +24,17 @@
 	import RegisterNav from './navbar/RegisterNav';
 	import UploadAuction from "./navbar/UploadAuctionNav";
 	import GoToLoginPageNav from "./navbar/GoToLoginPageNav";
-  import PlaceBid from "./navbar/PlaceBid";
+	import PlaceBid from "./navbar/PlaceBid";
 
 
-  export default {
+	export default {
 		name: "Navigation",
 		computed: {
 			currentNavigation() {
-				// let path = this.$route.path.substring(0,this.$route.path.lastIndexOf("/"));
-				// console.log(path);
-				switch (this.$route.path.substring(0,this.$route.path.lastIndexOf("/"))) {
+				let indexOne = this.$route.path.indexOf("/");
+				let indexTwo = this.$route.path.lastIndexOf("/");
+				let path = this.$route.path;
+				switch (((path.length > 1) && indexTwo > indexOne) ? path.substring(0, indexTwo) : path) {
 					case '/':
 						return HomeNav;
 						break;
