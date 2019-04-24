@@ -47,6 +47,7 @@
         ></v-text-field>
         <v-btn @click="clear">Rensa formulär</v-btn>
       </v-form>
+      <v-alert class="mt-3" :value="successMessage" type="success">{{ successMessage }}</v-alert>
       <v-alert class="mt-3" :value="errorMessage" type="error">{{ errorMessage }}</v-alert>
     </v-flex>
   </v-container>
@@ -60,6 +61,7 @@ export default {
   data() {
     return {
       errorMessage: '',
+      successMessage: '',
       valid: false,
       name: "",
       surname: "",
@@ -67,7 +69,6 @@ export default {
       password: "",
       email: "",
       showPassword: false,
-      responseFromDb: "",
       select: null,
       nameRules: [
         v => !!v || "Du måste fylla i namn",
@@ -95,7 +96,6 @@ export default {
     };
   },
   mounted() {
-    this.$store.commit("clearResponseFromDb");
     eventBus.$on("submitRegisterClicked", () => {
       this.submit();
     });
@@ -131,14 +131,15 @@ export default {
         body: JSON.stringify(user)
       })
         .then(res => {
-          console.log(res);
           return res.text();
         })
         .then(res => {
           console.log(res);
           if(res === 'success'){
-            this.$store.commit("addUserToDb", res);
-            this.$router.push({ name: "login" });
+            this.successMessage = 'Nytt konto registrerat!'
+            setTimeout(()=>{
+              this.$router.push({ name: "login" });
+            }, 3000)
           } else {
             this.errorMessage = 'Användarnamnet är upptaget'
           }

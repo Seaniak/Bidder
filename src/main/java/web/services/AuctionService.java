@@ -20,13 +20,17 @@ public class AuctionService {
     return auctionRepo.getAuctionById(id);
   }
 
-  public List<Auction> getUserAuctions(String username){
-    return auctionRepo.findAllByUsername(username);
+  public List<Auction> getUserAuctions(String username) {
+    return addThumbnails(
+            auctionRepo.findAllByUsername(username));
   }
 
   public List<Auction> getAllAuctions() {
-    List<Auction> auctions = auctionRepo.findAll();
+    return addThumbnails(
+            auctionRepo.findAll());
+  }
 
+  private List<Auction> addThumbnails(List<Auction> auctions) {
     for (Auction auction : auctions) {
       Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
       if (thumbnail != null)

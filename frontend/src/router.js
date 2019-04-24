@@ -47,12 +47,6 @@ export default new Router({
         import(/* webpackChunkName: "register" */ "./views/Register.vue")
     },
     {
-      path: "/register-success",
-      name: "registerSuccess",
-      component: () =>
-        import(/* webpackChunkName: "registerSuccess" */ "./views/RegistrationSuccess.vue")
-    },
-    {
       path: "/user-auctions",
       name: "userAuctions",
       component: () =>

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Log in</h1>
+    <h1>Logga in</h1>
     <v-form @submit="logIn">
       <v-text-field
               class="mt-5"

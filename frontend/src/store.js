@@ -9,7 +9,6 @@ export default new Vuex.Store({
     openNavDrawer: null,
     filteredItems: [],
     auctions: [],
-    addUserResponseFromDb: ''
   },
   mutations: {
     filterItems(state, searchInput = '') {
@@ -19,26 +18,20 @@ export default new Vuex.Store({
     addAuction(state, value) {
       state.auctions.push(value)
     },
-    addUserToDb(state, value) {
-      state.addUserResponseFromDb = value
-    },
-    clearResponseFromDb(state, value = '') {
-      state.addUserResponseFromDb = value;
-    },
     getAuctions(state, value) {
       state.auctions = value;
-      console.log(state.auctions)
+      console.log('Auctions: ', state.auctions)
     },
     logoutUser(state, value) {
       state.currentUser = null;
     },
     loginUser(state, user) {
       state.currentUser = user;
+      console.log('User: ', state.currentUser)
     }
   },
   actions: {
     async getAuctions(context) {
-      console.log('Fetching auctions')
       let response = await fetch('/api/auctions')
       response = await response.json();
 
