@@ -33,7 +33,7 @@
 			currentNavigation() {
 				// let path = this.$route.path.substring(0,this.$route.path.lastIndexOf("/"));
 				// console.log(path);
-				switch (this.$route.path.substring(0,this.$route.path.lastIndexOf("/"))) {
+				switch (this.$route.path) {
 					case '/':
 						return HomeNav;
 						break;

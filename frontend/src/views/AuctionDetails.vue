@@ -1,6 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container>
-    <v-carousel height="50vh">
+    <v-carousel height="50vh"
+    class="border">
       <v-carousel-item
               v-for="(image, i) in images"
               :key="i"
@@ -8,20 +9,20 @@
       ></v-carousel-item>
     </v-carousel>
     <h1>{{ auction.title }}</h1>
-    <v-layout row wrap>
-      <v-flex column xs6>
-        <h5>Högsta Bud</h5>
-        <h4>{{maxBid}}kr</h4>
-      </v-flex>
-      <v-flex column xs6>
-        <h5>Avslutas</h5>
-        <h4>{{ endDateString }}</h4>
-      </v-flex>
-      <v-flex column xs12 align-start="true">
-        <h5>Beskrivning</h5>
-        <p>{{ auction.description }}</p>
-      </v-flex>
+    <v-layout row wrap class="pt-2 justify-content-around">
+      <v-card class="border col-5">
+        <h4>Högsta Bud</h4>
+        <h3>{{maxBid}}kr</h3>
+      </v-card>
+      <v-card class="border col-5">
+        <h4>Avslutas</h4>
+        <h3>{{ endDateString }}</h3>
+      </v-card>
     </v-layout>
+    <div class="description py-3">
+      <h3>Beskrivning</h3>
+      <p>{{ auction.description }}</p>
+    </div>
     <v-data-table
             :headers="headers"
             :items="auction.bids"
@@ -31,7 +32,7 @@
             :rows-per-page-text="'Antal bud'"
             :pagination.sync="pagination"
             :rows-per-page-items="numbercontroll"
-            class="elevation-1"
+            class="border elevation-1"
     >
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
@@ -87,9 +88,6 @@
 			this.maxBid = Math.max(...(await this.auction.bids.map((bid) => bid.sum)));
       if(this.auction.bids.length >10) this.bidsController = false;
 
-			console.log('AuctionDetails: ', this.auction);
-			console.log('AuctionDetails images: ', this.images);
-
 			let endDate = new Date(this.auction.endTime);
 			this.endDateString = endDate.toLocaleDateString() + " " + endDate.getHours() + ":" + endDate.getMinutes();
 		}
@@ -97,4 +95,10 @@
 </script>
 
 <style scoped>
+  .border{
+    border-radius: 4px;
+  }
+  .description{
+    text-align: start;
+  }
 </style>
