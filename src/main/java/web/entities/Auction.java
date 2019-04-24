@@ -23,6 +23,10 @@ public class Auction {
   private int reservedSum;
 
   @Transient
+  private String frontEndCreateTime;
+  @Transient
+  private String frontEndEndTime;
+  @Transient
   private String thumbnail;
   @Transient
   private List<String> images;
@@ -38,12 +42,12 @@ public class Auction {
   }
 
   public Auction(String username, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
-                 int reservedSum, String category, String auctionCondition) {
+				 int reservedSum, String category, String auctionCondition) {
     this.username = username;
     this.title = title;
     this.description = description;
-    this.createTime = createTime;
-    this.endTime = endTime;
+    this.frontEndCreateTime = frontEndCreateTime;
+    this.frontEndEndTime = frontEndEndTime;
     this.startSum = startSum;
     this.reservedSum = reservedSum;
     this.category = category;
@@ -150,5 +154,19 @@ public class Auction {
 		this.auctionCondition = auctionCondition;
 	}
 
+   public String getFrontEndCreateTime() {
+      return frontEndCreateTime;
+   }
 
+   public void setFrontEndCreateTime(String frontEndCreateTime) {
+      this.frontEndCreateTime = frontEndCreateTime;
+   }
+
+   public String getFrontEndEndTime() {
+      return frontEndEndTime;
+   }
+
+   public void setFrontEndEndTime(String frontEndEndTime) {
+      this.frontEndEndTime = frontEndEndTime;
+   }
 }

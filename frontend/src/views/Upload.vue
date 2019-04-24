@@ -93,9 +93,6 @@
       });
     },
     methods: {
-      /* convertDateToSql(milliseconds) {
-          return new Date(milliseconds).toISOString().slice(0, 19) + '000+0000';
-       },*/
       async handleSubmit() {
         // if no input, don't submit
         if (!this.title.length || !this.description.length) {
@@ -128,11 +125,13 @@
           auctionCondition: this.auctionCondition,
           startSum: this.startSum,
           reservedSum: this.reservedSum,
-          create_time: this.createTime,
-          end_time: this.endTime,
+          frontEndCreateTime: this.createTime,
+          frontEndEndTime: this.endTime,
           thumbnail: this.thumbnail[0]
         };
         console.log(data);
+        console.log(typeof data.frontEndCreateTime);
+        console.log(typeof data.frontEndEndTime);
 
         fetch('/api/auctions', {
           method: 'POST',

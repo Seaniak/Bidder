@@ -2,6 +2,7 @@ package web.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Bid {
@@ -16,7 +17,6 @@ public class Bid {
   private int sum;
 
   public Bid() {
-
   }
 
   public String getUsername() {
