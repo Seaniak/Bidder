@@ -23,8 +23,7 @@ public class Auction {
   private int reservedSum;
 
   @Transient
-  private String[] imagePaths;
-
+  private String thumbnail;
   @Transient
   private List<String> images;
   @Transient
@@ -55,20 +54,20 @@ public class Auction {
 
   }
 
+  public String getThumbnail() {
+    return thumbnail;
+  }
+
+  public void setThumbnail(String thumbnail) {
+    this.thumbnail = thumbnail;
+  }
+
   public List<Bid> getBids() {
     return bids;
   }
 
   public void setBids(List<Bid> bids) {
     this.bids = bids;
-  }
-
-  public String[] getImagePaths() {
-    return imagePaths;
-  }
-
-  public void setImagePaths(String[] imagePaths) {
-    this.imagePaths = imagePaths;
   }
 
   public long getId() {

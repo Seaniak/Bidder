@@ -23,38 +23,45 @@
     data() {
       return {
         previewImages: [],
-        files: []
+        files: [],
+        thumbnail: []
       }
     },
     methods: {
       upload(e) {
+        this.resetArrays()
         let images = e.target.files; // array with files
 
         for (let image of images) {
-          this.readImage(image)
+          this.readImage(image);
         }
-        console.log(this.files)
+        this.readImage(images[0], true)
+
         this.$emit('uploadImage', {
           previewImages: this.previewImages,
-          files: this.files
+          files: this.files,
+          thumbnail: this.thumbnail
         })
       },
-      readImage(imageFile) {
+      readImage(imageFile, thumbnail = false) {
         let reader = new FileReader();
         reader.readAsDataURL(imageFile);  // read file to this format
         reader.onload = e => { // when file is loaded
 
           let image = new Image();
           image.onload = () => {
-            this.files.push(this.convertImage(image))
+            if (thumbnail)
+              this.convertImage(image, thumbnail)
+            else
+              this.convertImage(image)
           }
           image.src = e.target.result
         }
       },
-      convertImage(image) {
+      convertImage(image, thumbnail = false) {
         let canvas = document.createElement('canvas');
-        canvas.width = 800;
-        canvas.height = 600;
+        canvas.width = thumbnail ? 200 : 600;
+        canvas.height = thumbnail ? 200 : 400;
 
         let context = canvas.getContext('2d');
 
@@ -87,11 +94,17 @@
 
         // convert to Base64 string for preview
         let imageData = canvas.toDataURL('image/png');
+
+        if (thumbnail) {
+          this.thumbnail.push(imageData);
+          return;
+        }
+
         this.previewImages.push(imageData);
+        this.files.push(imageData);
 
-        let imageURI = this.dataUriToFile(imageData);
-
-        return new File([imageURI], "imageFile.png", {type: "image/png"});
+        // let imageURI = this.dataUriToFile(imageData);
+        // return new File([imageURI], "imageFile.png", {type: "image/png"});
       },
       dataUriToFile(dataURI) {
         // convert base64 to raw binary data held in a string
@@ -105,6 +118,11 @@
           u8arr[n] = byteString.charCodeAt(n);
         }
         return u8arr;
+      },
+      resetArrays() {
+        this.files = []
+        this.previewImages = []
+        this.thumbnail = []
       }
     }
   }

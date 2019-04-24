@@ -37,17 +37,13 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getAuctions(context) {
+    async getAuctions(context) {
       console.log('Fetching auctions')
-      fetch('/api/auctions')
-          .then((res) => {
-            return res.json();
-          })
-          .then((res) => {
-            context.commit('getAuctions', res)
-            context.commit('filterItems')
-          })
-          .catch(e => console.log(e))
-    },
-  }
+      let response = await fetch('/api/auctions')
+      response = await response.json();
+
+      context.commit('getAuctions', response)
+      context.commit('filterItems')
+    }
+  },
 })
