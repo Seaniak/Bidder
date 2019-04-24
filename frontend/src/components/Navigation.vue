@@ -45,6 +45,9 @@
           case '/upload':
             return UploadAuction;
             break;
+          case '/user-auctions':
+            return UploadAuction;
+            break;
           default:
             return HomeNav
         }
