@@ -23,6 +23,10 @@ public class Auction {
   private int reservedSum;
 
   @Transient
+  private String frontEndCreateTime;
+  @Transient
+  private String frontEndEndTime;
+  @Transient
   private String thumbnail;
   @Transient
   private List<String> images;
@@ -37,13 +41,13 @@ public class Auction {
     this.images = images;
   }
 
-  public Auction(long userId, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+  public Auction(long userId, String title, String description, String frontEndCreateTime, String frontEndEndTime, int startSum,
                  int reservedSum, String category, String auctionCondition) {
     this.userId = userId;
     this.title = title;
     this.description = description;
-    this.createTime = createTime;
-    this.endTime = endTime;
+    this.frontEndCreateTime = frontEndCreateTime;
+    this.frontEndEndTime = frontEndEndTime;
     this.startSum = startSum;
     this.reservedSum = reservedSum;
     this.category = category;

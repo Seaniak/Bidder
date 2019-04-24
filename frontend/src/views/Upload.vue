@@ -126,11 +126,13 @@
           auctionCondition: this.auctionCondition,
           startSum: this.startSum,
           reservedSum: this.reservedSum,
-          create_time: this.createTime,
-          end_time: this.endTime,
+          frontEndCreateTime: new Date(this.createTime),
+          frontEndEndTime: new Date(this.endTime),
           thumbnail: this.thumbnail[0]
         };
         console.log(data);
+        console.log(typeof data.frontEndCreateTime);
+        console.log(typeof data.frontEndEndTime);
 
         fetch('/api/auctions', {
           method: 'POST',
