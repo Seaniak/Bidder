@@ -80,16 +80,8 @@ public class AuctionController {
 
   @PostMapping
     public Auction publishAuction(@RequestBody Auction auction) {
-    if (auction.getCreateTime() == null)
-      //auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
-      System.out.println("auction time is: " + auction.getCreateTime());
-      System.out.println(auction.toString());
-      System.out.println("auction title is: " + auction.getTitle());
-/*      auction.setCreateTime(Timestamp.valueOf(String.valueOf(auction.getCreateTime())));
-      auction.setEndTime(Timestamp.valueOf(String.valueOf(auction.getEndTime())));*/
-    /*      auction.setEndTime(Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(auction.getEndTime())));*/
-
-
+    auction.setCreateTime(Timestamp.valueOf(auction.getFrontEndCreateTime()));
+    auction.setEndTime(Timestamp.valueOf(auction.getFrontEndEndTime()));
     Auction auctionFromDb = auctionService.insertAuction(auction);
     Thumbnail thumbnail = new Thumbnail(auctionFromDb.getId(), auction.getThumbnail());
 

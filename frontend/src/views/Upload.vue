@@ -126,8 +126,8 @@
           auctionCondition: this.auctionCondition,
           startSum: this.startSum,
           reservedSum: this.reservedSum,
-          frontEndCreateTime: new Date(this.createTime),
-          frontEndEndTime: new Date(this.endTime),
+          frontEndCreateTime: this.createTime,
+          frontEndEndTime: this.endTime,
           thumbnail: this.thumbnail[0]
         };
         console.log(data);

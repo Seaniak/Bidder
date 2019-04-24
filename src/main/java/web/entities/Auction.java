@@ -154,5 +154,19 @@ public class Auction {
 		this.auctionCondition = auctionCondition;
 	}
 
+   public String getFrontEndCreateTime() {
+      return frontEndCreateTime;
+   }
 
+   public void setFrontEndCreateTime(String frontEndCreateTime) {
+      this.frontEndCreateTime = frontEndCreateTime;
+   }
+
+   public String getFrontEndEndTime() {
+      return frontEndEndTime;
+   }
+
+   public void setFrontEndEndTime(String frontEndEndTime) {
+      this.frontEndEndTime = frontEndEndTime;
+   }
 }
