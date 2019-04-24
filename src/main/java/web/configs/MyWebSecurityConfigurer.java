@@ -3,6 +3,7 @@ package web.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,13 +16,6 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
   @Autowired
   MyUserDetailsService myUserDetailsService;
-
-  @Override
-  public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-            .userDetailsService(myUserDetailsService)
-            .passwordEncoder(myUserDetailsService.getEncoder());
-  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -40,9 +34,22 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/login?logout")
             .deleteCookies("JSESSIONID")
             .and()
-            .rememberMe().key("uniqueAndSecret")
+            .rememberMe().key("ultraUberUniqueAndSecret")
             .tokenValiditySeconds(86400)
     ;
+  }
+
+  public DaoAuthenticationProvider authenticationProvider(){
+    DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+    auth
+            .setUserDetailsService(myUserDetailsService);
+            auth.setPasswordEncoder(myUserDetailsService.getEncoder());
+            return auth;
+  }
+
+  @Override
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(authenticationProvider());
   }
 
   @Override
