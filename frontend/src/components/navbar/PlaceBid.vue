@@ -1,7 +1,7 @@
 <template>
   <!--  <v-btn @click="placeBidClicked" dark flat>Placera bud</v-btn>-->
   <v-layout row wrap class="bidBar">
-    <smooth-picker class="scroller col-6" ref="smoothPicker" :data="possibleBids" :change="dataChange"/>
+    <smooth-picker class="scroller col-6" ref="smoothPicker" :data="data" :change="dataChange"/>
     <v-btn col-2 class="bidBtn">Lägg Bud</v-btn>
   </v-layout>
 </template>
@@ -18,40 +18,51 @@
 		},
 		data() {
 			return {
+				data: [{
+					currentIndex: 1,
+					flex: 4,
+					list: ['TEST', 'TEST'],
+					textAlign: 'center',
+					className: 'row-group'
+				}]
+			}},
+				methods
+		:
+			{
+				newBids(currentBid)
+				{
+					let addSum = 10;
+					if (currentBid >= 100) addSum = 20;
+					else if (currentBid >= 300) addSum = 50;
+					else if (currentBid >= 800) addSum = 100;
+					else if (currentBid >= 1800) addSum = 200;
+					else if (currentBid >= 3800) addSum = 200;
+					let bids = [];
+					let latestSum = currentBid + addSum;
+					while (bids.length < 20) bids.push((latestSum += addSum) + ' kr');
+					return bids;
+				}
+			,
+				dataChange(gIndex, iIndex)
+				{
+					console.log(gIndex, iIndex);
+				}
+			,
 			}
-		},
-		methods: {
-			newBids(currentBid) {
-				let addSum = 10;
-				if (currentBid >= 100) addSum = 20;
-				else if (currentBid >= 300) addSum = 50;
-				else if (currentBid >= 800) addSum = 100;
-				else if (currentBid >= 1800) addSum = 200;
-				else if (currentBid >= 3800) addSum = 200;
-				let bids = [];
-				let latestSum = currentBid + addSum;
-				while (bids.length < 20) bids.push((latestSum += addSum) + ' kr');
-				return bids;
-			},
-			dataChange(gIndex, iIndex) {
-				console.log(gIndex, iIndex);
-			},
-			placeBidClicked() {
-				// eventBus.$emit('nav-placebid-clicked')
+		,
+			computed: {
+				possibleBids()
+				{
+					return {
+						currentIndex: 1,
+						flex: 4,
+						list: this.newBids(this.$store.state.currentBid),
+						textAlign: 'center',
+						className: 'row-group'
+					};
+				}
 			}
-		},
-		computed: {
-			possibleBids () {
-        return {
-			    currentIndex: 1,
-				  flex: 4,
-				  list: this.newBids(this.$store.state.currentBid),
-				  textAlign: 'center',
-				  className: 'row-group'
-		  };
-			}
-    }
-	};
+		};
 </script>
 
 <style scoped>
