@@ -4,9 +4,16 @@
       <v-icon color="white" large>keyboard_arrow_left</v-icon>
     </v-btn>
 
-    <div>
-      <component :is="currentNavigation"></component>
-    </div>
+      <transition
+              name="animate-route"
+              mode="out-in"
+              enter-active-class="animated pulse"
+              leave-active-class="animated pulse"
+      >
+      <component id="custom-nav"
+                 :is="currentNavigation"
+                 :key="$route.fullPath"></component>
+      </transition>
 
     <v-btn
             icon
@@ -62,6 +69,9 @@
 </script>
 
 <style scoped>
+  #custom-nav{
+    animation-duration: 200ms;
+  }
   #bottom-nav {
     display: flex;
     justify-content: space-around;
