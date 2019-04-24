@@ -12,7 +12,7 @@ public class Auction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-  private long userId;
+  private String username;
   private String title;
   private String description;
   private String category;
@@ -37,9 +37,9 @@ public class Auction {
     this.images = images;
   }
 
-  public Auction(long userId, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
-                 int reservedSum, String category, String auctionCondition) {
-    this.userId = userId;
+  public Auction(String username, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+				 int reservedSum, String category, String auctionCondition) {
+    this.username = username;
     this.title = title;
     this.description = description;
     this.createTime = createTime;
@@ -78,12 +78,12 @@ public class Auction {
     this.id = id;
   }
 
-  public long getUserId() {
-    return userId;
+  public String getUsername() {
+    return username;
   }
 
-  public void setUserId(long userId) {
-    this.userId = userId;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getTitle() {
