@@ -41,7 +41,7 @@ public class Auction {
     this.images = images;
   }
 
-  public Auction(String username, String title, String description, Timestamp createTime, Timestamp endTime, int startSum,
+  public Auction(String username, String title, String description, String frontEndCreateTime, String frontEndEndTime, int startSum,
 				 int reservedSum, String category, String auctionCondition) {
     this.username = username;
     this.title = title;

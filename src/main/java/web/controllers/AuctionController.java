@@ -39,6 +39,11 @@ public class AuctionController {
     return auctionService.getAllAuctions();
   }
 
+  @GetMapping("/user={username}")
+  public List<Auction> getUserAuctions(@PathVariable String username) {
+    return auctionService.getUserAuctions(username);
+  }
+
   @GetMapping("/{id}")
   public Auction getOneAuction(@PathVariable Long id) {
     Auction auction = auctionService.getAuctionById(id);
