@@ -12,15 +12,15 @@ public class Image {
 
   private long auctionId;
   private boolean thumbnail;
-  private String path;
+  private String imageData;
 
   public Image() {
   }
 
-  public Image(Auction auction, boolean thumbnail, String path) {
-    this.auctionId = auction.getId();
+  public Image(long auctionId, boolean thumbnail, String imageData) {
+    this.auctionId = auctionId;
     this.thumbnail = thumbnail;
-    this.path = path;
+    this.imageData = imageData;
   }
 
   public long getId() {
@@ -47,11 +47,11 @@ public class Image {
     this.thumbnail = thumbnail;
   }
 
-  public String getPath() {
-    return path;
+  public String getImageData() {
+    return imageData;
   }
 
-  public void setPath(String path) {
-    this.path = path;
+  public void setImageData(String imageData) {
+    this.imageData = imageData;
   }
 }

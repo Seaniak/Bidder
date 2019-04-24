@@ -2,7 +2,7 @@
   <v-container>
     <router-link :to="'/auction/' + auction.id">
       <!-- auction.imagePaths -->
-      <v-img :src="`https://shopcdn.textalk.se/shop/35510/art10/h3474/132433474-origpic-a14e5f.jpg?max-width=720&max-height=720&quality=85`">
+      <v-img :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail">
         <div class="row">
           <div class="column">
             <h4 class="xs12">{{ auction.title }}</h4>
@@ -21,6 +21,12 @@
     name: "AuctionCard",
     data() {
       return {}
+    },
+    computed: {
+      defaultThumbnail() {
+        return 'https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673'
+      }
+
     },
     props: ["auction"],
   };
