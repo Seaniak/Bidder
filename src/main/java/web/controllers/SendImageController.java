@@ -18,20 +18,6 @@ public class SendImageController {
 
   @GetMapping("/{auctionId}")
   public List<String> getImages(@PathVariable Long auctionId) {
-    List<String> images = imageService.getAllImagesAsBase64(auctionId);
-
-    return images;
-
-//    byte[] imageData = null;
-//    try {
-//      imageData = Files.readAllBytes(image.toPath());
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-//
-//    return ResponseEntity.ok()
-//            .contentType(MediaType.IMAGE_PNG)
-//            .header(HttpHeaders.CONTENT_TYPE, "image/png")
-//            .body(imageData);
+    return imageService.getAllImagesAsBase64(auctionId);
   }
 }
