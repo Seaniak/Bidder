@@ -54,6 +54,7 @@
 
   #auction-card {
     border-radius: 4px;
+    animation-duration: 200ms;
   }
 
   #auction {
@@ -61,7 +62,6 @@
     text-decoration: none;
     color: var(--main-font-color);
     width: 100%;
-    animation-duration: 200ms;
     border-bottom: solid 1px #7c7e70;
   }
 
