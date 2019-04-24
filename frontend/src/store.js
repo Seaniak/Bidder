@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loggedIn: false,
+    currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
     auctions: [],
@@ -30,10 +30,10 @@ export default new Vuex.Store({
       console.log(state.auctions)
     },
     logoutUser(state, value) {
-      state.loggedIn = value;
+      state.currentUser = null;
     },
-    loginUser(state, successfulLogin) {
-      state.loggedIn = successfulLogin;
+    loginUser(state, user) {
+      state.currentUser = user;
     }
   },
   actions: {
