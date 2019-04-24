@@ -94,9 +94,12 @@
 	};
 </script>
 
-<style scoped>
+<style>
   .border{
     border-radius: 4px;
+  }
+  .v-carousel__controls{
+    border-radius: 0 0 4px 4px;
   }
   .description{
     text-align: start;
