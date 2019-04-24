@@ -7,4 +7,5 @@ import web.entities.Auction;
 @Repository
 public interface AuctionRepo extends JpaRepository<Auction, Long> {
   Auction getAuctionById(Long id);
+  //Auction findAllByCategoryContaining(String category);
 }
