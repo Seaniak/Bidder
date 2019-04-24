@@ -20,6 +20,10 @@ public class AuctionService {
     return auctionRepo.getAuctionById(id);
   }
 
+  public List<Auction> getUserAuctions(String username){
+    return auctionRepo.findAllByUsername(username);
+  }
+
   public List<Auction> getAllAuctions() {
     List<Auction> auctions = auctionRepo.findAll();
 
