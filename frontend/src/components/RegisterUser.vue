@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-flex>
-      <h1>Register account</h1>
+      <h1>Skapa nytt konto</h1>
       <v-form mx-auto v-model="valid" ref="form">
         <v-text-field
           placeholder="Skriv in förnamn"
@@ -47,6 +47,7 @@
         ></v-text-field>
         <v-btn @click="clear">Rensa formulär</v-btn>
       </v-form>
+      <v-alert class="mt-3" :value="errorMessage" type="error">{{ errorMessage }}</v-alert>
     </v-flex>
   </v-container>
 </template>
@@ -58,6 +59,7 @@ export default {
   name: "RegisterUser",
   data() {
     return {
+      errorMessage: '',
       valid: false,
       name: "",
       surname: "",
@@ -98,6 +100,10 @@ export default {
       this.submit();
     });
   },
+  beforeDestroy() {
+    // Removes event listener on component destroy
+    eventBus.$off('submitRegisterClicked')
+  },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
@@ -126,14 +132,18 @@ export default {
       })
         .then(res => {
           console.log(res);
-          return res.json();
+          return res.text();
         })
         .then(res => {
           console.log(res);
-          this.$store.commit("addUserToDb", res.message);
+          if(res === 'success'){
+            this.$store.commit("addUserToDb", res);
+            this.$router.push({ name: "login" });
+          } else {
+            this.errorMessage = 'Användarnamnet är upptaget'
+          }
         })
         .catch(e => console.log(e));
-      this.$router.push({ name: "registerSuccess" });
     }
   }
 };
@@ -143,4 +153,7 @@ export default {
 h1 {
   color: black;
 }
+  .error-message{
+    color: red;
+  }
 </style>

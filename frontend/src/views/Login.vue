@@ -33,6 +33,10 @@
     created() {
       eventBus.$on("nav-login-clicked", () => this.logIn());
     },
+    beforeDestroy() {
+      // Removes event listener on component destroy
+      eventBus.$off('nav-login-clicked')
+    },
     methods: {
       async logIn(e) {
         if (e !== undefined) e.preventDefault();
