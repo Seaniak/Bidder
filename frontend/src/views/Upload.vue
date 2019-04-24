@@ -86,6 +86,8 @@
     },
     computed: {},
     mounted() {
+      console.log(this.$store.state.currentUser)
+
       eventBus.$on('uploadAuctionClicked', () => {
         this.handleSubmit();
       });

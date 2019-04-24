@@ -27,18 +27,11 @@
     async created() {
       this.$store.dispatch('getAuctions');
 
-      // Get last logged in account from local storage,
-      // and auto login on connect
-      let rememberedUser = JSON.parse(localStorage.getItem('remember-me'))
-      let response = await fetch("/login", {
-        method: "POST",
-        body: rememberedUser,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      })
-      if (!await response.url.includes('error'))
-        this.$store.commit("loginUser", true);
+      let user = await fetch('/api/remember-me');
+      user = await user.json()
+          .catch(e => console.log("Not logged in"));
+
+      this.$store.commit("loginUser", user);
     }
   }
 </script>

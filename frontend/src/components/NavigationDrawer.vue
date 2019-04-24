@@ -15,7 +15,7 @@
       </v-layout>
     </div>
     <v-layout column>
-      <v-btn v-if="!$store.state.loggedIn" to="/login" flat>
+      <v-btn v-if="!$store.state.currentUser" to="/login" flat>
         <span>Logga in</span>
         <v-icon medium>account_box</v-icon>
       </v-btn>
@@ -31,7 +31,7 @@
         <span>Registera konto</span>
         <v-icon medium>account_box</v-icon>
       </v-btn>
-      <v-btn v-if="$store.state.loggedIn" to="/upload" flat>
+      <v-btn v-if="$store.state.currentUser" to="/upload" flat>
         <span>Skapa auktion</span>
         <v-icon dark medium>note_add</v-icon>
       </v-btn>
@@ -49,7 +49,7 @@ export default {
     logout() {
       fetch("/logout").then(res => {
         if (res.url.includes("logout")) {
-          this.$store.commit("logoutUser", false);
+          this.$store.commit("logoutUser");
         }
       });
       this.toggleDrawer();
