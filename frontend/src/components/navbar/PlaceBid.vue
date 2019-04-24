@@ -1,7 +1,7 @@
 <template>
   <!--  <v-btn @click="placeBidClicked" dark flat>Placera bud</v-btn>-->
   <v-layout row wrap class="bidBar">
-    <smooth-picker class="scroller col-6" ref="smoothPicker" :data="data" :change="dataChange"/>
+    <smooth-picker class="scroller col-6" ref="smoothPicker" :data="possibleBids" :change="dataChange"/>
     <v-btn col-2 class="bidBtn">Lägg Bud</v-btn>
   </v-layout>
 </template>
@@ -53,13 +53,13 @@
 			computed: {
 				possibleBids()
 				{
-					return {
+					return [{
 						currentIndex: 1,
 						flex: 4,
 						list: this.newBids(this.$store.state.currentBid),
 						textAlign: 'center',
 						className: 'row-group'
-					};
+					}];
 				}
 			}
 		};
