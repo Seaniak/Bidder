@@ -12,7 +12,9 @@ export default new Vuex.Store({
   },
   mutations: {
     filterItems(state, searchInput) {
-      state.filteredItems = searchInput
+      console.log('search input in store is: ' + searchInput);
+      state.filteredItems = searchInput;
+      if (searchInput.length === 0) state.filteredItems = state.auctions;
     },
     addAuction(state, value) {
       state.auctions.push(value)
@@ -35,7 +37,7 @@ export default new Vuex.Store({
       response = await response.json();
 
       context.commit('getAuctions', response)
-      context.commit('filterItems')
+      context.commit('filterItems', [])
     }
   }
 })

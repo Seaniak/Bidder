@@ -30,6 +30,14 @@
                 })
                 .then(res => {
                    console.log(res);
+                   let searchRes = [];
+                   res.forEach(auction => {
+                      if (searchRes.includes(auction)){
+                         console.log('Auction already exists')
+                      } else {
+                         searchRes.push(auction);
+                      }
+                   });
                    this.$store.commit("filterItems", res);
                 })
                 .catch(e => console.log(e));
