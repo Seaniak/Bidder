@@ -24,6 +24,12 @@ module.exports = {
         ws: true,
         changeOrigin: true,
         secure: false
+      },
+      "/ultra-secret-socket-address": {
+        target: "ws://localhost:8070",
+        ws: true,
+        changeOrigin: true,
+        secure: false
       }
     }
   },

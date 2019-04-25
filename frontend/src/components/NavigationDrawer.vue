@@ -12,6 +12,9 @@
           <v-icon large>keyboard_arrow_right</v-icon>
         </v-btn>
         <h2>Navigering</h2>
+        <v-btn fab>
+          LL
+        </v-btn>
       </v-layout>
     </div>
     <v-layout column>
