@@ -30,7 +30,13 @@
                 })
                 .then(res => {
                    console.log(res);
-                   this.$store.commit("filterItems", res);
+                   let queryCollector = [];
+                   res.forEach(auction => (queryCollector.push(' ' + auction.title + ' ' + auction.description + ' '
+                       + auction.auctionCondition + ' ' + auction.username + ' ' + auction.category)));
+                   let query = '';
+                   query.concat(...queryCollector);
+                   console.log('Query is: ' + queryCollector);
+                   this.$store.commit("filterItems", query);
                 })
                 .catch(e => console.log(e));
          }

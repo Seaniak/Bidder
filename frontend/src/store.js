@@ -12,8 +12,8 @@ export default new Vuex.Store({
   },
   mutations: {
     filterItems(state, searchInput = '') {
-      let filter = new RegExp(searchInput, "i")
-      state.filteredItems = state.auctions.filter(p => p.title.match(filter) || p.description.match(filter))
+      let filter = new RegExp(searchInput, "i");
+      state.filteredItems = state.auctions.filter(p => p.title.match(filter) || p.description.match(filter) || p.auctionCondition || p.username || p.category)
     },
     addAuction(state, value) {
       state.auctions.push(value)
@@ -38,5 +38,5 @@ export default new Vuex.Store({
       context.commit('getAuctions', response)
       context.commit('filterItems')
     }
-  },
+  }
 })

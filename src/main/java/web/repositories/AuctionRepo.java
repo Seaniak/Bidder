@@ -11,4 +11,8 @@ public interface AuctionRepo extends JpaRepository<Auction, Long> {
   Auction getAuctionById(Long id);
   List<Auction> findAllByUsername(String username);
   List<Auction> findAllByTitleContaining (String searchQuery);
+  List<Auction> findAllByCategoryContaining (String searchQuery);
+  List<Auction> findAllByDescriptionContaining (String searchQuery);
+  List<Auction> findAllByAuctionConditionContaining (String searchQuery);
+  List<Auction> findAllByUsernameContaining (String searchQuery);
 }
