@@ -31,8 +31,8 @@
                 .then(res => {
                    console.log(res);
                    let queryCollector = [];
-                   res.forEach(auction => (queryCollector.push(' ' + auction.title + ' ' + auction.description + ' '
-                       + auction.auctionCondition + ' ' + auction.username + ' ' + auction.category)));
+                   res.forEach(auction => (queryCollector.push(auction.title + ' ' + auction.description + ' '
+                       + auction.auctionCondition + ' ' + auction.username + ' ' + auction.category + ' ')));
                    let query = '';
                    query.concat(...queryCollector);
                    console.log('Query is: ' + queryCollector);
