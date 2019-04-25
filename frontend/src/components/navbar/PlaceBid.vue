@@ -2,7 +2,7 @@
   <!--  <v-btn @click="placeBidClicked" dark flat>Placera bud</v-btn>-->
   <v-layout row wrap class="bidBar">
     <smooth-picker class="scroller col-6" ref="smoothPicker" :data="possibleBids" :change="dataChange"/>
-    <v-btn col-2 class="bidBtn">Lägg Bud</v-btn>
+    <v-btn col-2 class="bidBtn" @click="placeBidClicked">Lägg Bud</v-btn>
   </v-layout>
 </template>
 
@@ -18,51 +18,64 @@
 		},
 		data() {
 			return {
-				data: [{
+				chosenBid: 0,
+				bids: [],
+			}
+		},
+		methods: {
+			bidAdder(currentBid) {
+				let addSum = 0;
+				if (currentBid < 200) addSum = 10;
+				else if (currentBid < 500) addSum = 20;
+				else if (currentBid < 1000) addSum = 50;
+				else if (currentBid < 10000) addSum = 100;
+				else if (currentBid < 20000) addSum = 250;
+				else if (currentBid < 40000) addSum = 500;
+				else if (currentBid < 200000) addSum = 1000;
+				else if (currentBid < 500000) addSum = 2500;
+				else if (currentBid < 1000000) addSum = 5000;
+				else if (currentBid < 2000000) addSum = 10000;
+				else if (currentBid < 4000000) addSum = 25000;
+				else if (currentBid < 10000000) addSum = 50000;
+				else if (currentBid >= 20000000) addSum = 250000;
+				return addSum;
+			},
+			newBids(currentBid) {
+				let bids = [];
+				let bidStrings = [];
+				let addSum = this.bidAdder(currentBid);
+				let possibleBid = currentBid + addSum;
+				while (bidStrings.length < 20) {
+					bids.push(possibleBid);
+					bidStrings.push((possibleBid) + ' kr');
+					possibleBid += addSum;
+				}
+				this.bids = bids;
+				return bidStrings;
+			}
+			,
+			dataChange(gIndex, iIndex) {
+				console.log(this.bids[iIndex]);
+				this.chosenBid = this.bids[iIndex];
+			}
+			,
+			placeBidClicked() {
+				console.log(this.chosenBid);
+			}
+		}
+		,
+		computed: {
+			possibleBids() {
+				return [{
 					currentIndex: 1,
 					flex: 4,
-					list: ['TEST', 'TEST'],
+					list: this.newBids(this.$store.state.currentBid),
 					textAlign: 'center',
 					className: 'row-group'
-				}]
-			}},
-				methods
-		:
-			{
-				newBids(currentBid)
-				{
-					let addSum = 10;
-					if (currentBid >= 100) addSum = 20;
-					else if (currentBid >= 300) addSum = 50;
-					else if (currentBid >= 800) addSum = 100;
-					else if (currentBid >= 1800) addSum = 200;
-					else if (currentBid >= 3800) addSum = 200;
-					let bids = [];
-					let latestSum = currentBid + addSum;
-					while (bids.length < 20) bids.push((latestSum += addSum) + ' kr');
-					return bids;
-				}
-			,
-				dataChange(gIndex, iIndex)
-				{
-					console.log(gIndex, iIndex);
-				}
-			,
+				}];
 			}
-		,
-			computed: {
-				possibleBids()
-				{
-					return [{
-						currentIndex: 1,
-						flex: 4,
-						list: this.newBids(this.$store.state.currentBid),
-						textAlign: 'center',
-						className: 'row-group'
-					}];
-				}
-			}
-		};
+		}
+	};
 </script>
 
 <style scoped>
