@@ -28,23 +28,21 @@ public class SocketController extends TextWebSocketHandler {
 
     Map clientData = new Gson().fromJson(message.getPayload(), Map.class);
 
-    System.out.println(clientData.get("action") + ": " + clientData.get("payload"));
+    System.out.println("DEBUG SOCKET DATA: " + clientData.get("action") + ": " + clientData.get("payload"));
 
-    socketService.sendToAll(new SocketEvent("message", "WoW, Hello Worldie"), SocketEvent.class);
+//    for testing
+    if (clientData.get("action").equals("message")) {
+      socketService.sendToAll(new SocketEvent("message", clientData.get("payload")), SocketEvent.class);
+    }
 
+//    for testing
     Bid bid = new Bid(46, "loke", 25);
     socketService.sendToAll(new SocketEvent("bid", bid), SocketEvent.class);
-
-    // Example with a generic Map instead of converting the JSON to a specific class
-    // Map keysAndValues = new Gson().fromJson(message.getPayload(), Map.class);
-    // Get the value of a key named "firstname"
-    // String firstname = keysAndValues.get("firstname");
   }
 
   @Override
   public void afterConnectionEstablished(WebSocketSession session) {
     socketService.addSession(session);
-    ;
   }
 
   @Override

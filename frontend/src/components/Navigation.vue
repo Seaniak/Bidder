@@ -18,6 +18,7 @@
     <v-badge
             overlap
             left
+            v-model="$store.state.notificationBadge"
             color="orange"
     >
       <template v-slot:badge>
@@ -31,7 +32,7 @@
     <v-btn
             icon
             id="toggleDrawer"
-            @click.stop="$store.state.openNavDrawer = !$store.state.openNavDrawer"
+            @click.stop="toggleDrawer"
     >
       <v-icon color="white" medium>menu</v-icon>
     </v-btn>
@@ -50,6 +51,13 @@
 
 	export default {
 		name: "Navigation",
+    methods: {
+      toggleDrawer(){
+        this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer
+
+        this.$store.commit('notificationToggle', false)
+      }
+    },
 		computed: {
 			currentNavigation() {
 				let indexOne = this.$route.path.indexOf("/");

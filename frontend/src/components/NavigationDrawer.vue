@@ -1,10 +1,10 @@
 <template>
   <v-navigation-drawer
-    v-model="$store.state.openNavDrawer"
-    fixed
-    right
-    clipped
-    temporary
+          v-model="$store.state.openNavDrawer"
+          fixed
+          right
+          clipped
+          temporary
   >
     <div class="nav-title my-3">
       <v-layout row align-center justify-center>
@@ -12,8 +12,15 @@
           <v-icon large>keyboard_arrow_right</v-icon>
         </v-btn>
         <h2>Navigering</h2>
-        <v-btn fab>
-          LL
+        <v-btn
+                v-if="$store.state.currentUser"
+                absolute
+                fab
+                :color="iconColor"
+                id="user-icon"
+                @click="testSocketMessage">
+          {{$store.state.currentUser.name.charAt(0).toUpperCase()}}
+          {{$store.state.currentUser.surname.charAt(0).toUpperCase()}}
         </v-btn>
       </v-layout>
     </div>
@@ -24,10 +31,6 @@
       </v-btn>
       <v-btn v-else flat @click="logout">
         <span>Logga ut</span>
-        <v-icon medium>account_box</v-icon>
-      </v-btn>
-      <v-btn id="aboutBtn" to="/about" flat>
-        <span>Om oss</span>
         <v-icon medium>account_box</v-icon>
       </v-btn>
       <v-btn v-if="!$store.state.currentUser" id="registerBtn" to="/register" flat>
@@ -42,41 +45,79 @@
         <span>Mina auktioner</span>
         <v-icon dark medium>bookmarks</v-icon>
       </v-btn>
+      <!--<v-btn id="aboutBtn" to="/about" flat>-->
+      <!--<span>Om oss</span>-->
+      <!--<v-icon medium>account_box</v-icon>-->
+      <!--</v-btn>-->
+      <Notifications/>
     </v-layout>
   </v-navigation-drawer>
 </template>
 
 <script>
-export default {
-  name: "NavigationDrawer",
-  methods: {
-    toggleDrawer() {
-      this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer;
+  import {sendMessage} from "@/webSocket";
+  import Notifications from './Notifications'
+
+  export default {
+    name: "NavigationDrawer",
+    components: {
+      Notifications
     },
-    logout() {
-      fetch("/logout").then(res => {
-        if (res.url.includes("logout")) {
-          this.$store.commit("logoutUser");
-        }
-      });
-      this.toggleDrawer();
-      this.$router.push({ name: "home" });
+    computed: {
+      iconColor() {
+        let colors = [
+          '#F2D600',
+          '#61BD4F',
+          '#C377E0',
+          '#FF9F1A',
+          '#FF78CB',
+          '#00C2E0'
+        ]
+        let randomColor = Math.round(Math.random() * colors.length)
+        return colors[randomColor]
+      }
+    },
+    methods: {
+      testSocketMessage() {
+        sendMessage('User is sending a message')
+      },
+      toggleDrawer() {
+        this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer;
+      },
+      logout() {
+        fetch("/logout").then(res => {
+          if (res.url.includes("logout")) {
+            this.$store.commit("logoutUser");
+          }
+        });
+        this.toggleDrawer();
+        this.$router.push({name: "home"});
+      },
+      created() {
+
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.nav-title {
-  padding-bottom: 10px;
-  border-bottom: solid 1px #bbb;
-}
+  .nav-title {
+    padding-bottom: 10px;
+    border-bottom: solid 1px #bbb;
+  }
 
-#closeDrawer {
-  left: 0px;
-}
+  #closeDrawer {
+    left: 0px;
+  }
 
-#aboutBtn {
-  color: var(--main-font-color);
-}
+  #aboutBtn {
+    color: var(--main-font-color);
+  }
+
+  #user-icon {
+    right: 5px;
+    font-weight: bold;
+    font-size: 1.7em;
+    letter-spacing: -3px;
+  }
 </style>

@@ -9,6 +9,17 @@ export default new Vuex.Store({
     openNavDrawer: null,
     filteredItems: [],
     auctions: [],
+    notificationBadge: false,
+    notifications: []
+  },
+  actions: {
+    async getAuctions(context) {
+      let response = await fetch('/api/auctions')
+      response = await response.json();
+
+      context.commit('getAuctions', response)
+      context.commit('filterItems')
+    }
   },
   mutations: {
     filterItems(state, searchInput = '') {
@@ -28,15 +39,29 @@ export default new Vuex.Store({
     loginUser(state, user) {
       state.currentUser = user;
       console.log('User: ', state.currentUser)
-    }
-  },
-  actions: {
-    async getAuctions(context) {
-      let response = await fetch('/api/auctions')
-      response = await response.json();
+    },
+    notificationToggle(state, value) {
+      state.notificationBadge = value
+    },
+    webSocket(state, data) {
+      // update state depending on incoming action
+      switch (data.action) {
+        case "bid":
+          state.notificationBadge = true
+          console.log('Socket bid: ', data.payload)
+          break;
+        case "message":
+          state.notificationBadge = true
 
-      context.commit('getAuctions', response)
-      context.commit('filterItems')
+          let notify = {
+            title: 'Nytt meddelande',
+            subtitle: data.payload
+          }
+          state.notifications.push(notify)
+
+          console.log('Socket message: ', data.payload)
+          break;
+      }
     }
   },
 })

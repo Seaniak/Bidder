@@ -1,7 +1,6 @@
-import Vue from "vue";
+import {eventBus} from '@/main'
 
 let ws;
-
 let isConnected = false;
 connect();
 
@@ -10,18 +9,11 @@ function connect() {
   ws.onmessage = (e) => {
     let data = JSON.parse(e.data);
 
-    switch (data.action) {
-      case "bid":
-        console.log(data.payload)
-        break;
-      case "message":
-        console.log(data.payload)
-        break;
-      default:
-    }
+    // sends incoming data to the Vue instance
+    // where it gets commited to store
+    eventBus.$emit('socket-data', data)
   }
   ws.onopen = (e) => {
-    sendSomething();
     console.log("[Web Socket] Connected");
     isConnected = true;
   };
@@ -45,10 +37,10 @@ function disconnect() {
   console.log("[Web Socket] Disconnected");
 }
 
-function sendSomething() {
+export function sendMessage(message) {
   let data = {
-    action: 'Hello',
-    payload: 'Hello World!'
+    action: 'message',
+    payload: message
   }
   ws.send(JSON.stringify(data));
 }
