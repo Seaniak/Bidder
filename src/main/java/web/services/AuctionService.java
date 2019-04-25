@@ -40,7 +40,7 @@ public class AuctionService {
   }
 
   public List<Auction> getAuctionByTitle(String searchQuery) {
-    return auctionRepo.findAllByTitle(searchQuery);
+    return auctionRepo.findAllByTitleContaining(searchQuery);
   }
 
   public Auction insertAuction(Auction auction) {

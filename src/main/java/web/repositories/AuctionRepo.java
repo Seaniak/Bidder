@@ -10,5 +10,5 @@ import java.util.List;
 public interface AuctionRepo extends JpaRepository<Auction, Long> {
   Auction getAuctionById(Long id);
   List<Auction> findAllByUsername(String username);
-  List<Auction> findAllByTitle (String searchQuery);
+  List<Auction> findAllByTitleContaining (String searchQuery);
 }

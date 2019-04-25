@@ -17,7 +17,7 @@
       },
       watch: {
          async searchInput(value) {
-            await fetch("/api/auctions/" + value, {
+            await fetch("/api/auctions/search/" + value, {
                method: "POST",
                mode: "cors",
                headers: {
@@ -26,7 +26,11 @@
                body: JSON.stringify(value)
             })
                 .then(res => {
-                      this.$store.commit("filterItems", res);
+                   return res.json()
+                })
+                .then(res => {
+                   console.log(res);
+                   this.$store.commit("filterItems", res);
                 })
                 .catch(e => console.log(e));
          }
