@@ -64,7 +64,7 @@ public class AuctionController {
 
   @PostMapping("/{query}")
   public Iterable<Auction> getSearchResult (@PathVariable String query) {
-    return auctionService.getQueryByTitle(query);
+    return auctionService.getAuctionByTitle(query);
   }
 
   @PutMapping("/{id}")

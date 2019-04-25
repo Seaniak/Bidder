@@ -39,8 +39,8 @@ public class AuctionService {
     return auctions;
   }
 
-  public List<Auction> getQueryByTitle(String searchQuery) {
-    return auctionRepo.getByTitle(searchQuery);
+  public List<Auction> getAuctionByTitle(String searchQuery) {
+    return auctionRepo.findAllByTitle(searchQuery);
   }
 
   public Auction insertAuction(Auction auction) {

@@ -17,7 +17,7 @@
       },
       watch: {
          async searchInput(value) {
-            await fetch("/api/" + value, {
+            await fetch("/api/auctions/" + value, {
                method: "POST",
                mode: "cors",
                headers: {
