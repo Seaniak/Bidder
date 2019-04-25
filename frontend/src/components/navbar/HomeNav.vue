@@ -33,10 +33,7 @@
                    let queryCollector = [];
                    res.forEach(auction => (queryCollector.push(auction.title + ' ' + auction.description + ' '
                        + auction.auctionCondition + ' ' + auction.username + ' ' + auction.category + ' ')));
-                   let query = '';
-                   query.concat(...queryCollector);
-                   console.log('Query is: ' + queryCollector);
-                   this.$store.commit("filterItems", query);
+                   this.$store.commit("filterItems", ''.concat(...queryCollector));
                 })
                 .catch(e => console.log(e));
          }
