@@ -7,12 +7,12 @@
               leave-active-class="animated fadeOut"
       >
          <h1 class="col-12 mb-3" key="keyNeededToPreventError">Bidder</h1>
-         <h3
-                 v-if="$store.state.filteredItems.length === 0"
-                 key="no-auctions"
-         >
-            Inga auktioner hittades
-         </h3>
+            <AuctionCard class="col-12 col-md-4"
+                         v-if="$store.state.filteredItems === undefined || $store.state.filteredItems.length === 0"
+                         v-for="(auction, index) in $store.state.auctions"
+                         :key="index + 0"
+                         :auction="auction"
+            />
          <AuctionCard class="col-12 col-md-4"
                       v-else
                       v-for="(auction, index) in $store.state.filteredItems"

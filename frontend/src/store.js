@@ -12,9 +12,7 @@ export default new Vuex.Store({
   },
   mutations: {
     filterItems(state, searchInput) {
-      console.log('Search input in store is: ' + searchInput);
-      let filter = new RegExp(searchInput, "i");
-      state.filteredItems = state.auctions.filter(p => p.title.match(filter) || p.description.match(filter) || p.auctionCondition || p.username || p.category)
+      state.filteredItems = searchInput
     },
     addAuction(state, value) {
       state.auctions.push(value)
