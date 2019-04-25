@@ -13,7 +13,7 @@
                          :key="index + 0"
                          :auction="auction"
             />
-         <AuctionCard class="col-12 col-md-4"
+            <AuctionCard class="col-12 col-md-4"
                       v-else
                       v-for="(auction, index) in $store.state.filteredItems"
                       :key="index + 0"
