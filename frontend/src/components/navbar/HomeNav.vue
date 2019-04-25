@@ -29,7 +29,9 @@
                    return res.json()
                 })
                 .then(res => {
-                   console.log(res);
+                   console.log(typeof res);
+                   //TODO res.forEach is not a function? -> handle it
+                   if(!(res.length === 0)) {
                    let searchRes = [];
                    res.forEach(auction => {
                       if (searchRes.includes(auction)){
@@ -38,7 +40,8 @@
                          searchRes.push(auction);
                       }
                    });
-                   this.$store.commit("filterItems", res);
+                   this.$store.commit("filterItems", searchRes);
+                   }
                 })
                 .catch(e => console.log(e));
          }
