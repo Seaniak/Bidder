@@ -15,6 +15,19 @@
                  :key="$route.fullPath"></component>
       </transition>
 
+    <v-badge
+            overlap
+            left
+            color="orange"
+    >
+      <template v-slot:badge>
+        <v-icon
+                dark
+                small
+        >
+          notifications
+        </v-icon>
+      </template>
     <v-btn
             icon
             id="toggleDrawer"
@@ -22,6 +35,7 @@
     >
       <v-icon color="white" medium>menu</v-icon>
     </v-btn>
+    </v-badge>
   </nav>
 </template>
 
