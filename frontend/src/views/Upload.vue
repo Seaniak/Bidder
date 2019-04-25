@@ -50,9 +50,6 @@
         <div id="postImage">
           <FileUpload @uploadImage="handleImage($event)"/>
         </div>
-        <div v-if="previewImages[0]">
-          <img v-for="image of previewImages" width="60%" :src="image" :key="image + 1" alt="profile picture">
-        </div>
       </div>
     </form>
   </v-container>
@@ -62,6 +59,7 @@
   import FileUpload from '@/components/FileUpload';
   import {eventBus} from "@/main";
   import Datepicker from 'vuejs-datetimepicker';
+  import {convertImage} from "@/utilities/ImageConverter";
 
   export default {
     components: {
@@ -70,7 +68,6 @@
     },
     data() {
       return {
-        previewImages: [],
         files: [],
         thumbnail: [],
         title: '',
@@ -152,7 +149,6 @@
             .catch(e => console.log(e))
       },
       handleImage(imageData) {
-        this.previewImages = imageData.previewImages
         this.files = imageData.files
         this.thumbnail = imageData.thumbnail
       }

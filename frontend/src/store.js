@@ -3,6 +3,8 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+let noticeID = 0;
+
 export default new Vuex.Store({
   state: {
     currentUser: null,
@@ -43,6 +45,10 @@ export default new Vuex.Store({
     notificationToggle(state, value) {
       state.notificationBadge = value
     },
+    removeNotification(state, item) {
+      let index = state.notifications.indexOf(item)
+      state.notifications.splice(index, 1);
+    },
     webSocket(state, data) {
       // update state depending on incoming action
       switch (data.action) {
@@ -54,10 +60,13 @@ export default new Vuex.Store({
           state.notificationBadge = true
 
           let notify = {
+            id: noticeID,
             title: 'Nytt meddelande',
             subtitle: data.payload
           }
           state.notifications.push(notify)
+
+          noticeID++
 
           console.log('Socket message: ', data.payload)
           break;

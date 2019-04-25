@@ -10,31 +10,47 @@
     <label for="file-load">
       <v-icon dark>cloud_upload</v-icon>
     </label>
+    <div v-if="files[0]">
+      <img v-for="(image, i) of files"
+           width="20%"
+           :src="image"
+           :key="i"
+           alt="profile picture"
+           :class="{ 'active': activeIndex === i }"
+           @click="readThumbnail(i)">
+    </div>
   </div>
 </template>
 
 <script>
+  import {convertImage} from "@/utilities/ImageConverter";
+
   export default {
     name: "FileUpload",
     data() {
       return {
-        previewImages: [],
+        images: [],
         files: [],
-        thumbnail: []
+        thumbnail: [],
+        activeIndex: 0
       }
     },
     methods: {
       upload(e) {
         this.resetArrays()
-        let images = e.target.files; // array with files
+        this.images = e.target.files; // array with files
 
-        for (let image of images) {
+        for (let image of this.images) {
           this.readImage(image);
         }
-        this.readImage(images[0], true)
+        this.readThumbnail(0)
+      },
+      readThumbnail(index) {
+        this.activeIndex = index;
+
+        this.readImage(this.images[index], true)
 
         this.$emit('uploadImage', {
-          previewImages: this.previewImages,
           files: this.files,
           thumbnail: this.thumbnail
         })
@@ -43,87 +59,19 @@
         let reader = new FileReader();
         reader.readAsDataURL(imageFile);  // read file to this format
         reader.onload = e => { // when file is loaded
-
           let image = new Image();
           image.onload = () => {
             if (thumbnail)
-              this.convertImage(image, thumbnail)
+              this.thumbnail[0] = (convertImage(image, true))
             else
-              this.convertImage(image)
+              this.files.push(convertImage(image))
           }
           image.src = e.target.result
         }
       },
-      convertImage(image, thumbnail = false) {
-        let canvas = document.createElement('canvas');
-        let width = thumbnail ? 300 : 600;
-        let height = thumbnail ? 300 : 600;
-
-        canvas.width = width;
-        canvas.height = height;
-
-        let context = canvas.getContext('2d');
-
-        context.fillStyle = 'white';
-        context.fillRect(0, 0, width, height);
-
-        let imageScale = image.width / image.height;
-
-        let resizedWidth = image.width;
-        let resizedHeight = image.height;
-
-        // only resize if image is larger than target size
-        if (image.height > canvas.height ||
-            image.width > canvas.width) {
-          resizedWidth = canvas.width;
-          resizedHeight = resizedWidth / imageScale;
-          if (resizedHeight > canvas.height) {
-            resizedHeight = canvas.height;
-            resizedWidth = resizedHeight * imageScale;
-          }
-        }
-
-        // center image in canvas
-        let centerW = canvas.width / 2 - resizedWidth / 2;
-        let centerH = canvas.height / 2 - resizedHeight / 2;
-
-        context.drawImage(image,
-            centerW,
-            centerH,
-            resizedWidth,
-            resizedHeight
-        );
-
-        // convert to Base64 string for preview
-        let imageData = canvas.toDataURL('image/jpeg');
-
-        if (thumbnail) {
-          this.thumbnail.push(imageData);
-          return;
-        }
-
-        this.previewImages.push(imageData);
-        this.files.push(imageData);
-
-        // let imageURI = this.dataUriToFile(imageData);
-        // return new File([imageURI], "imageFile.png", {type: "image/png"});
-      },
-      dataUriToFile(dataURI) {
-        // convert base64 to raw binary data held in a string
-        let byteString = atob(dataURI.split(',')[1]);
-
-        let n = byteString.length;
-        // write the bytes of the string to an ArrayBuffer
-        // let ab = new ArrayBuffer(n);
-        let u8arr = new Uint8Array(n);
-        while (n--) {
-          u8arr[n] = byteString.charCodeAt(n);
-        }
-        return u8arr;
-      },
       resetArrays() {
         this.files = []
-        this.previewImages = []
+        this.images = []
         this.thumbnail = []
       }
     }
@@ -131,6 +79,9 @@
 </script>
 
 <style scoped>
+  .active{
+    border: 2px solid greenyellow;
+  }
   #upload {
     display: flex;
   }
