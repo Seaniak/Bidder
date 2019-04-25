@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import web.entities.Auction;
 import web.entities.Bid;
 import web.entities.Thumbnail;
-import web.services.AuctionService;
-import web.services.BidService;
-import web.services.ImageService;
-import web.services.ThumbnailService;
+import web.services.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -63,6 +60,11 @@ public class AuctionController {
     thumbnailService.insertThumbnail(thumbnail);
 
     return auctionFromDb;
+  }
+
+  @PostMapping("/{query}")
+  public Iterable<Auction> getSearchResult (@PathVariable String query) {
+    return auctionService.getQueryByTitle(query);
   }
 
   @PutMapping("/{id}")

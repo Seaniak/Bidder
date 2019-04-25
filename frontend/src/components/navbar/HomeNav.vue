@@ -1,26 +1,37 @@
 <template>
-  <v-text-field
-    dark
-    id="nav-search"
-    label="Sök efter auktioner"
-    v-model="searchInput"
-  ></v-text-field>
+   <v-text-field
+           dark
+           id="nav-search"
+           label="Sök efter auktioner"
+           v-model="searchInput"
+   ></v-text-field>
 </template>
 
 <script>
-export default {
-  name: "HomeNav",
-  data() {
-    return {
-      searchInput: ""
-    };
-  },
-  watch: {
-    searchInput(value) {
-      this.$store.commit("filterItems", value);
-    }
-  }
-};
+   export default {
+      name: "HomeNav",
+      data() {
+         return {
+            searchInput: ""
+         };
+      },
+      watch: {
+         async searchInput(value) {
+            await fetch("/api/" + value, {
+               method: "POST",
+               mode: "cors",
+               headers: {
+                  "Content-Type": "application/json"
+               },
+               body: JSON.stringify(value)
+            })
+                .then(res => {
+                      this.$store.commit("filterItems", res);
+                })
+                .catch(e => console.log(e));
+         }
+      }
+   };
 </script>
 
 <style scoped></style>

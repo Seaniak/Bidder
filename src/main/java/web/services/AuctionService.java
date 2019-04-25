@@ -39,6 +39,10 @@ public class AuctionService {
     return auctions;
   }
 
+  public List<Auction> getQueryByTitle(String searchQuery) {
+    return auctionRepo.getByTitle(searchQuery);
+  }
+
   public Auction insertAuction(Auction auction) {
     return auctionRepo.save(auction);
   }
