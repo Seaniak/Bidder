@@ -6,7 +6,7 @@
          ':' + formatNumber(this.timeLeft.getSeconds()))}}
       </p>
       <p v-else>
-         {{new Intl.DateTimeFormat("sv-SE", {weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric',
+         {{new Intl.DateTimeFormat("sv-SE", {year: 'numeric', month: 'numeric', day: 'numeric',
          hour: 'numeric', minute: 'numeric', second: 'numeric'}).format(this.endDate)}}
       </p>
    </div>
