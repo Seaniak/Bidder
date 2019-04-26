@@ -20,19 +20,33 @@ public class AuctionService {
     return auctionRepo.getAuctionById(id);
   }
 
-  public List<Auction> getUserAuctions(String username){
-    return auctionRepo.findAllByUsername(username);
+  public List<Auction> getUserAuctions(String username) {
+    return addThumbnails(
+            auctionRepo.findAllByUsername(username));
   }
 
   public List<Auction> getAllAuctions() {
-    List<Auction> auctions = auctionRepo.findAll();
+    return addThumbnails(
+            auctionRepo.findAll());
+  }
 
+  private List<Auction> addThumbnails(List<Auction> auctions) {
     for (Auction auction : auctions) {
       Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
       if (thumbnail != null)
         auction.setThumbnail(thumbnail.getImage());
     }
     return auctions;
+  }
+
+  public List<Auction> getSearchResult(String searchQuery) {
+    if(searchQuery.isEmpty()) return getAllAuctions();
+    List<Auction> tempList = auctionRepo.findAllByAuctionConditionContaining(searchQuery);
+    tempList.addAll(auctionRepo.findAllByUsername(searchQuery));
+    tempList.addAll(auctionRepo.findAllByCategoryContaining(searchQuery));
+    tempList.addAll(auctionRepo.findAllByDescriptionContaining(searchQuery));
+    tempList.addAll(auctionRepo.findAllByTitleContaining(searchQuery));
+    return addThumbnails(tempList);
   }
 
   public Auction insertAuction(Auction auction) {

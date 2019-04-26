@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1>Skapa auktion</h1>
-    <form @submit.prevent="handleSubmit">
+    <form>
       <v-text-field
               label="Titel"
               v-model="title"
@@ -84,13 +84,14 @@
         reservedSum: null,
       }
     },
-    computed: {},
-    mounted() {
-      console.log(this.$store.state.currentUser)
-
+    created() {
       eventBus.$on('uploadAuctionClicked', () => {
         this.handleSubmit();
       });
+    },
+    beforeDestroy() {
+      // Removes event listener on component destroy
+      eventBus.$off('uploadAuctionClicked')
     },
     methods: {
       async handleSubmit() {
@@ -127,11 +128,10 @@
           reservedSum: this.reservedSum,
           frontEndCreateTime: this.createTime,
           frontEndEndTime: this.endTime,
+          username: this.$store.state.currentUser.username,
           thumbnail: this.thumbnail[0]
         };
         console.log(data);
-        console.log(typeof data.frontEndCreateTime);
-        console.log(typeof data.frontEndEndTime);
 
         fetch('/api/auctions', {
           method: 'POST',

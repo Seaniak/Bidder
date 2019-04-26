@@ -1413,11 +1413,6 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-anypicker@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/anypicker/-/anypicker-2.0.9.tgz#30d2b6cd6cb64b117684cd4f0bcc8abd88d30fb6"
-  integrity sha1-MNK2zWy2SxF2hM1PC8yKvYjTD7Y=
-
 aproba@^1.0.3, aproba@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
@@ -4676,11 +4671,6 @@ joi@^14.3.0:
     isemail "3.x.x"
     topo "3.x.x"
 
-jquery@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.0.tgz#8de513fa0fa4b2c7d2e48a530e26f0596936efdf"
-  integrity sha512-ggRCXln9zEqv6OqAGXFEcshF5dSBvCkzj6Gm2gzuR5fWawaX8t7cxKVkkygKODrDAzKdoYw3l/e3pm3vlT4IbQ==
-
 js-levenshtein@^1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
@@ -5865,13 +5855,6 @@ pbkdf2@^3.0.3:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
-
-pd-select@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/pd-select/-/pd-select-2.0.4.tgz#20065a7cc3d4dbfaba174979fd70577437cb26bc"
-  integrity sha512-HTyg9H2wwXbnZsj59TEyiihrFjQzI2xNe7cvYChBTYP1CZ1RgWqMpvuZk1yQFOyDnV4E4I/5eRqJhdNvwNkrGA==
-  dependencies:
-    vue "^2.5.2"
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -7976,24 +7959,10 @@ vue-loader@^15.7.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-mobi-scroll@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/vue-mobi-scroll/-/vue-mobi-scroll-1.0.8.tgz#8aa809651f6f847763c41b960f79e107f42dfead"
-  integrity sha512-2amtickWNq94fFtSIvY6C4MPT8W5vIsxBslZxY+XfmU8O/zdyMLN/GP96ANV8chCC1VXH982ndeD/IPk7eqyRA==
-  dependencies:
-    vue "^2.5.11"
-
 vue-router@^3.0.1:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.6.tgz#2e4f0f9cbb0b96d0205ab2690cfe588935136ac3"
   integrity sha512-Ox0ciFLswtSGRTHYhGvx2L44sVbTPNS+uD2kRISuo8B39Y79rOo0Kw0hzupTmiVtftQYCZl87mwldhh2L9Aquw==
-
-vue-scroll-picker@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/vue-scroll-picker/-/vue-scroll-picker-0.2.0.tgz#2e2c7427d03fccb0a4d0e8529eee5fff4391b1f8"
-  integrity sha512-08m0JKbLewQi9f+ndH9aM9M1TIaG28oju3shDhORtJX/EmqPeypOKQZ9Pa3m9rdllsBo+8eH9AerIqAFh5y2GQ==
-  dependencies:
-    vue "^2.5.17"
 
 vue-smooth-picker@^0.3.9:
   version "0.3.9"
@@ -8023,7 +7992,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.3.3, vue@^2.5.11, vue@^2.5.17, vue@^2.5.2, vue@^2.6.6:
+vue@^2.3.3, vue@^2.5.2, vue@^2.6.6:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==

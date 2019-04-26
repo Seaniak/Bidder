@@ -121,12 +121,14 @@
 	};
 </script>
 
-<style scoped>
-  .border {
+<style>
+  .border{
     border-radius: 4px;
   }
-
-  .description {
+  .v-carousel__controls{
+    border-radius: 0 0 4px 4px;
+  }
+  .description{
     text-align: start;
   }
 </style>

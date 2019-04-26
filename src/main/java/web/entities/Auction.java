@@ -7,7 +7,6 @@ import java.util.List;
 @Entity
 public class Auction {
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;

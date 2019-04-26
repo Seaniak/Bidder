@@ -17,6 +17,7 @@
         <v-icon medium>attach_money</v-icon>
       </div>
       <div class="col-6">
+        <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
         <h5>{{ getDateString(auction.endTime) }}</h5>
         <v-icon medium>timelapse</v-icon>
       </div>
@@ -25,8 +26,11 @@
 </template>
 
 <script>
+  import AuctionTimeCountDown from '../components/AuctionTimeCountDown';
+
   export default {
     name: "AuctionCard",
+    components: {AuctionTimeCountDown},
     data() {
       return {}
     },
@@ -42,7 +46,7 @@
       }
 
     },
-    props: ["auction"],
+    props: ['auction', 'auctionEndTime'],
   };
 </script>
 

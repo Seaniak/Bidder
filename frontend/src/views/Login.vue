@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Log in</h1>
+    <h1>Logga in</h1>
     <v-form @submit="logIn">
       <v-text-field
               class="mt-5"
@@ -32,6 +32,10 @@
     },
     created() {
       eventBus.$on("nav-login-clicked", () => this.logIn());
+    },
+    beforeDestroy() {
+      // Removes event listener on component destroy
+      eventBus.$off('nav-login-clicked')
     },
     methods: {
       async logIn(e) {

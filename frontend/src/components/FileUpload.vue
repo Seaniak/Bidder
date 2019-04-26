@@ -56,10 +56,16 @@
       },
       convertImage(image, thumbnail = false) {
         let canvas = document.createElement('canvas');
-        canvas.width = thumbnail ? 200 : 600;
-        canvas.height = thumbnail ? 200 : 400;
+        let width = thumbnail ? 300 : 600;
+        let height = thumbnail ? 300 : 600;
+
+        canvas.width = width;
+        canvas.height = height;
 
         let context = canvas.getContext('2d');
+
+        context.fillStyle = 'white';
+        context.fillRect(0, 0, width, height);
 
         let imageScale = image.width / image.height;
 
@@ -89,7 +95,7 @@
         );
 
         // convert to Base64 string for preview
-        let imageData = canvas.toDataURL('image/png');
+        let imageData = canvas.toDataURL('image/jpeg');
 
         if (thumbnail) {
           this.thumbnail.push(imageData);

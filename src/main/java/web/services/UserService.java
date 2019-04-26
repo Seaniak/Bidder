@@ -11,10 +11,6 @@ public class UserService {
   @Autowired
   private UserRepo userRepo;
 
-//  public List<Auction> getAllPosts(){
-//    return postRepo.findAll();
-//  }
-
   public User findByUsername(String username){ return userRepo.findByUsername(username);}
 
   public User insertUser(User user){

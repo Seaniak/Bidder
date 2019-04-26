@@ -16,7 +16,6 @@ export default new Router({
     {
       path: "/upload",
       name: "upload",
-      props: true,
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -46,12 +45,6 @@ export default new Router({
       name: "register",
       component: () =>
         import(/* webpackChunkName: "register" */ "./views/Register.vue")
-    },
-    {
-      path: "/register-success",
-      name: "registerSuccess",
-      component: () =>
-        import(/* webpackChunkName: "registerSuccess" */ "./views/RegistrationSuccess.vue")
     },
     {
       path: "/user-auctions",

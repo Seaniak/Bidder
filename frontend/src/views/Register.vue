@@ -1,10 +1,5 @@
 <template>
-  <v-container>
-    <v-flex v-if="!$store.state.addUserResponseFromDb">
-      <RegisterUser />
-    </v-flex>
-    <v-flex v-else> </v-flex>
-  </v-container>
+  <RegisterUser />
 </template>
 
 <script>

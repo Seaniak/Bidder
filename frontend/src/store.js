@@ -10,25 +10,19 @@ export default new Vuex.Store({
     openNavDrawer: null,
     filteredItems: [],
     auctions: [],
-    addUserResponseFromDb: ''
   },
   mutations: {
-    filterItems(state, searchInput = '') {
-      let filter = new RegExp(searchInput, "i")
-      state.filteredItems = state.auctions.filter(p => p.title.match(filter) || p.description.match(filter))
+    filterItems(state, searchInput) {
+      console.log('search input in store is: ' + searchInput);
+      state.filteredItems = searchInput;
+      if (searchInput.length === 0) state.filteredItems = state.auctions;
     },
     addAuction(state, value) {
       state.auctions.push(value)
     },
-    addUserToDb(state, value) {
-      state.addUserResponseFromDb = value
-    },
-    clearResponseFromDb(state, value = '') {
-      state.addUserResponseFromDb = value;
-    },
     getAuctions(state, value) {
       state.auctions = value;
-      console.log(state.auctions)
+      console.log('Auctions: ', state.auctions)
     },
     logoutUser(state, value) {
       state.currentUser = null;
@@ -39,15 +33,16 @@ export default new Vuex.Store({
     setCurrentBid(state, bid) {
       state.currentBid = bid;
     },
+      console.log('User: ', state.currentUser)
+    }
   },
   actions: {
     async getAuctions(context) {
-      console.log('Fetching auctions');
-      let response = await fetch('/api/auctions');
+      let response = await fetch('/api/auctions')
       response = await response.json();
 
-      context.commit('getAuctions', response);
-      context.commit('filterItems');
+      context.commit('getAuctions', response)
+      context.commit('filterItems', [])
     }
-  },
+  }
 })
