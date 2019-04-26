@@ -37,10 +37,7 @@
           ></v-select>
         </v-flex>
       </v-layout>
-      <div>
-        <h4>Välj starttid</h4>
-        <Datepicker v-model="createTime" format="YYYY-MM-DD H:i:s" width="100%"/>
-      </div>
+
       <div>
         <h4>Välj sluttid</h4>
         <Datepicker v-model="endTime" format="YYYY-MM-DD H:i:s" width="100%"/>
@@ -49,9 +46,6 @@
       <div>
         <div id="postImage">
           <FileUpload @uploadImage="handleImage($event)"/>
-        </div>
-        <div v-if="previewImages[0]">
-          <img v-for="image of previewImages" width="60%" :src="image" :key="image + 1" alt="profile picture">
         </div>
       </div>
     </form>
@@ -62,6 +56,7 @@
   import FileUpload from '@/components/FileUpload';
   import {eventBus} from "@/main";
   import Datepicker from 'vuejs-datetimepicker';
+  import {convertImage} from "@/utilities/ImageConverter";
 
   export default {
     components: {
@@ -70,15 +65,13 @@
     },
     data() {
       return {
-        previewImages: [],
         files: [],
         thumbnail: [],
         title: '',
         description: '',
         auctionCondition: '',
         categories: ['Fordon', 'Teknik', 'Konst', 'Hus', 'Inredning'],
-        chosenCategory: '',
-        createTime: null,
+        chosenCategory: 'Fordon',
         endTime: null,
         startSum: null,
         reservedSum: null,
@@ -96,7 +89,8 @@
     methods: {
       async handleSubmit() {
         // if no input, don't submit
-        if (!this.title.length || !this.description.length) {
+        if (!this.title.length || !this.description.length || !this.auctionCondition.length ||
+        this.reservedSum < this.startSum && this.startSum < 0 && this.endTime > Date.now()) {
           return;
         }
 
@@ -126,7 +120,6 @@
           auctionCondition: this.auctionCondition,
           startSum: this.startSum,
           reservedSum: this.reservedSum,
-          frontEndCreateTime: this.createTime,
           frontEndEndTime: this.endTime,
           username: this.$store.state.currentUser.username,
           thumbnail: this.thumbnail[0]
@@ -152,7 +145,6 @@
             .catch(e => console.log(e))
       },
       handleImage(imageData) {
-        this.previewImages = imageData.previewImages
         this.files = imageData.files
         this.thumbnail = imageData.thumbnail
       }

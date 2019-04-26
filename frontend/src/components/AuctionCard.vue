@@ -8,18 +8,17 @@
             :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
             aspect-ratio="2.75"
     ></v-img>
-    <v-card-title primary-title>
+    <v-card-title class="align-items-start" primary-title>
       <div class="col-12">
-        <h3>{{ auction.title }}</h3>
+        <h3 class="col-12 mb-0">{{ auction.title }}</h3>
       </div>
       <div class="col-6">
-        <h5>Nuvarande bud</h5>
-        <v-icon medium>attach_money</v-icon>
+        <h5 class="col-12 mt-0">Bud</h5>
+        <p>{{maxBid}}</p>
       </div>
-      <div class="col-6">
+      <div class="col-6 mt-0">
+        <h5 class="col-12">Tid kvar</h5>
         <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
-        <h5>{{ getDateString(auction.endTime) }}</h5>
-        <v-icon medium>timelapse</v-icon>
       </div>
     </v-card-title>
   </v-card>
@@ -32,7 +31,9 @@
     name: "AuctionCard",
     components: {AuctionTimeCountDown},
     data() {
-      return {}
+      return {
+        maxBid: 'Placeholder'
+      }
     },
     methods: {
       getDateString(auctionTimeStamp) {
@@ -47,6 +48,9 @@
 
     },
     props: ['auction', 'auctionEndTime'],
+/*    async created() {
+      this.maxBid = Math.max(...(await this.auction.bids.map((bid) => bid.sum)));
+    }*/
   };
 </script>
 

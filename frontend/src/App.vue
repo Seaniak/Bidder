@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import {eventBus} from '@/main'
   import Navigation from '@/components/Navigation'
   import NavigationDrawer from '@/components/NavigationDrawer'
 
@@ -32,6 +33,10 @@
           .catch(e => console.log("Not logged in"));
 
       this.$store.commit("loginUser", user);
+
+      // forward incoming socket data to store
+      eventBus.$on('socket-data', data =>
+          this.$store.commit('webSocket', data))
     }
   }
 </script>

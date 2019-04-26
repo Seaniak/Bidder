@@ -89,7 +89,7 @@ export default {
       emailRules: [
         v => !!v || "Du måste fylla i e-mail",
         v =>
-          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.timeLeft(v) ||
           "E-mail måste vara korrekt ifylld",
         v => (v && v.length <= 35) || "Max 35 tecken"
       ]
@@ -136,6 +136,7 @@ export default {
         .then(res => {
           console.log(res);
           if(res === 'success'){
+            this.errorMessage = '';
             this.successMessage = 'Nytt konto registrerat!'
             setTimeout(()=>{
               this.$router.push({ name: "login" });
