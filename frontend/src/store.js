@@ -29,12 +29,11 @@ export default new Vuex.Store({
     },
     loginUser(state, user) {
       state.currentUser = user;
+      console.log('User: ', state.currentUser)
     },
     setCurrentBid(state, bid) {
       state.currentBid = bid;
     },
-      console.log('User: ', state.currentUser)
-    }
   },
   actions: {
     async getAuctions(context) {
