@@ -38,10 +38,8 @@
 		name: "Navigation",
 		computed: {
 			currentNavigation() {
-				let indexOne = this.$route.path.indexOf("/");
-				let indexTwo = this.$route.path.lastIndexOf("/");
-				let path = this.$route.path;
-				switch (((path.length > 1) && indexTwo > indexOne) ? path.substring(0, indexTwo) : path) {
+		    let path = this.$route.path;
+				switch ((path.lastIndexOf("/") > 1) ? path.substring(0, path.lastIndexOf("/")) : path) {
 					case '/':
 						return HomeNav;
 						break;

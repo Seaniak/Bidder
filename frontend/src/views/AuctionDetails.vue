@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container>
     <v-carousel height="50vh"
-    class="border">
+                class="border">
       <v-carousel-item
               v-for="(image, i) in images"
               :key="i"
@@ -40,16 +40,35 @@
         <td class="text-xs-right">{{getDateString(props.item.time)}}</td>
       </template>
     </v-data-table>
+<!--    <smooth-picker ref="smoothPicker" :data="data" :change="dataChange" />-->
+
   </v-container>
 </template>
 
 <script>
+	// import 'vue-smooth-picker/dist/css/style.css';
+	// import {SmoothPicker} from 'vue-smooth-picker';
+
 	export default {
+		components: {
+			// SmoothPicker
+		},
 		data() {
 			return {
+				// data: [
+				// 	{
+				// 		currentIndex: 0,
+				// 		flex: 3,
+				// 		list: [
+				// 			'Plan A - free', 'Plan B - $50', 'Plan C - $100'
+				// 		],
+				// 		textAlign: 'center',
+				// 		className: 'row-group'
+				// 	}
+				// ],
 				maxBid: 0,
 				bidsController: true,
-          numbercontroll: [10,20,30,{text:'Alla',value:-1}],
+				numbercontroll: [10, 20, 30, {text: 'Alla', value: -1}],
 				auction: 0,
 				endDateString: 0,
 				images: [],
@@ -72,6 +91,9 @@
 			}
 		},
 		methods: {
+			// dataChange(gIndex, iIndex){
+			// 	console.log(gIndex, iIndex);
+      // },
 			getDateString(bidTimeStamp) {
 				let bidDate = new Date(bidTimeStamp);
 				return (bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString());
@@ -86,7 +108,12 @@
 			this.images = await images.json();
 
 			this.maxBid = Math.max(...(await this.auction.bids.map((bid) => bid.sum)));
-      if(this.auction.bids.length >10) this.bidsController = false;
+
+			////tillfälligt
+  		this.$store.commit("setCurrentBid", this.maxBid);
+      console.log([this.$store.state.currentBid*1.01, this.$store.state.currentBid*1.02, this.$store.state.currentBid*1.03,
+		  this.$store.state.currentBid*1.04, this.$store.state.currentBid*1.05, this.$store.state.currentBid*1.06]);
+		if (this.auction.bids.length > 10) this.bidsController = false;
 
 			let endDate = new Date(this.auction.endTime);
 			this.endDateString = endDate.toLocaleDateString() + " " + endDate.getHours() + ":" + endDate.getMinutes();
