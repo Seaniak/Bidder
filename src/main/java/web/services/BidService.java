@@ -23,11 +23,11 @@ public class BidService {
     return bidRepo.findAll();
   }
 
-  public Bid insertImage(Bid bid) {
+  public Bid insertBid(Bid bid) {
     return bidRepo.save(bid);
   }
 
-  public void deleteImage(Bid bid) {
+  public void deleteBid(Bid bid) {
     bidRepo.delete(bid);
   }
 }

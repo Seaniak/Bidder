@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    currentAuctionId: null,
     currentBid: null,
     currentUser: null,
     openNavDrawer: null,
@@ -24,6 +25,10 @@ export default new Vuex.Store({
       state.auctions = value;
       console.log('Auctions: ', state.auctions)
     },
+	  getSingleAuction(state, value) {
+		  state.auctions = value;
+		  console.log('Auctions: ', state.auctions)
+	  },
     logoutUser(state, value) {
       state.currentUser = null;
     },
@@ -34,14 +39,17 @@ export default new Vuex.Store({
     setCurrentBid(state, bid) {
       state.currentBid = bid;
     },
+    setCurrentAuctionId(state, bid) {
+      state.currentBid = bid;
+    },
   },
   actions: {
     async getAuctions(context) {
-      let response = await fetch('/api/auctions')
+      let response = await fetch('/api/auctions');
       response = await response.json();
 
-      context.commit('getAuctions', response)
-      context.commit('filterItems', [])
+      context.commit('getAuctions', response);
+      context.commit('filterItems', []);
     }
   }
 })

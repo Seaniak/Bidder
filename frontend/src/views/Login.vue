@@ -70,8 +70,6 @@
           user = await user.json()
           this.$store.commit("loginUser", user);
         }
-
-
         // for automatically login on connect
       }
     }

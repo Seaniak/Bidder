@@ -31,7 +31,7 @@
 	import RegisterNav from './navbar/RegisterNav';
 	import UploadAuction from "./navbar/UploadAuctionNav";
 	import GoToLoginPageNav from "./navbar/GoToLoginPageNav";
-	import PlaceBid from "./navbar/PlaceBid";
+	import PlaceBidNav from "./navbar/PlaceBidNav";
 
 
 	export default {
@@ -56,7 +56,7 @@
 						return UploadAuction;
 						break;
 					case '/auction':
-						return PlaceBid;
+						return PlaceBidNav;
 						break;
 					default:
 						return HomeNav

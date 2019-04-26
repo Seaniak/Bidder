@@ -1,41 +1,22 @@
 <template>
-  <!--  <v-btn @click="placeBidClicked" dark flat>Placera bud</v-btn>-->
-  <v-layout row wrap class="bidBar">
-    <smooth-picker class="scroller col-6" ref="smoothPicker" :data="possibleBids" :change="dataChange"/>
-    <v-btn col-2 class="bidBtn" @click="placeBidClicked">Lägg Bud</v-btn>
-  </v-layout>
+  <PlaceBid :auctionId="auctionId"></PlaceBid>
 </template>
 
 <script>
-	//import { eventBus } from "@/main";
-	import 'vue-smooth-picker/dist/css/style.css';
-	import {SmoothPicker} from 'vue-smooth-picker';
+	import PlaceBid from '../PlaceBid'
 
 	export default {
-		name: "PlaceBid",
+		name: "PlaceBidNav",
 		components: {
+			PlaceBid,
 		},
 		data() {
 			return {
+				auctionId: this.$route.params.id
 			}
 		}
 	}
 </script>
 
 <style scoped>
-  /*.scroller {*/
-  /*  width: auto;*/
-  /*  height: auto;*/
-  /*  bottom: 10px;*/
-  /*}*/
-
-  /*.bidBtn {*/
-  /*  width: auto;*/
-  /*  height: auto;*/
-  /*}*/
-
-  /*.bidBar {*/
-  /*  width: 300px;*/
-  /*  height: auto;*/
-  /*}*/
 </style>
