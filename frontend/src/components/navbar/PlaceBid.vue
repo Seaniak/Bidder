@@ -55,19 +55,19 @@
 			}
 			,
 			dataChange(gIndex, iIndex) {
-				console.log(this.bids[iIndex]);
-				this.chosenBid = this.bids[iIndex];
+				this.chosenBid = this.bids[iIndex - 1];
 			}
 			,
 			placeBidClicked() {
 				console.log(this.chosenBid);
+
 			}
 		}
 		,
 		computed: {
 			possibleBids() {
 				return [{
-					currentIndex: 1,
+					currentIndex: 2,
 					flex: 4,
 					list: this.newBids(this.$store.state.currentBid),
 					textAlign: 'center',
