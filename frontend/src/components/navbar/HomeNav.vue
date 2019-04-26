@@ -33,15 +33,8 @@
                 })
                 .then(res => {
                    if(!(res.length === 0)) {
-                   let searchRes = [];
-                   res.forEach(auction => {
-                      if (searchRes.includes(auction)){
-                         console.log('Auction already exists')
-                      } else {
-                         searchRes.push(auction);
-                      }
-                   });
-                   this.$store.commit("filterItems", searchRes);
+                      let searchRes = res.filter(a => new Date(a.endTime) > Date.now());
+                      this.$store.commit("filterItems", searchRes);
                    }
                 })
                 .catch(e => console.log(e));

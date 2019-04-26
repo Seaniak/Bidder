@@ -11,10 +11,9 @@ export default new Vuex.Store({
     auctions: [],
   },
   mutations: {
-    filterItems(state, searchInput) {
-      console.log('search input in store is: ' + searchInput);
-      state.filteredItems = searchInput;
-      if (searchInput.length === 0) state.filteredItems = state.auctions;
+    filterItems(state, searchResult) {
+      console.log('search input in store is: ' + searchResult);
+      state.filteredItems = searchResult;
     },
     addAuction(state, value) {
       state.auctions.push(value)
@@ -33,11 +32,11 @@ export default new Vuex.Store({
   },
   actions: {
     async getAuctions(context) {
-      let response = await fetch('/api/auctions')
+      let response = await fetch('/api/auctions');
       response = await response.json();
 
-      context.commit('getAuctions', response)
-      context.commit('filterItems', [])
+      context.commit('getAuctions', response);
+      context.commit('filterItems', response.filter(a => new Date(a.endTime) > Date.now()))
     }
   }
 })
