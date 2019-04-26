@@ -63,7 +63,9 @@ public class AuctionController {
   }
 
   @PostMapping("/search/{query}")
-  public Iterable<Auction> getSearchResult (@PathVariable String query) {
+  public Iterable<Auction> getSearchResult (@PathVariable(required = false) String query) {
+    if (query.equals("#default#"))
+      query = "";
     return auctionService.getSearchResult(query);
   }
 

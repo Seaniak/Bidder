@@ -7,13 +7,6 @@
               leave-active-class="animated fadeOut"
       >
          <h1 class="col-12 mb-3" key="keyNeededToPreventError">Bidder</h1>
-<!--            <AuctionCard class="col-12 col-md-4"
-                         v-if="$store.state.filteredItems.length === 0"
-                         v-for="(auction, indexA) in $store.state.auctions"
-                         :key="indexA"
-                         :auction="auction"
-                         v-else
-            />-->
             <AuctionCard class="col-12 col-md-4"
                       v-for="(auction, index) in $store.state.filteredItems"
                       :key="index"

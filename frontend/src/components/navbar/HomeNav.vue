@@ -16,7 +16,9 @@
          };
       },
       watch: {
-         async searchInput(value) {
+         async searchInput(value){
+            if (!value) value = '#default#';
+            console.log(value)
             await fetch("/api/auctions/search/" + value, {
                method: "POST",
                mode: "cors",
@@ -26,11 +28,11 @@
                body: JSON.stringify(value)
             })
                 .then(res => {
+                   console.log(res)
                    return res.json()
                 })
                 .then(res => {
                    console.log(typeof res);
-                   //TODO res.forEach is not a function? -> handle it
                    if(!(res.length === 0)) {
                    let searchRes = [];
                    res.forEach(auction => {
