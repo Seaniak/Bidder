@@ -30,6 +30,12 @@ module.exports = {
         ws: true,
         changeOrigin: true,
         secure: false
+      },
+      "/api/auctions/search": {
+        target: "http://localhost:8070",
+        ws: true,
+        changeOrigin: true,
+        secure: false
       }
     }
   },

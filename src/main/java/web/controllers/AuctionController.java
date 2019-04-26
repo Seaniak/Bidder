@@ -5,12 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import web.entities.Auction;
 import web.entities.Bid;
 import web.entities.Thumbnail;
-import web.services.AuctionService;
-import web.services.BidService;
-import web.services.ImageService;
-import web.services.ThumbnailService;
+import web.services.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -54,7 +52,7 @@ public class AuctionController {
     public Auction publishAuction(@RequestBody Auction auction) {
 
 //    Timestamp is received as string from frontend, and parsed here
-    auction.setCreateTime(Timestamp.valueOf(auction.getFrontEndCreateTime()));
+    auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
     auction.setEndTime(Timestamp.valueOf(auction.getFrontEndEndTime()));
 
     Auction auctionFromDb = auctionService.insertAuction(auction);
@@ -63,6 +61,13 @@ public class AuctionController {
     thumbnailService.insertThumbnail(thumbnail);
 
     return auctionFromDb;
+  }
+
+  @PostMapping("/search/{query}")
+  public Iterable<Auction> getSearchResult (@PathVariable(required = false) String query) {
+    if (query.equals("-default-"))
+      query = "";
+    return auctionService.getSearchResult(query);
   }
 
   @PutMapping("/{id}")

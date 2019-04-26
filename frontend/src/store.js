@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {updateConnection, logoutConnection} from "./webSocket";
 
 Vue.use(Vuex);
 
@@ -8,6 +7,7 @@ let noticeID = 0;
 
 export default new Vuex.Store({
   state: {
+    currentBid: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
@@ -25,9 +25,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    filterItems(state, searchInput = '') {
-      let filter = new RegExp(searchInput, "i")
-      state.filteredItems = state.auctions.filter(p => p.title.match(filter) || p.description.match(filter))
+    filterItems(state, searchResult) {
+      console.log('search input in store is: ' + searchResult);
+      state.filteredItems = searchResult;
     },
     addAuction(state, value) {
       state.auctions.push(value)
@@ -48,6 +48,9 @@ export default new Vuex.Store({
         updateConnection()
       }
       console.log('User: ', state.currentUser)
+    },
+    setCurrentBid(state, bid) {
+      state.currentBid = bid;
     },
     notificationToggle(state, value) {
       state.notificationBadge = value

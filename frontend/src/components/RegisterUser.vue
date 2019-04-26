@@ -89,7 +89,7 @@ export default {
       emailRules: [
         v => !!v || "Du måste fylla i e-mail",
         v =>
-          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.timeLeft(v) ||
           "E-mail måste vara korrekt ifylld",
         v => (v && v.length <= 35) || "Max 35 tecken"
       ]

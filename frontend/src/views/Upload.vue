@@ -37,10 +37,7 @@
           ></v-select>
         </v-flex>
       </v-layout>
-      <div>
-        <h4>Välj starttid</h4>
-        <Datepicker v-model="createTime" format="YYYY-MM-DD H:i:s" width="100%"/>
-      </div>
+
       <div>
         <h4>Välj sluttid</h4>
         <Datepicker v-model="endTime" format="YYYY-MM-DD H:i:s" width="100%"/>
@@ -74,8 +71,7 @@
         description: '',
         auctionCondition: '',
         categories: ['Fordon', 'Teknik', 'Konst', 'Hus', 'Inredning'],
-        chosenCategory: '',
-        createTime: null,
+        chosenCategory: 'Fordon',
         endTime: null,
         startSum: null,
         reservedSum: null,
@@ -93,7 +89,8 @@
     methods: {
       async handleSubmit() {
         // if no input, don't submit
-        if (!this.title.length || !this.description.length) {
+        if (!this.title.length || !this.description.length || !this.auctionCondition.length ||
+        this.reservedSum < this.startSum && this.startSum < 0 && this.endTime > Date.now()) {
           return;
         }
 
@@ -123,7 +120,6 @@
           auctionCondition: this.auctionCondition,
           startSum: this.startSum,
           reservedSum: this.reservedSum,
-          frontEndCreateTime: this.createTime,
           frontEndEndTime: this.endTime,
           username: this.$store.state.currentUser.username,
           thumbnail: this.thumbnail[0]

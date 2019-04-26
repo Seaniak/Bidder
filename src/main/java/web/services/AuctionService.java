@@ -39,6 +39,16 @@ public class AuctionService {
     return auctions;
   }
 
+  public List<Auction> getSearchResult(String searchQuery) {
+    if(searchQuery.isEmpty()) return getAllAuctions();
+    List<Auction> tempList = auctionRepo.findAllByAuctionConditionContaining(searchQuery);
+    tempList.addAll(auctionRepo.findAllByUsername(searchQuery));
+    tempList.addAll(auctionRepo.findAllByCategoryContaining(searchQuery));
+    tempList.addAll(auctionRepo.findAllByDescriptionContaining(searchQuery));
+    tempList.addAll(auctionRepo.findAllByTitleContaining(searchQuery));
+    return addThumbnails(tempList);
+  }
+
   public Auction insertAuction(Auction auction) {
     return auctionRepo.save(auction);
   }
