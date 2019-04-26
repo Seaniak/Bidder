@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    currentBid: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
@@ -28,7 +29,10 @@ export default new Vuex.Store({
     loginUser(state, user) {
       state.currentUser = user;
       console.log('User: ', state.currentUser)
-    }
+    },
+    setCurrentBid(state, bid) {
+      state.currentBid = bid;
+    },
   },
   actions: {
     async getAuctions(context) {

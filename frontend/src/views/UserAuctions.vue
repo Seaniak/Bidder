@@ -24,9 +24,9 @@
       }
     },
     async created() {
-        let response = await fetch('/api/auctions/user=' + this.$store.state.currentUser.username)
-        response = await response.json()
-        this.userAuctions = response
+        let response = await fetch('/api/auctions/user=' + this.$store.state.currentUser.username);
+        response = await response.json();
+        this.userAuctions = response;
     }
   }
 </script>
