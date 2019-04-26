@@ -1,7 +1,9 @@
 <template>
    <div>
-      <p v-if="this.timeLeft < 86400">
-         {{new Intl.DateTimeFormat("sv-SE", {hour: 'numeric', minute: 'numeric', second: 'numeric'}).format(this.endDate)}}
+      <p v-if="this.timeLeft.getTime() < 86400000">
+         {{formatNumber(this.timeLeft.getHours()) +
+         ':' + formatNumber(this.timeLeft.getMinutes() +
+         ':' + formatNumber(this.timeLeft.getSeconds()))}}
       </p>
       <p v-else>
          {{new Intl.DateTimeFormat("sv-SE", {weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric',
@@ -20,7 +22,7 @@
             endDate: new Date(this.auctionEndTime),
             interval: null,
             timer: 0,
-            timeLeft: null,
+            timeLeft: new Date(),
          }
       },
       components: {  },
@@ -28,9 +30,11 @@
       methods: {
          endTimeCountDown() {
             let timeDifference = this.endDate - Date.now();
-            timeDifference = Math.round(timeDifference/1000);
-            console.log(timeDifference)
-            this.timeLeft = timeDifference;
+            timeDifference = Math.round(timeDifference);
+            this.timeLeft = new Date(timeDifference);
+         },
+         formatNumber(time) {
+            return time.toString().padStart(2, '0');
          }
       },
       mounted(){
