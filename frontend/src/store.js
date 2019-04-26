@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import {updateConnection, logoutConnection} from "./webSocket";
 
 Vue.use(Vuex);
 
@@ -37,9 +38,15 @@ export default new Vuex.Store({
     },
     logoutUser(state, value) {
       state.currentUser = null;
+      logoutConnection()
+      window.socketUsername = 'anon'
     },
     loginUser(state, user) {
       state.currentUser = user;
+      if (user){
+        window.socketUsername = user.username
+        updateConnection()
+      }
       console.log('User: ', state.currentUser)
     },
     notificationToggle(state, value) {

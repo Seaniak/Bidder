@@ -31,12 +31,12 @@
   #notifications-area {
     bottom: 0;
     position: absolute;
+    width: 100%;
   }
   #notifications-items{
     overflow-y: scroll;
     height: 40vh;
   }
-
   ::-webkit-scrollbar {
     display: none;
   }

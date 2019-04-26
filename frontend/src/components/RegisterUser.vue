@@ -136,6 +136,7 @@ export default {
         .then(res => {
           console.log(res);
           if(res === 'success'){
+            this.errorMessage = '';
             this.successMessage = 'Nytt konto registrerat!'
             setTimeout(()=>{
               this.$router.push({ name: "login" });

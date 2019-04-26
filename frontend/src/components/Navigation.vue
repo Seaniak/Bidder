@@ -90,7 +90,7 @@
 	}
 </script>
 
-<style scoped>
+<style>
   #custom-nav{
     animation-duration: 200ms;
   }
@@ -103,5 +103,9 @@
     height: 10vh;
     border-top: solid 1px #7c7e70;
     background-color: teal;
+  }
+  .v-badge__badge{
+    width: 2em;
+    height: 2em;
   }
 </style>

@@ -1,16 +1,18 @@
 <template>
-  <div id="upload">
-    <input
-            id="file-load"
-            type="file"
-            accept="image/*"
-            multiple
-            required
-            @change="upload"/>
-    <label for="file-load">
-      <v-icon dark>cloud_upload</v-icon>
-    </label>
-    <div v-if="files[0]">
+  <div id="upload" class="row">
+    <div class="mb-3">
+      <input
+              id="file-load"
+              type="file"
+              accept="image/*"
+              multiple
+              required
+              @change="upload"/>
+      <label for="file-load">
+        <v-icon dark>cloud_upload</v-icon>
+      </label>
+    </div>
+    <div v-show="files[0]" id="image-files">
       <img v-for="(image, i) of files"
            width="20%"
            :src="image"
@@ -79,9 +81,15 @@
 </script>
 
 <style scoped>
-  .active{
+  .active {
     border: 2px solid greenyellow;
   }
+  #image-files{
+    width: 100%;
+  }
+img{
+  margin-right: 1%;
+}
   #upload {
     display: flex;
   }

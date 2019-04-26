@@ -25,14 +25,20 @@ public class SocketController extends TextWebSocketHandler {
 
   @Override
   public void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
-
     Map clientData = new Gson().fromJson(message.getPayload(), Map.class);
 
-    System.out.println("DEBUG SOCKET DATA: " + clientData.get("action") + ": " + clientData.get("payload"));
-
-//    for testing
-    if (clientData.get("action").equals("message")) {
-      socketService.sendToAll(new SocketEvent("message", clientData.get("payload")), SocketEvent.class);
+    switch (clientData.get("action").toString()){
+      case "connect":
+        socketService.updateUserSession(clientData.get("payload").toString(), session);
+        break;
+        case "logout":
+        socketService.removeUserSession(clientData.get("payload").toString());
+        break;
+      case "message":
+        socketService.sendToUser("loke", new SocketEvent("message", clientData.get("payload")), SocketEvent.class);
+        break;
+      default:
+        System.err.println("No handler for action: " +clientData.get("action"));
     }
 
 //    for testing
