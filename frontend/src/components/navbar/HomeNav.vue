@@ -17,7 +17,7 @@
       },
       watch: {
          async searchInput(value){
-            if (!value) value = '#default#';
+            if (!value) value = '-default-';
             console.log(value)
             await fetch("/api/auctions/search/" + value, {
                method: "POST",
@@ -32,7 +32,6 @@
                    return res.json()
                 })
                 .then(res => {
-                   console.log(typeof res);
                    if(!(res.length === 0)) {
                    let searchRes = [];
                    res.forEach(auction => {

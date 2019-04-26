@@ -18,8 +18,8 @@
       </div>
       <div class="col-6">
         <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
-        <h5>{{ getDateString(auction.endTime) }}</h5>
-        <v-icon medium>timelapse</v-icon>
+<!--        <h5>{{ getDateString(auction.endTime) }}</h5>
+        <v-icon medium>timelapse</v-icon>-->
       </div>
     </v-card-title>
   </v-card>

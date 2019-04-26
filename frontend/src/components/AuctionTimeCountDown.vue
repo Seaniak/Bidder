@@ -1,6 +1,6 @@
 <template>
    <div>
-      <p>{{endTimeCountDown(endDate)}}</p>
+      <p>{{timeLeft}}</p>
    </div>
    
 </template>
@@ -11,15 +11,27 @@
       name: "AuctionTimeCountDown.vue",
       data() {
          return {
-            endDate: new Date(this.auctionEndTime)
+            endDate: new Date(this.auctionEndTime),
+            interval: null,
+            timer: 0,
+            timeLeft: null
          }
       },
       components: {  },
       props: ['auctionEndTime'],
       methods: {
-         endTimeCountDown(date) {
-            return date;
+         endTimeCountDown() {
+            let timeDifference = new Date(Date.now() - this.endDate);
+            this.timeLeft = new Date(this.endDate - timeDifference);
          }
+      },
+      mounted(){
+         this.interval = setInterval(() => {
+            this.endTimeCountDown();
+         }, 1000)
+      },
+      beforeDestroy() {
+         clearInterval(this.interval);
       }
    }
 </script>
