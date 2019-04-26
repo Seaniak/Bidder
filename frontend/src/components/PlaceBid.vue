@@ -12,7 +12,7 @@
 	import {SmoothPicker} from 'vue-smooth-picker';
 
 	export default {
-		name: "PlaceBid",
+		name: "ChooseBid",
 		components: {
 			SmoothPicker
 		},
@@ -58,9 +58,18 @@
 				this.chosenBid = this.bids[iIndex - 1];
 			}
 			,
-			placeBidClicked() {
-				console.log(this.chosenBid);
 
+			async placeBidClicked() {
+				let data = {auctionID: this.auctionIDuser: this.$store.state.currentUser, bid: this.chosenBid};
+				console.log(data);
+
+				fetch('/api/bids', {
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(data)
+				});
 			}
 		}
 		,
