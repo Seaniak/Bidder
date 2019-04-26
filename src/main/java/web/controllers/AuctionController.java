@@ -8,6 +8,7 @@ import web.entities.Thumbnail;
 import web.services.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -51,7 +52,7 @@ public class AuctionController {
     public Auction publishAuction(@RequestBody Auction auction) {
 
 //    Timestamp is received as string from frontend, and parsed here
-    auction.setCreateTime(Timestamp.valueOf(auction.getFrontEndCreateTime()));
+    auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
     auction.setEndTime(Timestamp.valueOf(auction.getFrontEndEndTime()));
 
     Auction auctionFromDb = auctionService.insertAuction(auction);
