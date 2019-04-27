@@ -5,12 +5,12 @@
     <div class="text-xs-center">
       <v-bottom-sheet
               v-model="sheet"
-              >
+      >
         <template v-slot:activator>
           <v-btn
                   color="purple"
                   dark
-                  >
+          >
             Lägg Bud
           </v-btn>
         </template>
@@ -34,13 +34,14 @@
 	import {SmoothPicker} from 'vue-smooth-picker';
 
 	export default {
-		name: "ChooseBid",
-		props: ["auctionId"],
+		name: "PlaceBid",
+		props: ["auctionId", "propAuction"],
 		components: {
 			SmoothPicker
 		},
 		data() {
 			return {
+				activeAuction: this.propAuction,
 				chosenBid: 0,
 				bids: [],
 				sheet: false,
@@ -64,9 +65,6 @@
 				else if (currentBid >= 20000000) addSum = 250000;
 				return addSum;
 			},
-			checkLoggedIn() {
-				return this.$store.state.currentUser === undefined;
-			},
 			newBids(currentBid) {
 				let bids = [];
 				let bidStrings = [];
@@ -87,13 +85,13 @@
 			}
 			,
 			async placeBidClicked() {
-				if (this.checkLoggedIn()) return;
+				if (this.$store.state.currentUser === undefined || this.$store.state.activeAuction.username === this.$store.state.currentUser.username)
+					return;
 				let data = {
 					auctionId: this.auctionId,
 					username: this.$store.state.currentUser.username,
 					sum: this.chosenBid
 				};
-				console.log(data);
 				let bid = await fetch('/api/bids', {
 					method: 'POST',
 					headers: {
@@ -103,38 +101,92 @@
 				});
 				console.log(await bid.json());
 				this.sheet = false;
-
 			}
 		}
 		,
 		computed: {
 			possibleBids() {
+				if (this.activeAuction == null) this.activeAuction = this.$store.state.activeAuction;
 				return [{
 					currentIndex: 1,
 					flex: 4,
-					list: this.newBids(this.$store.state.currentBid),
+					list: this.newBids((this.activeAuction === null) ? 0 : this.activeAuction.maxBid),
 					textAlign: 'center',
 					className: 'row-group'
 				}];
-			}
+			},
+		},
+		created() {
 		}
 	};
 </script>
 
 <style scoped>
-  .scroller {
-    width: auto;
-    height: auto;
-    bottom: 10px;
+
+  bidBar {
   }
 
-  .bidBtn {
-    width: auto;
-    height: auto;
+  vars {
+    --main-bg-color: inherit;
   }
 
-  .bidBar {
-    width: 300px;
-    height: auto;
+  .smooth-picker[data-v-43f1648a] {
+    /*font-size: 1rem;*/
+    font-size: 1.2rem;
+    /*height: 10em;*/
+    height: 100%;
+    position: relative;
+    /*background-color: #fff;*/
+    background-color: var(--main-bg-color);
+    overflow: hidden
+  }
+
+  .smooth-picker .smooth-list[data-v-43f1648a] {
+    height: 6.25em;
+    position: relative;
+    top: 4em;
+  }
+
+  .smooth-picker .smooth-item[data-v-43f1648a] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    text-align: center;
+    will-change: transform;
+    contain: strict;
+    height: 2em;
+    line-height: 2;
+    font-size: 1em
+  }
+
+  .smooth-picker .smooth-handle-layer[data-v-43f1648a] {
+    position: absolute;
+    width: 100%;
+    height: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    top: -1px;
+    bottom: -1px
+  }
+
+  .smooth-picker .smooth-handle-layer .smooth-top[data-v-43f1648a] {
+    border-bottom: 1px solid #c8c7cc;
+    background: linear-gradient(180deg, #fff 10%, hsla(0, 0%, 100%, .7));
+    transform: translateZ(5.625em)
+  }
+
+  .smooth-picker .smooth-handle-layer .smooth-middle[data-v-43f1648a] {
+    height: 2em
+  }
+
+  .smooth-picker .smooth-handle-layer .smooth-bottom[data-v-43f1648a] {
+    border-top: 1px solid #c8c7cc;
+    background: linear-gradient(0deg, #fff 10%, hsla(0, 0%, 100%, .7));
+    transform: translateZ(5.625em)
   }
 </style>

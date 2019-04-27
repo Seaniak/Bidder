@@ -8,8 +8,9 @@ let noticeID = 0;
 
 export default new Vuex.Store({
   state: {
+    activeAuction: null,
     currentAuctionId: null,
-    currentBid: null,
+    // currentBid: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
@@ -19,72 +20,73 @@ export default new Vuex.Store({
   },
   actions: {
     async getAuctions(context) {
-      let response = await fetch('/api/auctions')
+      let response = await fetch('/api/auctions');
       response = await response.json();
 
-      context.commit('getAuctions', response)
-      context.commit('filterItems')
+      context.commit('getAuctions', response);
+      context.commit('filterItems');
     }
   },
   mutations: {
     filterItems(state, searchResult) {
-      console.log('search input in store is: ' + searchResult);
+      // console.log('search input in store is: ' + searchResult);
       state.filteredItems = searchResult;
     },
     addAuction(state, value) {
-      state.auctions.push(value)
+      state.auctions.push(value);
     },
     getAuctions(state, value) {
       state.auctions = value;
-      console.log('Auctions: ', state.auctions)
+      // console.log('Auctions: ', state.auctions);
     },
 	  getSingleAuction(state, value) {
 		  state.auctions = value;
-		  console.log('Auctions: ', state.auctions)
+		  // console.log('Auctions: ', state.auctions);
 	  },
-    logoutUser(state, value) {
+    logoutUser(state) {
       state.currentUser = null;
-      logoutConnection()
-      window.socketUsername = 'anon'
+      logoutConnection();
+      window.socketUsername = 'anon';
     },
     loginUser(state, user) {
       state.currentUser = user;
       if (user) {
-        window.socketUsername = user.username
-        updateConnection()
+        window.socketUsername = user.username;
+        updateConnection();
       }
-      console.log('User: ', state.currentUser)
+      // console.log('User: ', state.currentUser);
     },
     setCurrentBid(state, bid) {
       state.currentBid = bid;
     },
+    setActiveAuction(state, activeAuction) {
+      state.activeAuction = activeAuction;
+    },
     notificationToggle(state, value) {
-      state.notificationBadge = value
+      state.notificationBadge = value;
     },
     removeNotification(state, item) {
-      let index = state.notifications.indexOf(item)
+      let index = state.notifications.indexOf(item);
       state.notifications.splice(index, 1);
     },
     webSocket(state, data) {
       // update state depending on incoming action
       switch (data.action) {
         case "bid":
-          state.notificationBadge = true
-          console.log('Socket bid: ', data.payload)
+          state.notificationBadge = true;
+          // console.log('Socket bid: ', data.payload);
           break;
         case "message":
-          state.notificationBadge = true
-
-          let notify = {
+          state.notificationBadge = true;
+          state.notifications.push({
             id: noticeID,
             title: 'Nytt meddelande',
             subtitle: data.payload
-          }
-          state.notifications.push(notify)
+          });
 
-          noticeID++
+          noticeID++;
 
-          console.log('Socket message: ', data.payload)
+          // console.log('Socket message: ', data.payload);
           break;
       }
     }

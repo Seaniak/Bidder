@@ -12,7 +12,7 @@
     <v-layout row wrap class="pt-2 justify-content-around">
       <v-card class="border col-5">
         <h4>Högsta Bud</h4>
-        <h3>{{maxBid}}kr</h3>
+        <h3>{{this.auction.maxBid}}kr</h3>
       </v-card>
       <v-card class="border col-5">
         <h4>Avslutas</h4>
@@ -31,7 +31,7 @@
             :no-data-text="'Inga bud är lagda!'"
             :rows-per-page-text="'Antal bud'"
             :pagination.sync="pagination"
-            :rows-per-page-items="numbercontroll"
+            :rows-per-page-items="pageController"
             class="border elevation-1"
     >
       <template v-slot:items="props">
@@ -40,35 +40,19 @@
         <td class="text-xs-right">{{getDateString(props.item.time)}}</td>
       </template>
     </v-data-table>
-<!--    <smooth-picker ref="smoothPicker" :data="data" :change="dataChange" />-->
 
   </v-container>
 </template>
 
 <script>
-	// import 'vue-smooth-picker/dist/css/style.css';
-	// import {SmoothPicker} from 'vue-smooth-picker';
 
 	export default {
 		components: {
-			// SmoothPicker
 		},
 		data() {
 			return {
-				// data: [
-				// 	{
-				// 		currentIndex: 0,
-				// 		flex: 3,
-				// 		list: [
-				// 			'Plan A - free', 'Plan B - $50', 'Plan C - $100'
-				// 		],
-				// 		textAlign: 'center',
-				// 		className: 'row-group'
-				// 	}
-				// ],
-				maxBid: 0,
 				bidsController: true,
-				numbercontroll: [10, 20, 30, {text: 'Alla', value: -1}],
+				pageController: [10, 20, 30, {text: 'Alla', value: -1}],
 				auction: 0,
 				endDateString: 0,
 				images: [],
@@ -93,7 +77,7 @@
 		methods: {
 			// dataChange(gIndex, iIndex){
 			// 	console.log(gIndex, iIndex);
-      // },
+			// },
 			getDateString(bidTimeStamp) {
 				let bidDate = new Date(bidTimeStamp);
 				return (bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString());
@@ -106,13 +90,13 @@
 
 			let images = await fetch('/api/get_image/' + this.$route.params.id);
 			this.images = await images.json();
+		  this.auction.maxBid = (this.auction.bids.length === 0) ?
+          this.auction.startSum : Math.max(...(await this.auction.bids.map((bid) => bid.sum)));
+      // console.log(this.auction);
+			// ////tillfälligt
+			// this.$store.commit("setCurrentBid", this.maxBid);
+		  this.$store.commit("setActiveAuction", this.auction);
 
-			this.maxBid = Math.max(...(await this.auction.bids.map((bid) => bid.sum)));
-
-			////tillfälligt
-  		this.$store.commit("setCurrentBid", this.maxBid);
-      console.log([this.$store.state.currentBid*1.01, this.$store.state.currentBid*1.02, this.$store.state.currentBid*1.03,
-		  this.$store.state.currentBid*1.04, this.$store.state.currentBid*1.05, this.$store.state.currentBid*1.06]);
 		if (this.auction.bids.length > 10) this.bidsController = false;
 
 			let endDate = new Date(this.auction.endTime);
@@ -122,13 +106,15 @@
 </script>
 
 <style>
-  .border{
+  .border {
     border-radius: 4px;
   }
-  .v-carousel__controls{
+
+  .v-carousel__controls {
     border-radius: 0 0 4px 4px;
   }
-  .description{
+
+  .description {
     text-align: start;
   }
 </style>

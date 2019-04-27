@@ -53,9 +53,9 @@
 		name: "Navigation",
     methods: {
       toggleDrawer(){
-        this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer
+        this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer;
 
-        this.$store.commit('notificationToggle', false)
+        this.$store.commit('notificationToggle', false);
       }
     },
 		computed: {
