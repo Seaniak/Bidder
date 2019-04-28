@@ -3,6 +3,7 @@ package web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.entities.Auction;
+import web.entities.Bid;
 import web.entities.Thumbnail;
 import web.repositories.AuctionRepo;
 
@@ -18,6 +19,10 @@ public class AuctionService {
   private AuctionRepo auctionRepo;
   @Autowired
   private ThumbnailService thumbnailService;
+  @Autowired
+  private BidService bidService;
+  @Autowired
+  private ImageService imageService;
 
   public Auction getAuctionById(Long id) {
     return auctionRepo.getAuctionById(id);
@@ -29,8 +34,7 @@ public class AuctionService {
   }
 
   public List<Auction> getAllAuctions() {
-    return addThumbnails(
-            auctionRepo.findAll());
+    return addImageLinks(addBids(addThumbnails(auctionRepo.findAll())));
   }
 
   private List<Auction> addThumbnails(List<Auction> auctions) {
@@ -38,6 +42,22 @@ public class AuctionService {
       Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
       if (thumbnail != null)
         auction.setThumbnail(thumbnail.getImage());
+    }
+    return auctions;
+  }
+
+  private List<Auction> addBids(List<Auction> auctions) {
+    for (Auction auction : auctions) {
+      List<Bid> bids = bidService.getAuctionBids(auction.getId());
+      auction.setBids(bids);
+    }
+    return auctions;
+  }
+
+  private List<Auction> addImageLinks(List<Auction> auctions) {
+    for (Auction auction : auctions) {
+      List<String> images = imageService.getAuctionImageData(auction.getId());
+      auction.setImages(images);
     }
     return auctions;
   }
@@ -53,8 +73,15 @@ public class AuctionService {
     searchRes.addAll(auctionRepo.findAllByTitleContaining(searchQuery));
     filteredRes.addAll(searchRes);
     finalResult.addAll(filteredRes);
-
-    return addThumbnails(finalResult);
+    finalResult.forEach(auction -> {
+      List<String> images = imageService.getAuctionImageData(auction.getId());
+      auction.setImages(images);
+      List<Bid> bids = bidService.getAuctionBids(auction.getId());
+      auction.setBids(bids);
+      Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
+      if (thumbnail != null) auction.setThumbnail(thumbnail.getImage());
+      });
+    return finalResult;
   }
 
   public Auction insertAuction(Auction auction) {

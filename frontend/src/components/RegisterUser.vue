@@ -47,8 +47,12 @@
         ></v-text-field>
         <v-btn @click="clear">Rensa formulär</v-btn>
       </v-form>
-      <v-alert class="mt-3" :value="successMessage" type="success">{{ successMessage }}</v-alert>
-      <v-alert class="mt-3" :value="errorMessage" type="error">{{ errorMessage }}</v-alert>
+      <v-alert class="mt-3" :value="successMessage" type="success">{{
+        successMessage
+      }}</v-alert>
+      <v-alert class="mt-3" :value="errorMessage" type="error">{{
+        errorMessage
+      }}</v-alert>
     </v-flex>
   </v-container>
 </template>
@@ -60,8 +64,8 @@ export default {
   name: "RegisterUser",
   data() {
     return {
-      errorMessage: '',
-      successMessage: '',
+      errorMessage: "",
+      successMessage: "",
       valid: false,
       name: "",
       surname: "",
@@ -100,7 +104,7 @@ export default {
   },
   beforeDestroy() {
     // Removes event listener on component destroy
-    eventBus.$off('submitRegisterClicked')
+    eventBus.$off("submitRegisterClicked");
   },
   methods: {
     submit() {
@@ -133,14 +137,14 @@ export default {
         })
         .then(res => {
           console.log(res);
-          if(res === 'success'){
-            this.errorMessage = '';
-            this.successMessage = 'Nytt konto registrerat!'
-            setTimeout(()=>{
+          if (res === "success") {
+            this.errorMessage = "";
+            this.successMessage = "Nytt konto registrerat!";
+            setTimeout(() => {
               this.$router.push({ name: "login" });
-            }, 3000)
+            }, 3000);
           } else {
-            this.errorMessage = 'Användarnamnet är upptaget'
+            this.errorMessage = "Användarnamnet är upptaget";
           }
         })
         .catch(e => console.log(e));
@@ -153,7 +157,7 @@ export default {
 h1 {
   color: black;
 }
-  .error-message{
-    color: red;
-  }
+.error-message {
+  color: red;
+}
 </style>

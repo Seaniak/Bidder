@@ -23,6 +23,7 @@ public class Bid {
     this.sum = sum;
   }
 
+  public Bid(){}
   public String getUsername() {
     return username;
   }

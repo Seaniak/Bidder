@@ -46,6 +46,7 @@ public class AuctionController {
     List<String> images = imageService.getAuctionImageData(id);
     auction.setImages(images);
 
+    auction.setThumbnail(thumbnailService.getAuctionThumbnail(auction.getId()).getImage());
     return auction;
   }
 
