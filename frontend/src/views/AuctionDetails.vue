@@ -19,6 +19,16 @@
         <h3>{{ endDateString }}</h3>
       </v-card>
     </v-layout>
+    <v-layout row wrap class="pt-2 justify-content-around">
+      <v-card class="border col-5">
+        <h4>Säljare</h4>
+        <h3>{{this.auction.username}}</h3>
+      </v-card>
+      <v-card class="border col-5">
+        <h4>Kategori</h4>
+        <h3>{{ this.auction.category }}</h3>
+      </v-card>
+    </v-layout>
     <div class="description py-3">
       <h3>Beskrivning</h3>
       <p>{{ auction.description }}</p>

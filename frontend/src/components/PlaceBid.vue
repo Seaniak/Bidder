@@ -3,14 +3,9 @@
   <v-layout row wrap class="bidBar">
     <smooth-picker class="scroller col-6" ref="smoothPicker" :data="possibleBids" :change="dataChange"/>
     <div class="text-xs-center">
-      <v-bottom-sheet
-              v-model="sheet"
-      >
+      <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
-          <v-btn
-                  color="purple"
-                  dark
-          >
+          <v-btn color="purple" dark>
             Lägg Bud
           </v-btn>
         </template>
@@ -35,13 +30,13 @@
 
 	export default {
 		name: "PlaceBid",
-		props: ["auctionId", "propAuction"],
+      props: [  "propAuction"],
 		components: {
 			SmoothPicker
 		},
 		data() {
 			return {
-				activeAuction: this.propAuction,
+				activeAuction: null,
 				chosenBid: 0,
 				bids: [],
 				sheet: false,
@@ -88,7 +83,7 @@
 				if (this.$store.state.currentUser === undefined || this.$store.state.activeAuction.username === this.$store.state.currentUser.username)
 					return;
 				let data = {
-					auctionId: this.auctionId,
+					auctionId: this.activeAuction.id,
 					username: this.$store.state.currentUser.username,
 					sum: this.chosenBid
 				};
@@ -117,6 +112,8 @@
 			},
 		},
 		created() {
+			if(this.propAuction != null) this.activeAuction = this.propAuction;
+			console.log(this.activeAuction);
 		}
 	};
 </script>
