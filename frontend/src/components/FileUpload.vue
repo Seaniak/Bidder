@@ -12,8 +12,8 @@
         <v-icon dark>cloud_upload</v-icon>
       </label>
     </div>
-    <div v-show="files[0]" id="image-files">
-      <img v-for="(image, i) of files"
+    <div v-show="previewImages[0]" id="image-files">
+      <img v-for="(image, i) of previewImages"
            width="20%"
            :src="image"
            :key="i"
@@ -34,6 +34,8 @@
         images: [],
         files: [],
         thumbnail: [],
+        previewImages: [],
+        previewThumbnail: [],
         activeIndex: 0
       }
     },
@@ -48,8 +50,9 @@
         this.readThumbnail(0)
       },
       readThumbnail(index) {
-        this.activeIndex = index;
+        this.thumbnail = []
 
+        this.activeIndex = index;
         this.readImage(this.images[index], true)
 
         this.$emit('uploadImage', {
@@ -63,18 +66,40 @@
         reader.onload = e => { // when file is loaded
           let image = new Image();
           image.onload = () => {
-            if (thumbnail)
-              this.thumbnail[0] = (convertImage(image, true))
-            else
-              this.files.push(convertImage(image))
+            if (thumbnail) {
+              this.dataUriToFile(convertImage(image, true), true)
+            } else {
+              let convertedImage = convertImage(image);
+              this.previewImages.push(convertedImage)
+              this.dataUriToFile(convertedImage)
+            }
           }
           image.src = e.target.result
         }
+      },
+      dataUriToFile(dataURI, thumb = false) {
+        // convert base64 to raw binary data held in a string
+        let byteString = atob(dataURI.split(',')[1]);
+
+        let n = byteString.length;
+        // write the bytes of the string to an ArrayBuffer
+        // let ab = new ArrayBuffer(n);
+        let u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = byteString.charCodeAt(n);
+        }
+        let file = new File([u8arr], "imageFile.jpeg", {type: "image/jpeg"});
+
+        if (thumb)
+          this.thumbnail.push(file)
+        else
+          this.files.push(file)
       },
       resetArrays() {
         this.files = []
         this.images = []
         this.thumbnail = []
+        this.previewImages = []
       }
     }
   }
@@ -84,12 +109,15 @@
   .active {
     border: 2px solid greenyellow;
   }
-  #image-files{
+
+  #image-files {
     width: 100%;
   }
-img{
-  margin-right: 1%;
-}
+
+  img {
+    margin-right: 1%;
+  }
+
   #upload {
     display: flex;
   }

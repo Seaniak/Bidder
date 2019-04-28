@@ -3,7 +3,7 @@
     <v-carousel height="50vh"
                 class="border">
       <v-carousel-item
-              v-for="(image, i) in images"
+              v-for="(image, i) in auction.images"
               :key="i"
               :src="image"
       ></v-carousel-item>

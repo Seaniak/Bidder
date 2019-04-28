@@ -23,13 +23,12 @@ export default new Vuex.Store({
       let response = await fetch('/api/auctions');
       response = await response.json();
 
-      context.commit('getAuctions', response);
-      context.commit('filterItems');
+      context.commit('getAuctions', response)
+      context.commit('filterItems', '-default-')
     }
   },
   mutations: {
     filterItems(state, searchResult) {
-      // console.log('search input in store is: ' + searchResult);
       state.filteredItems = searchResult;
     },
     addAuction(state, value) {
