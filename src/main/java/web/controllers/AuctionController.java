@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import web.entities.Auction;
 import web.entities.Bid;
+import web.entities.Image;
 import web.entities.Thumbnail;
 import web.services.*;
 
@@ -49,7 +50,7 @@ public class AuctionController {
   }
 
   @PostMapping
-    public Auction publishAuction(@RequestBody Auction auction) {
+  public Auction publishAuction(@RequestBody Auction auction) {
 
 //    Timestamp is received as string from frontend, and parsed here
     auction.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
@@ -60,11 +61,16 @@ public class AuctionController {
     Thumbnail thumbnail = new Thumbnail(auctionFromDb.getId(), auction.getThumbnail());
     thumbnailService.insertThumbnail(thumbnail);
 
+    for (String image : auction.getImages()) {
+      Image img = new Image(auctionFromDb.getId(), false, image);
+      imageService.insertImage(img);
+    }
+
     return auctionFromDb;
   }
 
   @PostMapping("/search/{query}")
-  public Iterable<Auction> getSearchResult (@PathVariable(required = false) String query) {
+  public Iterable<Auction> getSearchResult(@PathVariable(required = false) String query) {
     if (query.equals("-default-"))
       query = "";
     return auctionService.getSearchResult(query);

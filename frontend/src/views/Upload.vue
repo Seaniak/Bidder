@@ -67,6 +67,8 @@
       return {
         files: [],
         thumbnail: [],
+        imagePaths: [],
+        thumbnail: '',
         title: '',
         description: '',
         auctionCondition: '',
@@ -90,28 +92,35 @@
       async handleSubmit() {
         // if no input, don't submit
         if (!this.title.length || !this.description.length || !this.auctionCondition.length ||
-        this.reservedSum < this.startSum && this.startSum < 0 && this.endTime > Date.now()) {
+            this.reservedSum < this.startSum && this.startSum < 0 && this.endTime > Date.now()) {
           return;
         }
 
-        this.postAuction();
+        this.thumbnail =  await this.uploadImages(this.thumbnail[0])
+
+        let imagePaths = [];
+
+        for (let file of this.files) {
+          imagePaths.push(await this.uploadImages(file))
+        }
+
+        this.postAuction(imagePaths);
         this.$router.push({name: 'home'})
       },
-      async uploadImages(auctionId) {
-        for (let file of this.files) {
+      async uploadImages(file) {
 
-          let fileData = new FormData();
-          fileData.append('file', file)
-          fileData.append('auctionId', auctionId)
+        let fileData = new FormData();
+        fileData.append('file', file)
 
-          let response = await fetch('/api/upload', {
-            method: 'POST',
-            body: fileData
-          })
-          console.log(await response.text());
-        }
+        let response = await fetch('/api/upload', {
+          method: 'POST',
+          body: fileData
+        })
+        response = await response.text()
+        console.log(response);
+        return response
       },
-      postAuction() {
+      postAuction(imagePaths) {
 
         let data = {
           title: this.title,
@@ -122,7 +131,8 @@
           reservedSum: this.reservedSum,
           frontEndEndTime: this.endTime,
           username: this.$store.state.currentUser.username,
-          thumbnail: this.thumbnail[0]
+          thumbnail: this.thumbnail,
+          images: imagePaths
         };
         console.log(data);
 
@@ -137,8 +147,7 @@
               return res.json()
             })
             .then(res => {
-              this.uploadImages(res.id);
-
+              console.log(res)
               this.$store.commit('addAuction', res)
               this.$store.commit('filterItems')
             })

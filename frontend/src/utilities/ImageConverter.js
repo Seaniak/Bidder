@@ -47,7 +47,7 @@ export function convertImage(image, thumbnail = false) {
   // return new File([imageURI], "imageFile.png", {type: "image/png"});
 }
 
-function dataUriToFile(dataURI) {
+export function dataUriToFile(dataURI) {
   // convert base64 to raw binary data held in a string
   let byteString = atob(dataURI.split(',')[1]);
 
@@ -58,5 +58,5 @@ function dataUriToFile(dataURI) {
   while (n--) {
     u8arr[n] = byteString.charCodeAt(n);
   }
-  return u8arr;
+  return new File([u8arr], "imageFile.jpeg", {type: "image/jpeg"});
 }
