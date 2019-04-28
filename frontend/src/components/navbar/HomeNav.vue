@@ -18,24 +18,28 @@
       watch: {
          async searchInput(value){
             if (!value) value = '-default-';
-            console.log(value)
-            await fetch("/api/auctions/search/" + value, {
+            this.getAuctions(value)
+         }
+      },
+      created(){
+         this.getAuctions('-default-')
+      },
+      methods:{
+         getAuctions(search){
+            fetch("/api/auctions/search/" + search, {
                method: "POST",
                mode: "cors",
                headers: {
                   "Content-Type": "application/json"
                },
-               body: JSON.stringify(value)
+               body: search
             })
                 .then(res => {
-                   console.log(res)
                    return res.json()
                 })
                 .then(res => {
-                   if(!(res.length === 0)) {
-                      let searchRes = res.filter(a => new Date(a.endTime) > Date.now());
-                      this.$store.commit("filterItems", searchRes);
-                   }
+                   let searchRes = res.filter(a => new Date(a.endTime) > Date.now());
+                   this.$store.commit("filterItems", searchRes);
                 })
                 .catch(e => console.log(e));
          }

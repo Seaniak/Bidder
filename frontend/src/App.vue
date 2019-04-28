@@ -26,7 +26,7 @@
       NavigationDrawer
     },
     async created() {
-      this.$store.dispatch('getAuctions');
+      // this.$store.dispatch('getAuctions');
 
       let user = await fetch('/api/remember-me');
       user = await user.json()
