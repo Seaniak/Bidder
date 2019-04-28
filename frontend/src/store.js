@@ -60,27 +60,44 @@ export default new Vuex.Store({
       state.notifications.splice(index, 1);
     },
     webSocket(state, data) {
+      let notify = {
+        id: noticeID,
+        icon: '',
+        title: '',
+        subtitle: '',
+        route: ''
+      }
+
       // update state depending on incoming action
       switch (data.action) {
         case "bid":
           state.notificationBadge = true
-          console.log('Socket bid: ', data.payload)
+          let bid = data.payload;
+          console.log('Socket bid: ', bid)
+
+          notify.icon = 'monetization_on'
+          notify.title = `Utbudad på ${bid.auctionId}`
+          notify.subtitle = `Nytt bud: ${bid.sum}kr, av ${bid.username}`
+          notify.route = `/auctions/${bid.auctionId}`
+
+          state.notifications.unshift(notify)
           break;
         case "message":
           state.notificationBadge = true
+          let message = data.payload
 
-          let notify = {
-            id: noticeID,
-            title: 'Nytt meddelande',
-            subtitle: data.payload
-          }
-          state.notifications.push(notify)
+          notify.icon = 'chat'
+          notify.title = 'Nytt meddelande'
+          notify.subtitle = message
+          notify.route = '/'
 
-          noticeID++
+          state.notifications.unshift(notify)
 
-          console.log('Socket message: ', data.payload)
+          console.log('Socket message: ', message)
           break;
       }
+
+      noticeID++
     }
   },
 })

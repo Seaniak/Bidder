@@ -1,11 +1,12 @@
 <template>
   <v-list-tile
+          :to="item.route"
           two-line
           ripple
           @click="deleteItem"
   >
     <v-list-tile-action>
-      <v-icon medium>message</v-icon>
+      <v-icon medium>{{item.icon}}</v-icon>
     </v-list-tile-action>
 
     <v-list-tile-content>
