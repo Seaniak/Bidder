@@ -1,40 +1,61 @@
 <template>
-  <div id="upload">
-    <input
-            id="file-load"
-            type="file"
-            accept="image/*"
-            multiple
-            required
-            @change="upload"/>
-    <label for="file-load">
-      <v-icon dark>cloud_upload</v-icon>
-    </label>
+  <div id="upload" class="row">
+    <div class="mb-3">
+      <input
+              id="file-load"
+              type="file"
+              accept="image/*"
+              multiple
+              required
+              @change="upload"/>
+      <label for="file-load">
+        <v-icon dark>cloud_upload</v-icon>
+      </label>
+    </div>
+    <div v-show="previewImages[0]" id="image-files">
+      <img v-for="(image, i) of previewImages"
+           width="20%"
+           :src="image"
+           :key="i"
+           alt="profile picture"
+           :class="{ 'active': activeIndex === i }"
+           @click="readThumbnail(i)">
+    </div>
   </div>
 </template>
 
 <script>
+  import {convertImage} from "@/utilities/ImageConverter";
+
   export default {
     name: "FileUpload",
     data() {
       return {
-        previewImages: [],
+        images: [],
         files: [],
-        thumbnail: []
+        thumbnail: [],
+        previewImages: [],
+        previewThumbnail: [],
+        activeIndex: 0
       }
     },
     methods: {
       upload(e) {
         this.resetArrays()
-        let images = e.target.files; // array with files
+        this.images = e.target.files; // array with files
 
-        for (let image of images) {
+        for (let image of this.images) {
           this.readImage(image);
         }
-        this.readImage(images[0], true)
+        this.readThumbnail(0)
+      },
+      readThumbnail(index) {
+        this.thumbnail = []
+
+        this.activeIndex = index;
+        this.readImage(this.images[index], true)
 
         this.$emit('uploadImage', {
-          previewImages: this.previewImages,
           files: this.files,
           thumbnail: this.thumbnail
         })
@@ -43,72 +64,20 @@
         let reader = new FileReader();
         reader.readAsDataURL(imageFile);  // read file to this format
         reader.onload = e => { // when file is loaded
-
           let image = new Image();
           image.onload = () => {
-            if (thumbnail)
-              this.convertImage(image, thumbnail)
-            else
-              this.convertImage(image)
+            if (thumbnail) {
+              this.dataUriToFile(convertImage(image, true), true)
+            } else {
+              let convertedImage = convertImage(image);
+              this.previewImages.push(convertedImage)
+              this.dataUriToFile(convertedImage)
+            }
           }
           image.src = e.target.result
         }
       },
-      convertImage(image, thumbnail = false) {
-        let canvas = document.createElement('canvas');
-        let width = thumbnail ? 300 : 600;
-        let height = thumbnail ? 300 : 600;
-
-        canvas.width = width;
-        canvas.height = height;
-
-        let context = canvas.getContext('2d');
-
-        context.fillStyle = 'white';
-        context.fillRect(0, 0, width, height);
-
-        let imageScale = image.width / image.height;
-
-        let resizedWidth = image.width;
-        let resizedHeight = image.height;
-
-        // only resize if image is larger than target size
-        if (image.height > canvas.height ||
-            image.width > canvas.width) {
-          resizedWidth = canvas.width;
-          resizedHeight = resizedWidth / imageScale;
-          if (resizedHeight > canvas.height) {
-            resizedHeight = canvas.height;
-            resizedWidth = resizedHeight * imageScale;
-          }
-        }
-
-        // center image in canvas
-        let centerW = canvas.width / 2 - resizedWidth / 2;
-        let centerH = canvas.height / 2 - resizedHeight / 2;
-
-        context.drawImage(image,
-            centerW,
-            centerH,
-            resizedWidth,
-            resizedHeight
-        );
-
-        // convert to Base64 string for preview
-        let imageData = canvas.toDataURL('image/jpeg');
-
-        if (thumbnail) {
-          this.thumbnail.push(imageData);
-          return;
-        }
-
-        this.previewImages.push(imageData);
-        this.files.push(imageData);
-
-        // let imageURI = this.dataUriToFile(imageData);
-        // return new File([imageURI], "imageFile.png", {type: "image/png"});
-      },
-      dataUriToFile(dataURI) {
+      dataUriToFile(dataURI, thumb = false) {
         // convert base64 to raw binary data held in a string
         let byteString = atob(dataURI.split(',')[1]);
 
@@ -119,18 +88,36 @@
         while (n--) {
           u8arr[n] = byteString.charCodeAt(n);
         }
-        return u8arr;
+        let file = new File([u8arr], "imageFile.jpeg", {type: "image/jpeg"});
+
+        if (thumb)
+          this.thumbnail.push(file)
+        else
+          this.files.push(file)
       },
       resetArrays() {
         this.files = []
-        this.previewImages = []
+        this.images = []
         this.thumbnail = []
+        this.previewImages = []
       }
     }
   }
 </script>
 
 <style scoped>
+  .active {
+    border: 2px solid greenyellow;
+  }
+
+  #image-files {
+    width: 100%;
+  }
+
+  img {
+    margin-right: 1%;
+  }
+
   #upload {
     display: flex;
   }

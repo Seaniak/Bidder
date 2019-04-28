@@ -16,7 +16,11 @@ public class Bid {
   private String username;
   private int sum;
 
-  public Bid() {
+  public Bid(long auctionId, String username, int sum) {
+    this.auctionId = auctionId;
+    this.time = Timestamp.valueOf(LocalDateTime.now());
+    this.username = username;
+    this.sum = sum;
   }
 
   public String getUsername() {

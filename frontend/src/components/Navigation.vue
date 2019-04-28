@@ -15,13 +15,28 @@
                  :key="$route.fullPath"></component>
       </transition>
 
+    <v-badge
+            overlap
+            left
+            v-model="$store.state.notificationBadge"
+            color="orange"
+    >
+      <template v-slot:badge>
+        <v-icon
+                dark
+                small
+        >
+          notifications
+        </v-icon>
+      </template>
     <v-btn
             icon
             id="toggleDrawer"
-            @click.stop="$store.state.openNavDrawer = !$store.state.openNavDrawer"
+            @click.stop="toggleDrawer"
     >
       <v-icon color="white" medium>menu</v-icon>
     </v-btn>
+    </v-badge>
   </nav>
 </template>
 
@@ -36,6 +51,13 @@
 
 	export default {
 		name: "Navigation",
+    methods: {
+      toggleDrawer(){
+        this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer
+
+        this.$store.commit('notificationToggle', false)
+      }
+    },
 		computed: {
 			currentNavigation() {
 		    let path = this.$route.path;
@@ -66,7 +88,7 @@
 	}
 </script>
 
-<style scoped>
+<style>
   #custom-nav{
     animation-duration: 200ms;
   }
@@ -79,5 +101,9 @@
     height: 10vh;
     border-top: solid 1px #7c7e70;
     background-color: teal;
+  }
+  .v-badge__badge{
+    width: 2em;
+    height: 2em;
   }
 </style>

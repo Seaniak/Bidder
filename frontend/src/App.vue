@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import {eventBus} from '@/main'
   import Navigation from '@/components/Navigation'
   import NavigationDrawer from '@/components/NavigationDrawer'
 
@@ -25,13 +26,17 @@
       NavigationDrawer
     },
     async created() {
-      this.$store.dispatch('getAuctions');
+      // this.$store.dispatch('getAuctions');
 
       let user = await fetch('/api/remember-me');
       user = await user.json()
           .catch(e => console.log("Not logged in"));
 
       this.$store.commit("loginUser", user);
+
+      // forward incoming socket data to store
+      eventBus.$on('socket-data', data =>
+          this.$store.commit('webSocket', data))
     }
   }
 </script>
