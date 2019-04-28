@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {updateConnection, logoutConnection} from "./webSocket";
+import { updateConnection, logoutConnection } from "./webSocket";
 
 Vue.use(Vuex);
 
@@ -20,32 +20,43 @@ export default new Vuex.Store({
   },
   actions: {
     async getAuctions(context) {
-      let response = await fetch('/api/auctions');
+      let response = await fetch("/api/auctions");
       response = await response.json();
-
-      context.commit('getAuctions', response)
-      context.commit('filterItems', '-default-')
+      console.log("ASYNC GETAUC", response);
+      context.commit("getAuctions", response);
+      context.commit("filterItems", "-default-");
     }
   },
   mutations: {
     filterItems(state, searchResult) {
       state.filteredItems = searchResult;
+      searchResult.forEach((res) => {
+      	let exists = false;
+      	state.auctions.forEach((auction) => {
+      		if(res.id === auction.id) exists = true;
+		});
+      	if(!exists) state.auctions.push(res);
+	  })
+
     },
     addAuction(state, value) {
       state.auctions.push(value);
     },
     getAuctions(state, value) {
       state.auctions = value;
-      // console.log('Auctions: ', state.auctions);
+      console.log('Auctions: ', state.auctions);
     },
-	  getSingleAuction(state, value) {
-		  state.auctions = value;
-		  // console.log('Auctions: ', state.auctions);
-	  },
+    // getSingleAuction(state, value) {
+    //   state.auctions = value;
+    //   // console.log('Auctions: ', state.auctions);
+    // },
+    setActiveAuction(state, activeAuction) {
+      state.activeAuction = activeAuction;
+    },
     logoutUser(state) {
       state.currentUser = null;
       logoutConnection();
-      window.socketUsername = 'anon';
+      window.socketUsername = "anon";
     },
     loginUser(state, user) {
       state.currentUser = user;
@@ -57,9 +68,6 @@ export default new Vuex.Store({
     },
     setCurrentBid(state, bid) {
       state.currentBid = bid;
-    },
-    setActiveAuction(state, activeAuction) {
-      state.activeAuction = activeAuction;
     },
     notificationToggle(state, value) {
       state.notificationBadge = value;
@@ -79,7 +87,7 @@ export default new Vuex.Store({
           state.notificationBadge = true;
           state.notifications.push({
             id: noticeID,
-            title: 'Nytt meddelande',
+            title: "Nytt meddelande",
             subtitle: data.payload
           });
 
@@ -89,5 +97,5 @@ export default new Vuex.Store({
           break;
       }
     }
-  },
-})
+  }
+});

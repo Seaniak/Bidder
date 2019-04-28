@@ -43,12 +43,12 @@ module.exports = {
         changeOrigin: true,
         secure: false
       },
-      			"/api/bids": {
-				ws: true,
-				target: "http://localhost:8070",
-				changeOrigin: true,
-				secure: false
-			},
+      "/api/bids": {
+        ws: true,
+        target: "http://localhost:8070",
+        changeOrigin: true,
+        secure: false
+      }
     }
   },
   publicPath: "",
