@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      activeAuction: null,
+      bidAuction: null,
       chosenBid: 0,
       bids: [],
       sheet: false
@@ -90,7 +90,7 @@ export default {
       )
         return;
       let data = {
-        auctionId: this.activeAuction.id,
+        auctionId: this.bidAuction.id,
         username: this.$store.state.currentUser.username,
         sum: this.chosenBid
       };
@@ -107,14 +107,16 @@ export default {
   },
   computed: {
     possibleBids() {
-      if (this.activeAuction == null)
-        this.activeAuction = this.$store.state.activeAuction;
+      if (this.bidAuction == null) this.bidAuction = this.$store.state.activeAuction;
+      this.bidAuction.maxBid = (this.bidAuction.bids.length === 0) ?
+          this.bidAuction.startSum
+          : Math.max(...(this.bidAuction.bids.map(bid => bid.sum)));
       return [
         {
           currentIndex: 1,
-          flex: 4,
+          flex: 6,
           list: this.newBids(
-            this.activeAuction === null ? 0 : this.activeAuction.maxBid
+            this.bidAuction === null ? 0 : this.bidAuction.maxBid
           ),
           textAlign: "center",
           className: "row-group"
@@ -123,9 +125,8 @@ export default {
     }
   },
   created() {
-    if (this.propAuction != null) this.activeAuction = this.propAuction;
-    // console.log(this.activeAuction);
-  }
+    if (this.propAuction != null) this.bidAuction = this.propAuction;
+    }
 };
 </script>
 

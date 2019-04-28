@@ -35,7 +35,7 @@
     <v-data-table
       :headers="headers"
       :items="(updateAuction === null) ? [] : updateAuction.bids"
-      :hide-actions="bidsController"
+      :hide-actions="pageControl"
       :must-sort="true"
       :no-data-text="'Inga bud är lagda!'"
       :rows-per-page-text="'Antal bud'"
@@ -61,7 +61,7 @@ export default {
   },
   data() {
     return {
-      bidsController: true,
+      // bidsController: this.bidPages(),
       pageController: [10, 20, 30, { text: "Alla", value: -1 }],
       // auction: this.updateAuction,
       endDateString: 0,
@@ -85,6 +85,9 @@ export default {
     };
   },
   methods: {
+  	// bidPages(){
+  	// 	return (;
+    // },
     getDateString(bidTimeStamp) {
       let bidDate = new Date(bidTimeStamp);
       return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
@@ -94,6 +97,9 @@ export default {
     }
   },
   computed: {
+  	pageControl() {
+		  return !(this.$store.state.activeAuction != null 	&& this.$store.state.activeAuction.bids.length > 10);
+    },
   	updateAuction() {
   		let auction = null;
   		if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
@@ -102,7 +108,6 @@ export default {
 		    auction.maxBid = (auction.bids.length === 0) ?
             auction.startSum
 				  : Math.max(...(auction.bids.map(bid => bid.sum)));
-		    if (auction.bids.length > 10) this.bidsController = false;
 	    }
   		return auction;
 	},
