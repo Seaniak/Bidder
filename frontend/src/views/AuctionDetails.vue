@@ -2,39 +2,39 @@
   <v-container>
     <v-carousel height="50vh" class="border">
       <v-carousel-item
-        v-for="(image, i) in auction.images"
+        v-for="(image, i) in (updateAuction !== null) ? updateAuction.images : []"
         :key="i"
         :src="image"
       ></v-carousel-item>
     </v-carousel>
-    <h1>{{ auction.title }}</h1>
+    <h1 v-if="updateAuction !== null">{{ updateAuction.title }}</h1>
     <v-layout row wrap class="pt-2 justify-content-around">
       <v-card class="border col-5">
         <h4>Högsta Bud</h4>
-        <h3>{{ auction.maxBid }}kr</h3>
+        <h3 v-if="updateAuction !== null">{{ updateAuction.maxBid }}kr</h3>
       </v-card>
       <v-card class="border col-5">
         <h4>Avslutas</h4>
-        <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
+        <AuctionTimeCountDown v-if="updateAuction !== null" :auctionEndTime="updateAuction.endTime" />
       </v-card>
     </v-layout>
     <v-layout row wrap class="pt-2 justify-content-around">
       <v-card class="border col-5">
         <h4>Säljare</h4>
-        <h3>{{auction.username }}</h3>
+        <h3 v-if="updateAuction !== null"> {{ updateAuction.username }}</h3>
       </v-card>
       <v-card class="border col-5">
         <h4>Kategori</h4>
-        <h3>{{auction.category }}</h3>
+        <h3 v-if="updateAuction !== null">{{ updateAuction.category }}</h3>
       </v-card>
     </v-layout>
     <div class="description py-3">
       <h3>Beskrivning</h3>
-      <p>{{ auction.description }}</p>
+      <p v-if="updateAuction !== null">{{ updateAuction.description }}</p>
     </div>
     <v-data-table
       :headers="headers"
-      :items="auction.bids"
+      :items="(updateAuction === null) ? [] : updateAuction.bids"
       :hide-actions="bidsController"
       :must-sort="true"
       :no-data-text="'Inga bud är lagda!'"
@@ -53,16 +53,19 @@
 </template>
 
 <script>
+    import AuctionTimeCountDown from "../components/AuctionTimeCountDown";
+
 export default {
-  // props: ["auctionProp"],
-  components: {},
+  components: {
+  	AuctionTimeCountDown,
+  },
   data() {
     return {
       bidsController: true,
       pageController: [10, 20, 30, { text: "Alla", value: -1 }],
-      auction: null,
+      // auction: this.updateAuction,
       endDateString: 0,
-      images: [],
+      // images: [],
       pagination: {
         descending: true,
         page: 1,
@@ -82,57 +85,47 @@ export default {
     };
   },
   methods: {
-    // dataChange(gIndex, iIndex){
-    // 	console.log(gIndex, iIndex);
-    // },
     getDateString(bidTimeStamp) {
       let bidDate = new Date(bidTimeStamp);
       return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
     },
-    // setAuction(activeAuction) {
-		//   if (this.$route.params.id === activeAuction.id) this.auction = activeAuction;
-	  // },
 	  compareAuctionId(id){
-    	return (this.$route.params.id === id);
+    	return (this.$route.params.id == id);
     }
   },
   computed: {
   	updateAuction() {
-  		if(this.compareAuctionId(this.$store.state.activeAuction.id)) {
-  			this.auction = this.$store.state.activeAuction;
-		    console.log("AUCTION SET BY COMPUTED() FROM STORE", this.auction)
-	  }
-	  },
+  		let auction = null;
+  		if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
+  			auction = this.$store.state.activeAuction;
+		    console.log("AUCTION SET BY COMPUTED() FROM STORE", auction);
+		    auction.maxBid = (auction.bids.length === 0) ?
+            auction.startSum
+				  : Math.max(...(auction.bids.map(bid => bid.sum)));
+		    if (auction.bids.length > 10) this.bidsController = false;
+	    }
+  		return auction;
+	},
   },
   async created() {
-	  console.log("STORED AUCTIONS", this.$store.state.auctions);
 	  this.$store.state.auctions.forEach((a) => {
-		console.log(a);
 		if(this.compareAuctionId(a.id)) {
 	  		this.$store.commit("setActiveAuction", a);
 		    console.log("ACTIVEAUCTION SET BY CREATED() FROM STORE", a)
 	    }
 	  });
 
-	  if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
-	  	this.auction = this.$store.state.activeAuction;
-  		console.log("AUCTION SET BY CREATED() FROM STORE", this.auction)
-    } else {
+	  if(this.$store.state.activeAuction == null || !this.compareAuctionId(this.$store.state.activeAuction.id)) {
       let auction = await fetch("/api/auctions/" + this.$route.params.id);
-      this.auction = await auction.json();
-		  console.log("AUCTION SET BY CREATED() FROM DATABASE", this.auction);
-		  this.$store.commit("setActiveAuction", await auction.json());
-		  console.log("ACTIVEAUCTION SET BY CREATED FROM DATABASE", this.auction);
+      auction = await auction.json();
+		  this.$store.commit("setActiveAuction", auction);
+		  this.$store.commit("addAuction", auction);
+		  console.log("ACTIVEAUCTION SET BY CREATED() FROM DATABASE", auction);
 	  }
+    //
+	  // let images = await fetch("/api/get_image/" + this.$route.params.id);
+    // this.images = await images.json();
 
-	  let images = await fetch("/api/get_image/" + this.$route.params.id);
-    this.images = await images.json();
-    this.auction.maxBid =
-      this.auction.bids.length === 0
-        ? this.auction.startSum
-        : Math.max(...(await this.auction.bids.map(bid => bid.sum)));
-
-    if (this.auction.bids.length > 10) this.bidsController = false;
   }
 };
 </script>
