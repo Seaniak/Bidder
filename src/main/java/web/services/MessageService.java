@@ -14,28 +14,28 @@ public class MessageService {
 
   @Autowired
   private MessageRepo messageRepo;
-  @Autowired
-  private SocketService socketService;
+//  @Autowired
+//  private SocketService socketService;
 
-  public List<Message> getChatMessages(Long chatId) {
-    List<Message> Messages = messageRepo.findAllByChatId(chatId);
-    return Messages == null ? new ArrayList<>() : Messages;
-  }
+//  public List<Message> getChatMessages(Long chatId) {
+//    List<Message> Messages = messageRepo.findAllByChatId(chatId);
+//    return Messages == null ? new ArrayList<>() : Messages;
+//  }
 
   public List<Message> getAllMessages() {
     return messageRepo.findAll();
   }
 
-  public Message insertMessage(Message Message) {
-    Message MessageFromDB = messageRepo.save(Message);
+  public Message insertMessage(Message message) {
+    Message MessageFromDB = messageRepo.save(message);
 
 //    emits the new Message to all connected users
 //    to update auction
-    socketService.sendToAll(new SocketEvent("Message", MessageFromDB), SocketEvent.class);
+//    socketService.sendToAll(new SocketEvent("Message", MessageFromDB), SocketEvent.class);
     return MessageFromDB;
   }
 
-  public void deleteMessage(Message Message) {
-    messageRepo.delete(Message);
+  public void deleteMessage(Message message) {
+    messageRepo.delete(message);
   }
 }

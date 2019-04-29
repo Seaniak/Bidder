@@ -1,9 +1,11 @@
 package web.services;
 
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import web.entities.Message;
 import web.entities.SocketEvent;
 
 import java.io.IOException;
@@ -14,6 +16,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class SocketService {
+
+  @Autowired
+  private MessageService messageService;
 
   private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
   private Map<String, WebSocketSession> loggedInSessions = new ConcurrentHashMap<>();
@@ -64,5 +69,9 @@ public class SocketService {
 
   public void removeSession(WebSocketSession session) {
     sessions.remove(session);
+  }
+
+  public void saveMessage(Message message){
+    messageService.insertMessage(message);
   }
 }

@@ -13,8 +13,8 @@ public class Chat {
   private long auctionId;
 
   // TODO: inner join chat and messages
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "chatId")
-  private List<Message> messages;
+//  @OneToMany(cascade = CascadeType.ALL, mappedBy = "chatId")
+//  private List<Message> messages;
 
   public Chat() {
   }
@@ -35,11 +35,11 @@ public class Chat {
     this.auctionId = auctionId;
   }
 
-  public List<Message> getMessages() {
-    return messages;
-  }
+//  public List<Message> getMessages() {
+//    return messages;
+//  }
 
-  public void setMessages(List<Message> messages) {
-    this.messages = messages;
-  }
+//  public void setMessages(List<Message> messages) {
+//    this.messages = messages;
+//  }
 }

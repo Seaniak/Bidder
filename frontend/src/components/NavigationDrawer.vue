@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {sendMessage} from "@/webSocket";
+  import {sendMessage, sendData} from "@/webSocket";
   import Notifications from './Notifications'
 
   export default {
@@ -79,7 +79,13 @@
     },
     methods: {
       testSocketMessage() {
-        sendMessage('User is sending a message')
+        let message = {
+          action: 'message',
+          sender: 'loke',
+          recipient: 'user',
+          text: 'Sample text, haha Rickard'
+        }
+        sendData(message)
       },
       toggleDrawer() {
         this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer;

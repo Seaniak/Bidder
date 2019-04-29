@@ -12,9 +12,9 @@ public class Message {
   private long id;
 
 //  TODO: fix inner join with chat
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "CHAT_ID")
-  private Chat chatId;
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  @JoinColumn(name = "CHAT_ID")
+//  private Chat chatId;
 
 //  private long chatId;
   private String sender;
@@ -30,6 +30,13 @@ public class Message {
     this.time = time;
   }
 
+  public Message(String sender, String recipient, String text) {
+    this.sender = sender;
+    this.recipient = recipient;
+    this.text = text;
+    this.time = Timestamp.valueOf(LocalDateTime.now());
+  }
+
   public long getId() {
     return id;
   }
@@ -38,13 +45,13 @@ public class Message {
     this.id = id;
   }
 
-  public Chat getChatId() {
-    return chatId;
-  }
+//  public Chat getChatId() {
+//    return chatId;
+//  }
 
-  public void setChatId(Chat chatId) {
-    this.chatId = chatId;
-  }
+//  public void setChatId(Chat chatId) {
+//    this.chatId = chatId;
+//  }
 
   public String getSender() {
     return sender;

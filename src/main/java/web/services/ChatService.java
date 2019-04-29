@@ -18,15 +18,15 @@ public class ChatService {
   private ChatRepo chatRepo;
   @Autowired
   private MessageRepo messageRepo;
-  @Autowired
-  private SocketService socketService;
+//  @Autowired
+//  private SocketService socketService;
 
   // TODO: inner join chat and messages
-  public List<Chat> getAllChats(Long chatId) {
-
-    List<Message> Messages = messageRepo.findAllByChatId(chatId);
-    return new ArrayList<>();
-  }
+//  public List<Chat> getAllChats(Long chatId) {
+//
+//    List<Message> Messages = messageRepo.findAllByChatId(chatId);
+//    return new ArrayList<>();
+//  }
 
   public List<Message> getAllMessages() {
     return messageRepo.findAll();
@@ -37,7 +37,7 @@ public class ChatService {
 
 //    emits the new Message to all connected users
 //    to update auction
-    socketService.sendToAll(new SocketEvent("Message", MessageFromDB), SocketEvent.class);
+//    socketService.sendToAll(new SocketEvent("Message", MessageFromDB), SocketEvent.class);
     return MessageFromDB;
   }
 
