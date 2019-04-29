@@ -1,22 +1,24 @@
 <template>
-  <v-card id="auction-card" :to="'/auction/' + auction.id" class="mb-3 pt-1">
-    <v-img
-      :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
-      aspect-ratio="2.75"
-    ></v-img>
-    <v-card-title class="align-items-start" primary-title>
-      <div class="col-12">
-        <h3 class="col-12 mb-0">{{ auction.title }}</h3>
-      </div>
-      <div class="col-6">
-        <h5 class="col-12 mt-0">Bud</h5>
-        <p>{{ maxBid }}</p>
-      </div>
-      <div class="col-6 mt-0">
-        <h5 class="col-12">Tid kvar</h5>
-        <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
-      </div>
-    </v-card-title>
+  <v-card id="auction-card" class="mb-3 pt-1">
+    <div @click="$router.push('/auction/' + auction.id)">
+      <v-img
+          :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
+          aspect-ratio="2.75"
+      ></v-img>
+      <v-card-title class="align-items-start" primary-title>
+        <div class="col-12">
+          <h3 class="col-12 mb-0">{{ auction.title }}</h3>
+        </div>
+        <div class="col-6">
+          <h5 class="col-12 mt-0">Bud</h5>
+          <p>{{ maxBid }}</p>
+        </div>
+        <div class="col-6 mt-0">
+          <h5 class="col-12">Tid kvar</h5>
+          <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
+        </div>
+      </v-card-title>
+    </div>
     <v-content>
       <place-bid :propAuction="auction"></place-bid>
     </v-content>
