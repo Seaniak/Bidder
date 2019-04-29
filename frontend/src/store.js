@@ -26,39 +26,30 @@ export default new Vuex.Store({
   },
   getters: {
     getAuction: (state) => (auctionId) => {
-      return state.auctions.auctionId;
+      return state.auctions[auctionId];
     }
   },
   mutations: {
     filterItems(state, searchResult) {
       searchResult.forEach((newAuction) => {
-        let exists = false;
-        for(let key in state.auctions){
-          if(key == newAuction.id) exists = true;
-        }
-        if(!exists) {
+        if(!state.auctions[newAuction.id]) {
           newAuction.maxBid = (newAuction.bids.length > 0) ?
               Math.max(...(newAuction.bids.map((bid) => bid.sum)))
               : newAuction.startSum;
           state.auctions[newAuction.id] = newAuction;
-          // console.log("FILTERITEMS", state.auctions[newAuction.id])
         }
         state.filteredItems = searchResult;
         });
     },
   addAuction(state, newAuction) {
-    let exists = false;
-    for(let key in state.auctions){
-      if(key == newAuction.id) exists = true;
-    }
-    if(!exists) {
+    if(!state.auctions[newAuction.id]) {
       newAuction.maxBid = (newAuction.bids.length > 0) ?
           Math.max(...(newAuction.bids.map((bid) => bid.sum)))
           : newAuction.startSum;
       state.auctions[newAuction.id] = newAuction;
       console.log("ADDAUCTION", state.auctions[newAuction.id]);
     }
-    },
+  },
   logoutUser(state) {
     state.currentUser = null;
     logoutConnection();

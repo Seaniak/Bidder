@@ -93,12 +93,16 @@ export default {
         && this.$store.getters.getAuction(this.$route.params.id).bids.length > 10);
 
 	},
-  	updateAuction() {
+      updateAuction() {
+		// return this.$store.getters.getAuction(this.$route.params.id);
+        console.log("UPDATEAUCTION");
 		return this.$store.getters.getAuction(this.$route.params.id);
+
 	},
   },
   async created() {
   	console.log(this.$store.getters.getAuction(this.$route.params.id));
+	  console.log(this.$store.state.auctions[this.$route.params.id]);
 	  if(this.$store.getters.getAuction(this.$route.params.id) === undefined){
 		  let auction = await fetch("/api/auctions/" + this.$route.params.id);
 		  auction = await auction.json();
