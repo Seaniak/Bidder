@@ -36,7 +36,7 @@ export default {
 	props: ["auction", "auctionEndTime"],
 	data() {
     return {
-      maxBid: "Placeholder"
+      // maxBid: "Placeholder"
     };
   },
   methods: {
@@ -48,12 +48,14 @@ export default {
   computed: {
     defaultThumbnail() {
       return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
+    },
+    maxBid(){
+  	return (this.auction.bids.length > 0) ?
+        Math.max(...(this.auction.bids.map((bid) => bid.sum)))
+        : this.auction.startSum;
     }
   },
   created() {
-  	this.maxBid = (this.auction.bids.length > 0) ?
-        Math.max(...(this.auction.bids.map((bid) => bid.sum)))
-        : this.auction.startSum;
   }
 };
 </script>

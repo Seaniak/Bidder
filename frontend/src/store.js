@@ -31,12 +31,12 @@ export default new Vuex.Store({
     filterItems(state, searchResult) {
       state.filteredItems = searchResult;
       searchResult.forEach((res) => {
-      	let exists = false;
-      	state.auctions.forEach((auction) => {
-      		if(res.id === auction.id) exists = true;
-		});
-      	if(!exists) state.auctions.push(res);
-	  })
+        let exists = false;
+        state.auctions.forEach((auction) => {
+          if (res.id === auction.id) exists = true;
+        });
+        if (!exists) state.auctions.push(res);
+      })
 
     },
     addAuction(state, value) {
@@ -46,7 +46,14 @@ export default new Vuex.Store({
       state.auctions = value;
       console.log('Auctions: ', state.auctions)
     },
-    logoutUser(state, value) {
+    // getSingleAuction(state, value) {
+    //   state.auctions = value;
+    //   // console.log('Auctions: ', state.auctions);
+    // },
+    setActiveAuction(state, activeAuction) {
+      state.activeAuction = activeAuction;
+    },
+    logoutUser(state) {
       state.currentUser = null;
       logoutConnection()
       window.socketUsername = 'anon'
@@ -84,6 +91,19 @@ export default new Vuex.Store({
           state.notificationBadge = true
           let bid = data.payload;
           console.log('Socket bid: ', bid)
+
+          if (state.activeAuction)
+            if (state.activeAuction.id === bid.auctionId)
+              state.activeAuction.bids.push(bid)
+
+          state.auctions.forEach(a => {
+            if(a.id === bid.auctionId)
+              a.bids.push(bid)
+          })
+
+          // state.auctions.filter(a => {
+          //   a.id === bid.auctionId
+          // }).bids.push(bid)
 
           notify.icon = 'monetization_on'
           notify.title = `Utbudad på ${bid.auctionId}`
