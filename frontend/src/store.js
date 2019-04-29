@@ -8,6 +8,7 @@ let noticeID = 0;
 
 export default new Vuex.Store({
   state: {
+    auctionMap: new Map(),
     activeAuction: null,
     currentAuctionId: null,
     // currentBid: null,
@@ -30,13 +31,15 @@ export default new Vuex.Store({
   mutations: {
     filterItems(state, searchResult) {
       state.filteredItems = searchResult;
-      searchResult.forEach((res) => {
+      searchResult.forEach((searchAuction) => {
       	let exists = false;
       	state.auctions.forEach((auction) => {
-      		if(res.id === auction.id) exists = true;
+      		if(searchAuction.id === auction.id) exists = true;
 		});
-      	if(!exists) state.auctions.push(res);
-	  })
+      	if(!exists) state.auctions.push(searchAuction);
+
+        if(!state.auctionMap.has(searchAuction.id)) state.auctionMap.set(searchAuction.id, searchAuction);
+      })
 
     },
     addAuction(state, value) {
@@ -46,16 +49,19 @@ export default new Vuex.Store({
       });
       if(!exists) state.auctions.push(value);
     },
-    getAuctions(state, value) {
-      state.auctions = value;
-      console.log('Auctions: ', state.auctions);
-    },
+    // getAuctions(state, value) {
+    //   state.auctions = value;
+    //   console.log('Auctions: ', state.auctions);
+    // },
     // getSingleAuction(state, value) {
     //   state.auctions = value;
     //   // console.log('Auctions: ', state.auctions);
     // },
     setActiveAuction(state, activeAuction) {
       state.activeAuction = activeAuction;
+    },
+    addToAuctionMap(state, auction) {
+      if(!state.auctionMap.has(auction.id)) state.auctionMap.set(auction.id, auction);
     },
     logoutUser(state) {
       state.currentUser = null;

@@ -110,6 +110,13 @@ export default {
 	},
   },
   async created() {
+  	if(!this.$store.state.auctionMap.has(this.$route.params.id)){
+		  let auction = await fetch("/api/auctions/" + this.$route.params.id);
+		  auction = await auction.json();
+		  this.$store.commit("addAuction", auction);
+
+	}
+
 	  this.$store.state.auctions.forEach((a) => {
 		if(this.compareAuctionId(a.id)) {
 	  		this.$store.commit("setActiveAuction", a);
