@@ -26,7 +26,9 @@ export default new Router({
       path: "/auction/:id",
       name: "auctionDetails",
       component: () =>
-        import(/* webpackChunkName: "auctionDetails" */ "./views/AuctionDetails.vue")
+        import(
+          /* webpackChunkName: "auctionDetails" */ "./views/AuctionDetails.vue"
+        )
     },
     {
       path: "/about",
@@ -50,7 +52,9 @@ export default new Router({
       path: "/user-auctions",
       name: "userAuctions",
       component: () =>
-        import(/* webpackChunkName: "userAuctions" */ "./views/UserAuctions.vue")
+        import(
+          /* webpackChunkName: "userAuctions" */ "./views/UserAuctions.vue"
+        )
     }
   ]
 });

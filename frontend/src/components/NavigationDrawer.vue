@@ -33,7 +33,12 @@
         <span>Logga ut</span>
         <v-icon medium>account_box</v-icon>
       </v-btn>
-      <v-btn v-if="!$store.state.currentUser" id="registerBtn" to="/register" flat>
+      <v-btn
+        v-if="!$store.state.currentUser"
+        id="registerBtn"
+        to="/register"
+        flat
+      >
         <span>Registera konto</span>
         <v-icon medium>account_box</v-icon>
       </v-btn>

@@ -1,38 +1,37 @@
-import {eventBus} from '@/main'
+import { eventBus } from "@/main";
 
 let ws;
 let isConnected = false;
 connect();
 
 export function connect() {
-  ws = new WebSocket('ws://localhost:8070/ultraSecretSocketAddress/websocket');
+  ws = new WebSocket("ws://localhost:8070/ultraSecretSocketAddress/websocket");
 
-  ws.onmessage = (e) => {
+  ws.onmessage = e => {
     let data = JSON.parse(e.data);
     // sends incoming data to the Vue instance
     // where it gets commited to store
-    eventBus.$emit('socket-data', data)
-  }
+    eventBus.$emit("socket-data", data);
+  };
 
-  ws.onopen = (e) => {
+  ws.onopen = e => {
     console.log("[Web Socket] Connected");
 
     let connectData = {
-      action: 'connect',
+      action: "connect",
       payload: window.socketUsername
-    }
-    ws.send(JSON.stringify(connectData))
+    };
+    ws.send(JSON.stringify(connectData));
   };
 
-  ws.onclose = (e) => {
-
+  ws.onclose = e => {
     isConnected = false;
     console.log("[Web Socket] Disconnected");
 
     setTimeout(() => {
-      console.log("[Web Socket] Trying to reconnect..")
-      connect()
-    }, 2000)
+      console.log("[Web Socket] Trying to reconnect..");
+      connect();
+    }, 2000);
   };
 }
 
@@ -45,9 +44,9 @@ export function disconnect() {
 
 export function sendMessage(message) {
   let data = {
-    action: 'message',
+    action: "message",
     payload: message
-  }
+  };
   ws.send(JSON.stringify(data));
 }
 export function sendData(data) {
@@ -56,16 +55,16 @@ export function sendData(data) {
 
 export function updateConnection() {
   let data = {
-    action: 'connect',
+    action: "connect",
     payload: window.socketUsername
-  }
+  };
   ws.send(JSON.stringify(data));
 }
 
 export function logoutConnection() {
   let data = {
-    action: 'logout',
+    action: "logout",
     payload: window.socketUsername
-  }
+  };
   ws.send(JSON.stringify(data));
 }
