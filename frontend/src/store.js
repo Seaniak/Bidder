@@ -8,14 +8,10 @@ let noticeID = 0;
 
 export default new Vuex.Store({
   state: {
-    auctionMap: null,
-    activeAuction: null,
-    currentAuctionId: null,
-    // currentBid: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
-    auctions: [],
+    auctions: {},
     notificationBadge: false,
     notifications: []
   },
@@ -27,81 +23,42 @@ export default new Vuex.Store({
       context.commit("getAuctions", response);
       context.commit("filterItems", "-default-");
     },
-    // addAuctionToMap(state, auction) {
-    //   if (!state.auctionMap.has(auction.id)) {
-    //     auction.maxBid = (auction.bids.length > 0) ?
-    //         Math.max(...(auction.map((bid) => bid.sum)))
-    //         : auction.startSum;
-    //     state.auctionMap.set(auction.id, auction);
-    //   }
-    // }
   },
   getters: {
     getAuction: (state) => (auctionId) => {
-      // return state.auctionMap.get(auctionId);
-      // let res = undefined;
-      // res = state.auctions.find((auction) => auction.id === auctionId);
-      return state.auctions.find((auction) => auction.id === auctionId);
+      return state.auctions.auctionId;
     }
   },
   mutations: {
     filterItems(state, searchResult) {
       searchResult.forEach((newAuction) => {
-        if(!state.auctions.find((auction) => auction.id == newAuction.id)) {
-          newAuction.maxBid = (newAuction.bids.length > 0) ?
-                Math.max(...(newAuction.bids.map((bid) => bid.sum)))
-                : newAuction.startSum;
-          state.auctions.push(newAuction);
+        let exists = false;
+        for(let key in state.auctions){
+          if(key == newAuction.id) exists = true;
         }
-
-
-        // let exists = false;
-        // state.auctions.forEach((auction) => {
-        // 	if(searchAuction.id === auction.id) exists = true;
-        // });
-        // if(!exists) state.auctions.push(searchAuction);
-
-
-        // if(!state.auctionMap.has(searchAuction.id)) {
-        //   searchAuction.maxBid = (searchAuction.bids.length > 0) ?
-        //       Math.max(...(searchAuction.bids.map((bid) => bid.sum)))
-        //       : searchAuction.startSum;
-        //   state.auctionMap.set(searchAuction.id, searchAuction);
-        // }
-      });
-      state.filteredItems = searchResult;
+        if(!exists) {
+          newAuction.maxBid = (newAuction.bids.length > 0) ?
+              Math.max(...(newAuction.bids.map((bid) => bid.sum)))
+              : newAuction.startSum;
+          state.auctions[newAuction.id] = newAuction;
+          // console.log("FILTERITEMS", state.auctions[newAuction.id])
+        }
+        state.filteredItems = searchResult;
+        });
     },
   addAuction(state, newAuction) {
-    // let exists = false;
-    // state.auctions.forEach((auction) => {
-    //   if (value.id === auction.id) exists = true;
-    // });
-    // if (!exists) state.auctions.push(value);
-    // if(!state.auctions.find((auction) => {return auction.id === newAuction.id})){
-      if(!state.auctions.includes(newAuction)){
-
-        newAuction.maxBid = (newAuction.bids.length > 0) ?
+    let exists = false;
+    for(let key in state.auctions){
+      if(key == newAuction.id) exists = true;
+    }
+    if(!exists) {
+      newAuction.maxBid = (newAuction.bids.length > 0) ?
           Math.max(...(newAuction.bids.map((bid) => bid.sum)))
           : newAuction.startSum;
-      state.auctions.push(newAuction);
-      console.log("ADDAUCTION", newAuction);
+      state.auctions[newAuction.id] = newAuction;
+      console.log("ADDAUCTION", state.auctions[newAuction.id]);
     }
-  },
-  // getAuctions(state, value) {
-  //   state.auctions = value;
-  //   console.log('Auctions: ', state.auctions);
-  // },
-  // getSingleAuction(state, value) {
-  //   state.auctions = value;
-  //   // console.log('Auctions: ', state.auctions);
-  // },
-  setActiveAuction(state, activeAuction) {
-    state.activeAuction = activeAuction;
-  },
-  setAuctionMap(state, auctionMap) {
-    state.auctionMap = auctionMap;
-  },
-
+    },
   logoutUser(state) {
     state.currentUser = null;
     logoutConnection();
