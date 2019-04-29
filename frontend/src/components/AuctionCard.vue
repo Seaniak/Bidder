@@ -40,10 +40,6 @@ export default {
     };
   },
   methods: {
-    // getDateString(auctionTimeStamp) {
-    //   let bidDate = new Date(auctionTimeStamp);
-    //   return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
-    // }
   },
   computed: {
     defaultThumbnail() {

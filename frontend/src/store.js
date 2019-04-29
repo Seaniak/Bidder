@@ -40,7 +40,11 @@ export default new Vuex.Store({
 
     },
     addAuction(state, value) {
-      state.auctions.push(value);
+      let exists = false;
+      state.auctions.forEach((auction) => {
+        if(value.id === auction.id) exists = true;
+      });
+      if(!exists) state.auctions.push(value);
     },
     getAuctions(state, value) {
       state.auctions = value;
