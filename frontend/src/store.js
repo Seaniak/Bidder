@@ -8,7 +8,9 @@ let noticeID = 0;
 
 export default new Vuex.Store({
   state: {
-    currentBid: null,
+    activeAuction: null,
+    currentAuctionId: null,
+    // currentBid: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
@@ -28,6 +30,14 @@ export default new Vuex.Store({
   mutations: {
     filterItems(state, searchResult) {
       state.filteredItems = searchResult;
+      searchResult.forEach((res) => {
+      	let exists = false;
+      	state.auctions.forEach((auction) => {
+      		if(res.id === auction.id) exists = true;
+		});
+      	if(!exists) state.auctions.push(res);
+	  })
+
     },
     addAuction(state, value) {
       state.auctions.push(value)
