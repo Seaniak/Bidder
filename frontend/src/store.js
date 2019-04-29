@@ -100,7 +100,7 @@ export default new Vuex.Store({
           notify.icon = 'monetization_on'
           notify.title = `Utbudad på ${auctionTitle}`
           notify.subtitle = `Nytt bud: ${bid.sum}kr, av ${bid.username}`
-          notify.route = `/auctions/${bid.auctionId}`
+          notify.route = `/auction/${bid.auctionId}`
 
           state.notifications.unshift(notify)
           break;
@@ -118,8 +118,6 @@ export default new Vuex.Store({
           console.log('Socket message: ', message)
           break;
       }
-
-      noticeID++
     }
   },
 })
