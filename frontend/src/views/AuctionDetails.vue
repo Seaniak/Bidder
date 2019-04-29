@@ -85,9 +85,6 @@ export default {
     };
   },
   methods: {
-  	// bidPages(){
-  	// 	return (;
-    // },
     getDateString(bidTimeStamp) {
       let bidDate = new Date(bidTimeStamp);
       return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
@@ -127,10 +124,6 @@ export default {
 		  this.$store.commit("addAuction", auction);
 		  console.log("ACTIVEAUCTION SET BY CREATED() FROM DATABASE", auction);
 	  }
-    //
-	  // let images = await fetch("/api/get_image/" + this.$route.params.id);
-    // this.images = await images.json();
-
   }
 };
 </script>
