@@ -35,12 +35,13 @@ import { SmoothPicker } from "vue-smooth-picker";
 
 export default {
   name: "PlaceBid",
-  props: ["propAuction"],
+  props: ["auctionId"],
   components: {
     SmoothPicker
   },
   data() {
     return {
+    	bidId: this.auctionId,
       bidAuction: null,
       chosenBid: 0,
       bids: [],
@@ -90,7 +91,7 @@ export default {
       )
         return;
       let data = {
-        auctionId: this.bidAuction.id,
+        auctionId: this.bidId,
         username: this.$store.state.currentUser.username,
         sum: this.chosenBid
       };
@@ -107,17 +108,20 @@ export default {
   },
   computed: {
     possibleBids() {
-      if (this.bidAuction == null) this.bidAuction = this.$store.state.activeAuction;
-      this.bidAuction.maxBid = (this.bidAuction.bids.length === 0) ?
-          this.bidAuction.startSum
-          : Math.max(...(this.bidAuction.bids.map(bid => bid.sum)));
+      // if (this.bidAuction == null) this.bidAuction = this.$store.state.activeAuction;
+      // this.bidAuction.maxBid = (this.bidAuction.bids.length === 0) ?
+      //     this.bidAuction.startSum
+      //     : Math.max(...(this.bidAuction.bids.map(bid => bid.sum)));
+        let maxBid = (this.$store.state.auctionMap.get(this.bidId) === undefined) ?
+            0
+            : ((this.$store.state.auctionMap.get(this.bidId).bids.length === 0) ?
+				      this.$store.state.auctionMap.get(this.bidId).startSum
+                : Math.max(...(this.$store.state.auctionMap.get(this.bidId).bids.map(bid => bid.sum))));
       return [
         {
           currentIndex: 1,
           flex: 6,
-          list: this.newBids(
-            this.bidAuction === null ? 0 : this.bidAuction.maxBid
-          ),
+          list: this.newBids(maxBid),
           textAlign: "center",
           className: "row-group"
         }
@@ -125,8 +129,12 @@ export default {
     }
   },
   created() {
-    if (this.propAuction != null) this.bidAuction = this.propAuction;
-    }
+    // if (this.auctionId != null) this.bidAuction = this.propAuction;
+	  // this.$store.state.auctionMap.get(this.$route.params.id
+      console.log(this.auctionId);
+	  if (this.auctionId == null) this.bidId = this.$route.params.id;
+
+  }
 };
 </script>
 

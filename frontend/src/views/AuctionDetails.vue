@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-container>
+  <v-container v-if="updateAuction !== undefined">
     <v-carousel height="50vh" class="border">
       <v-carousel-item
         v-for="(image, i) in (updateAuction !== null) ? updateAuction.images : []"
@@ -89,48 +89,50 @@ export default {
       let bidDate = new Date(bidTimeStamp);
       return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
     },
-	  compareAuctionId(id){
-    	return (this.$route.params.id == id);
-    }
+	  // compareAuctionId(id){
+    // 	return (this.$route.params.id == id);
+    // }
   },
   computed: {
   	pageControl() {
-		  return !(this.$store.state.activeAuction != null 	&& this.$store.state.activeAuction.bids.length > 10);
-    },
+		  // return !(this.$store.state.activeAuction != null 	&& this.$store.state.activeAuction.bids.length > 10);
+		return !(this.$store.state.auctionMap.get(this.$route.params.id) != null
+        && this.$store.state.auctionMap.get(this.$route.params.id).bids.length > 10);
+
+	},
   	updateAuction() {
-  		let auction = null;
-  		if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
-  			auction = this.$store.state.activeAuction;
-		    console.log("AUCTION SET BY COMPUTED() FROM STORE", auction);
-		    auction.maxBid = (auction.bids.length === 0) ?
-            auction.startSum
-				  : Math.max(...(auction.bids.map(bid => bid.sum)));
-	    }
-  		return auction;
+  		// let auction = null;
+  		// if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
+  		// 	auction = this.$store.state.activeAuction;
+		  //   console.log("AUCTION SET BY COMPUTED() FROM STORE", auction);
+		  //   auction.maxBid = (auction.bids.length === 0) ?
+      //       auction.startSum
+			// 	  : Math.max(...(auction.bids.map(bid => bid.sum)));
+	    // }
+		return this.$store.getters.getAuction(this.$route.params.id);
 	},
   },
   async created() {
   	if(!this.$store.state.auctionMap.has(this.$route.params.id)){
 		  let auction = await fetch("/api/auctions/" + this.$route.params.id);
 		  auction = await auction.json();
-		  this.$store.commit("addAuction", auction);
-
-	}
-
-	  this.$store.state.auctions.forEach((a) => {
-		if(this.compareAuctionId(a.id)) {
-	  		this.$store.commit("setActiveAuction", a);
-		    console.log("ACTIVEAUCTION SET BY CREATED() FROM STORE", a)
-	    }
-	  });
-
-	  if(this.$store.state.activeAuction == null || !this.compareAuctionId(this.$store.state.activeAuction.id)) {
-      let auction = await fetch("/api/auctions/" + this.$route.params.id);
-      auction = await auction.json();
-		  this.$store.commit("setActiveAuction", auction);
-		  this.$store.commit("addAuction", auction);
-		  console.log("ACTIVEAUCTION SET BY CREATED() FROM DATABASE", auction);
+		  this.$store.commit("addAuctionToMap", auction);
 	  }
+    //
+	  // this.$store.state.auctions.forEach((a) => {
+		// if(this.compareAuctionId(a.id)) {
+	  // 		this.$store.commit("getAuction", a);
+		//     console.log("ACTIVEAUCTION SET BY CREATED() FROM STORE", a)
+	  //   }
+	  // });
+    //
+	  // if(this.$store.state.activeAuction == null || !this.compareAuctionId(this.$store.state.activeAuction.id)) {
+    //   let auction = await fetch("/api/auctions/" + this.$route.params.id);
+    //   auction = await auction.json();
+		//   this.$store.commit("setActiveAuction", auction);
+		//   this.$store.commit("addAuction", auction);
+		//   console.log("ACTIVEAUCTION SET BY CREATED() FROM DATABASE", auction);
+	  // }
   }
 };
 </script>

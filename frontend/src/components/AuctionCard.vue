@@ -1,24 +1,24 @@
 <template>
-  <v-card id="auction-card" :to="'/auction/' + auction.id" class="mb-3 pt-1">
+  <v-card v-if="updateAuction !== undefined" id="auction-card" :to="'/auction/' + auctionId" class="mb-3 pt-1">
     <v-img
-      :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
+      :src="updateAuction.thumbnail ? updateAuction.thumbnail : defaultThumbnail"
       aspect-ratio="2.75"
     ></v-img>
     <v-card-title class="align-items-start" primary-title>
       <div class="col-12">
-        <h3 class="col-12 mb-0">{{ auction.title }}</h3>
+        <h3 class="col-12 mb-0">{{ updateAuction.title }}</h3>
       </div>
       <div class="col-6">
         <h5 class="col-12 mt-0">Bud</h5>
-        <p>{{ maxBid }}</p>
+        <p>{{ updateAuction.maxBid }}</p>
       </div>
       <div class="col-6 mt-0">
         <h5 class="col-12">Tid kvar</h5>
-        <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
+        <AuctionTimeCountDown :auctionEndTime="updateAuction.endTime" />
       </div>
     </v-card-title>
     <v-content>
-      <place-bid :propAuction="auction"></place-bid>
+      <place-bid :auctionId="auctionId"></place-bid>
     </v-content>
   </v-card>
 </template>
@@ -33,24 +33,33 @@ export default {
     AuctionTimeCountDown,
     PlaceBid
   },
-	props: ["auction", "auctionEndTime"],
+	props: ["auctionId"],
 	data() {
     return {
-      maxBid: "Placeholder"
     };
   },
   methods: {
   },
   computed: {
-    defaultThumbnail() {
-      return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
-    }
+	  defaultThumbnail() {
+		  return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
+	  },
+	  // maxBid() {
+		//   let tempAuction = this.$store.getters.getAuction(this.auctionId);
+		//   return
+	  // },
+	  updateAuction() {
+		  // let auction = null;
+		  // if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
+		  // 	auction = this.$store.state.activeAuction;
+		  //   console.log("AUCTION SET BY COMPUTED() FROM STORE", auction);
+		  //   auction.maxBid = (auction.bids.length === 0) ?
+		  //       auction.startSum
+		  // 	  : Math.max(...(auction.bids.map(bid => bid.sum)));
+		  // }
+		  return this.$store.getters.getAuction(this.auctionId);
+	  },
   },
-  created() {
-  	this.maxBid = (this.auction.bids.length > 0) ?
-        Math.max(...(this.auction.bids.map((bid) => bid.sum)))
-        : this.auction.startSum;
-  }
 };
 </script>
 
