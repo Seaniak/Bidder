@@ -112,16 +112,18 @@ export default {
       // this.bidAuction.maxBid = (this.bidAuction.bids.length === 0) ?
       //     this.bidAuction.startSum
       //     : Math.max(...(this.bidAuction.bids.map(bid => bid.sum)));
-        let maxBid = (this.$store.state.auctionMap.get(this.bidId) === undefined) ?
-            0
-            : ((this.$store.state.auctionMap.get(this.bidId).bids.length === 0) ?
-				      this.$store.state.auctionMap.get(this.bidId).startSum
-                : Math.max(...(this.$store.state.auctionMap.get(this.bidId).bids.map(bid => bid.sum))));
+      //   let maxBid = (this.$store.state.auctionMap.get(this.bidId) === undefined) ?
+      //       0
+      //       : ((this.$store.state.auctionMap.get(this.bidId).bids.length === 0) ?
+			// 	      this.$store.state.auctionMap.get(this.bidId).startSum
+      //           : Math.max(...(this.$store.state.auctionMap.get(this.bidId).bids.map(bid => bid.sum))));
+        let bidAuction =  this.$store.getters.getAuction(this.auctionId);
+        // let maxBid =  (this.$store.getters.getAuction(this.auctionId) ? )
       return [
         {
           currentIndex: 1,
           flex: 6,
-          list: this.newBids(maxBid),
+          list: this.newBids(bidAuction ? bidAuction.maxBid : 0),
           textAlign: "center",
           className: "row-group"
         }

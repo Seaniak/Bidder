@@ -27,30 +27,40 @@ export default new Vuex.Store({
       context.commit("getAuctions", response);
       context.commit("filterItems", "-default-");
     },
-    addAuctionToMap(state, auction) {
-      if (!state.auctionMap.has(auction.id)) {
-        auction.maxBid = (auction.bids.length > 0) ?
-            Math.max(...(auction.map((bid) => bid.sum)))
-            : auction.startSum;
-        state.auctionMap.set(auction.id, auction);
-      }
-    }
+    // addAuctionToMap(state, auction) {
+    //   if (!state.auctionMap.has(auction.id)) {
+    //     auction.maxBid = (auction.bids.length > 0) ?
+    //         Math.max(...(auction.map((bid) => bid.sum)))
+    //         : auction.startSum;
+    //     state.auctionMap.set(auction.id, auction);
+    //   }
+    // }
   },
   getters: {
     getAuction: (state) => (auctionId) => {
-      return state.auctionMap.get(auctionId);
+      // return state.auctionMap.get(auctionId);
+      // let res = undefined;
+      // res = state.auctions.find((auction) => auction.id === auctionId);
+      return state.auctions.find((auction) => auction.id === auctionId);
     }
   },
   mutations: {
     filterItems(state, searchResult) {
-      searchResult.forEach((searchAuction) => {
+      searchResult.forEach((newAuction) => {
+        if(!state.auctions.find((auction) => auction.id == newAuction.id)) {
+          newAuction.maxBid = (newAuction.bids.length > 0) ?
+                Math.max(...(newAuction.bids.map((bid) => bid.sum)))
+                : newAuction.startSum;
+          state.auctions.push(newAuction);
+        }
+
+
         // let exists = false;
         // state.auctions.forEach((auction) => {
         // 	if(searchAuction.id === auction.id) exists = true;
         // });
         // if(!exists) state.auctions.push(searchAuction);
 
-        this.dispatch("addAuctionToMap", searchAuction);
 
         // if(!state.auctionMap.has(searchAuction.id)) {
         //   searchAuction.maxBid = (searchAuction.bids.length > 0) ?
@@ -61,12 +71,21 @@ export default new Vuex.Store({
       });
       state.filteredItems = searchResult;
     },
-  addAuction(state, value) {
-    let exists = false;
-    state.auctions.forEach((auction) => {
-      if (value.id === auction.id) exists = true;
-    });
-    if (!exists) state.auctions.push(value);
+  addAuction(state, newAuction) {
+    // let exists = false;
+    // state.auctions.forEach((auction) => {
+    //   if (value.id === auction.id) exists = true;
+    // });
+    // if (!exists) state.auctions.push(value);
+    // if(!state.auctions.find((auction) => {return auction.id === newAuction.id})){
+      if(!state.auctions.includes(newAuction)){
+
+        newAuction.maxBid = (newAuction.bids.length > 0) ?
+          Math.max(...(newAuction.bids.map((bid) => bid.sum)))
+          : newAuction.startSum;
+      state.auctions.push(newAuction);
+      console.log("ADDAUCTION", newAuction);
+    }
   },
   // getAuctions(state, value) {
   //   state.auctions = value;

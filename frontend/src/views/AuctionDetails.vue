@@ -1,40 +1,40 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-container v-if="updateAuction !== undefined">
+  <v-container>
     <v-carousel height="50vh" class="border">
       <v-carousel-item
-        v-for="(image, i) in (updateAuction !== null) ? updateAuction.images : []"
+        v-for="(image, i) in (updateAuction !== undefined) ? updateAuction.images : []"
         :key="i"
         :src="image"
       ></v-carousel-item>
     </v-carousel>
-    <h1 v-if="updateAuction !== null">{{ updateAuction.title }}</h1>
+    <h1 v-if="updateAuction !== undefined">{{ updateAuction.title }}</h1>
     <v-layout row wrap class="pt-2 justify-content-around">
       <v-card class="border col-5">
         <h4>Högsta Bud</h4>
-        <h3 v-if="updateAuction !== null">{{ updateAuction.maxBid }}kr</h3>
+        <h3 v-if="updateAuction !== undefined">{{ updateAuction.maxBid }}kr</h3>
       </v-card>
       <v-card class="border col-5">
         <h4>Avslutas</h4>
-        <AuctionTimeCountDown v-if="updateAuction !== null" :auctionEndTime="updateAuction.endTime" />
+        <AuctionTimeCountDown v-if="updateAuction !== undefined" :auctionEndTime="updateAuction.endTime" />
       </v-card>
     </v-layout>
     <v-layout row wrap class="pt-2 justify-content-around">
       <v-card class="border col-5">
         <h4>Säljare</h4>
-        <h3 v-if="updateAuction !== null"> {{ updateAuction.username }}</h3>
+        <h3 v-if="updateAuction !== undefined"> {{ updateAuction.username }}</h3>
       </v-card>
       <v-card class="border col-5">
         <h4>Kategori</h4>
-        <h3 v-if="updateAuction !== null">{{ updateAuction.category }}</h3>
+        <h3 v-if="updateAuction !== undefined">{{ updateAuction.category }}</h3>
       </v-card>
     </v-layout>
     <div class="description py-3">
       <h3>Beskrivning</h3>
-      <p v-if="updateAuction !== null">{{ updateAuction.description }}</p>
+      <p v-if="updateAuction !== undefined">{{ updateAuction.description }}</p>
     </div>
     <v-data-table
       :headers="headers"
-      :items="(updateAuction === null) ? [] : updateAuction.bids"
+      :items="(updateAuction === undefined) ? [] : updateAuction.bids"
       :hide-actions="pageControl"
       :must-sort="true"
       :no-data-text="'Inga bud är lagda!'"
@@ -96,8 +96,8 @@ export default {
   computed: {
   	pageControl() {
 		  // return !(this.$store.state.activeAuction != null 	&& this.$store.state.activeAuction.bids.length > 10);
-		return !(this.$store.state.auctionMap.get(this.$route.params.id) != null
-        && this.$store.state.auctionMap.get(this.$route.params.id).bids.length > 10);
+		return !(this.$store.getters.getAuction(this.$route.params.id) !== undefined
+        && this.$store.getters.getAuction(this.$route.params.id).bids.length > 10);
 
 	},
   	updateAuction() {
@@ -113,11 +113,20 @@ export default {
 	},
   },
   async created() {
-  	if(!this.$store.state.auctionMap.has(this.$route.params.id)){
+  	console.log(this.$store.getters.getAuction(this.$route.params.id));
+	  if(this.$store.getters.getAuction(this.$route.params.id) === undefined){
 		  let auction = await fetch("/api/auctions/" + this.$route.params.id);
 		  auction = await auction.json();
-		  this.$store.commit("addAuctionToMap", auction);
+		  this.$store.commit("addAuction", auction);
 	  }
+
+  	// if(!this.$store.state.auctionMap.has(this.$route.params.id)){
+		//   let auction = await fetch("/api/auctions/" + this.$route.params.id);
+		//   auction = await auction.json();
+		//   this.$store.commit("addAuctionToMap", auction);
+	  // }
+
+
     //
 	  // this.$store.state.auctions.forEach((a) => {
 		// if(this.compareAuctionId(a.id)) {

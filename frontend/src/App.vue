@@ -33,7 +33,7 @@ export default {
 
     this.$store.commit("loginUser", user);
     // let auctionMap = new Map();
-	  this.$store.commit("setAuctionMap", new Map());
+	  // this.$store.commit("setAuctionMap", new Map());
 	  // this.$store.commit("addToAuctionMap", "TEST");
 	  // this.$store.state.auctionMap.set(1, "TEST");
 	  // console.log(this.$store.state.auctionMap.get(1));
