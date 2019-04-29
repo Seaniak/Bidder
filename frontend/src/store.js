@@ -81,25 +81,50 @@ export default new Vuex.Store({
       state.notifications.splice(index, 1);
     },
     webSocket(state, data) {
+      let notify = {
+        icon: '',
+        title: '',
+        subtitle: '',
+        route: ''
+      }
+
       // update state depending on incoming action
       switch (data.action) {
         case "bid":
-          state.notificationBadge = true;
-          // console.log('Socket bid: ', data.payload);
+          let bid = data.payload;
+
+          let auctionTitle;
+          state.auctions.forEach(a => {
+            if (a.id === bid.auctionId) {
+              a.bids.push(bid)
+              auctionTitle = a.title
+            }
+          })
+
+          //  don't notify yourself
+          if (bid.username === state.currentUser.username) return;
+          state.notificationBadge = true
+          notify.icon = 'monetization_on'
+          notify.title = `Utbudad på ${auctionTitle}`
+          notify.subtitle = `Nytt bud: ${bid.sum}kr, av ${bid.username}`
+          notify.route = `/auction/${bid.auctionId}`
+
+          state.notifications.unshift(notify)
           break;
         case "message":
-          state.notificationBadge = true;
-          state.notifications.push({
-            id: noticeID,
-            title: "Nytt meddelande",
-            subtitle: data.payload
-          });
+          state.notificationBadge = true
+          let message = data.payload
 
-          noticeID++;
+          notify.icon = 'chat'
+          notify.title = 'Nytt meddelande'
+          notify.subtitle = message
+          notify.route = '/'
 
-          // console.log('Socket message: ', data.payload);
+          state.notifications.unshift(notify)
+
+          console.log('Socket message: ', message)
           break;
       }
     }
-  }
-});
+  },
+})
