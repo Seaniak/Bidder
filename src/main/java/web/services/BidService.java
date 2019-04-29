@@ -31,7 +31,7 @@ public class BidService {
 
 //    emits the new bid to all connected users
 //    to update auction
-    socketService.sendToAll(new SocketEvent("bid", bidFromDB), SocketEvent.class);
+    socketService.sendToAll(new SocketEvent("bid", bidFromDB));
     return bidFromDB;
   }
 

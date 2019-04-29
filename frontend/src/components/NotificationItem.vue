@@ -10,7 +10,7 @@
     </v-list-tile-action>
 
     <v-list-tile-content>
-      <v-list-tile-title v-text="item.id+': '+item.title"></v-list-tile-title>
+      <v-list-tile-title v-text="item.title"></v-list-tile-title>
       <v-list-tile-sub-title v-text="item.subtitle"></v-list-tile-sub-title>
     </v-list-tile-content>
 

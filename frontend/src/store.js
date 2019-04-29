@@ -4,13 +4,10 @@ import {updateConnection, logoutConnection} from "./webSocket";
 
 Vue.use(Vuex);
 
-let noticeID = 0;
-
 export default new Vuex.Store({
   state: {
     activeAuction: null,
     currentAuctionId: null,
-    // currentBid: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
@@ -78,7 +75,6 @@ export default new Vuex.Store({
     },
     webSocket(state, data) {
       let notify = {
-        id: noticeID,
         icon: '',
         title: '',
         subtitle: '',
@@ -88,25 +84,21 @@ export default new Vuex.Store({
       // update state depending on incoming action
       switch (data.action) {
         case "bid":
-          state.notificationBadge = true
           let bid = data.payload;
-          console.log('Socket bid: ', bid)
 
-          if (state.activeAuction)
-            if (state.activeAuction.id === bid.auctionId)
-              state.activeAuction.bids.push(bid)
-
+          let auctionTitle;
           state.auctions.forEach(a => {
-            if(a.id === bid.auctionId)
+            if (a.id === bid.auctionId) {
               a.bids.push(bid)
+              auctionTitle = a.title
+            }
           })
 
-          // state.auctions.filter(a => {
-          //   a.id === bid.auctionId
-          // }).bids.push(bid)
-
+          //  don't notify yourself
+          if (bid.username === state.currentUser.username) return;
+          state.notificationBadge = true
           notify.icon = 'monetization_on'
-          notify.title = `Utbudad på ${bid.auctionId}`
+          notify.title = `Utbudad på ${auctionTitle}`
           notify.subtitle = `Nytt bud: ${bid.sum}kr, av ${bid.username}`
           notify.route = `/auctions/${bid.auctionId}`
 

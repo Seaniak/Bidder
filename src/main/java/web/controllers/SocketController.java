@@ -6,7 +6,6 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import web.entities.Bid;
 import web.entities.SocketEvent;
 import web.services.SocketService;
 
@@ -35,15 +34,11 @@ public class SocketController extends TextWebSocketHandler {
         socketService.removeUserSession(clientData.get("payload").toString());
         break;
       case "message":
-        socketService.sendToUser("loke", new SocketEvent("message", clientData.get("payload")), SocketEvent.class);
+        socketService.sendToUser("loke", new SocketEvent("message", clientData.get("payload")));
         break;
       default:
         System.err.println("No handler for action: " +clientData.get("action"));
     }
-
-//    for testing
-    Bid bid = new Bid(46, "loke", 25);
-    socketService.sendToAll(new SocketEvent("bid", bid), SocketEvent.class);
   }
 
   @Override
