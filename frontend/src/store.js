@@ -1,28 +1,27 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { updateConnection, logoutConnection } from "./webSocket";
+import {updateConnection, logoutConnection} from "./webSocket";
+import {notifyMessage} from "./utilities/SocketMessage";
 
 Vue.use(Vuex);
-
-let noticeID = 0;
 
 export default new Vuex.Store({
   state: {
     activeAuction: null,
     currentAuctionId: null,
-    // currentBid: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
     auctions: [],
     notificationBadge: false,
-    notifications: []
+    notifications: [],
+    chatRecipient: '',
+    chatMessages: []
   },
   actions: {
     async getAuctions(context) {
       let response = await fetch("/api/auctions");
       response = await response.json();
-      console.log("ASYNC GETAUC", response);
       context.commit("getAuctions", response);
       context.commit("filterItems", "-default-");
     }
@@ -31,29 +30,25 @@ export default new Vuex.Store({
     filterItems(state, searchResult) {
       state.filteredItems = searchResult;
       searchResult.forEach((res) => {
-      	let exists = false;
-      	state.auctions.forEach((auction) => {
-      		if(res.id === auction.id) exists = true;
-		});
-      	if(!exists) state.auctions.push(res);
-	  })
+        let exists = false;
+        state.auctions.forEach((auction) => {
+          if (res.id === auction.id) exists = true;
+        });
+        if (!exists) state.auctions.push(res);
+      })
 
     },
     addAuction(state, value) {
       let exists = false;
       state.auctions.forEach((auction) => {
-        if(value.id === auction.id) exists = true;
+        if (value.id === auction.id) exists = true;
       });
-      if(!exists) state.auctions.push(value);
+      if (!exists) state.auctions.push(value);
     },
     getAuctions(state, value) {
       state.auctions = value;
       console.log('Auctions: ', state.auctions);
     },
-    // getSingleAuction(state, value) {
-    //   state.auctions = value;
-    //   // console.log('Auctions: ', state.auctions);
-    // },
     setActiveAuction(state, activeAuction) {
       state.activeAuction = activeAuction;
     },
@@ -68,10 +63,18 @@ export default new Vuex.Store({
         window.socketUsername = user.username;
         updateConnection();
       }
-      // console.log('User: ', state.currentUser);
     },
     setCurrentBid(state, bid) {
       state.currentBid = bid;
+    },
+    fetchMessages(state, value) {
+      state.chatMessages = value
+    },
+    addNewMessage(state, value) {
+      state.chatMessages.push(value)
+    },
+    currentRecipient(state, value) {
+      state.chatRecipient = value
     },
     notificationToggle(state, value) {
       state.notificationBadge = value;
@@ -79,13 +82,15 @@ export default new Vuex.Store({
     removeNotification(state, item) {
       let index = state.notifications.indexOf(item);
       state.notifications.splice(index, 1);
+      state.notificationBadge = false;
     },
     webSocket(state, data) {
       let notify = {
         icon: '',
         title: '',
         subtitle: '',
-        route: ''
+        route: '',
+        params: ''
       }
 
       // update state depending on incoming action
@@ -93,16 +98,27 @@ export default new Vuex.Store({
         case "bid":
           let bid = data.payload;
 
+          let subscribedAuction = false
+
           let auctionTitle;
           state.auctions.forEach(a => {
             if (a.id === bid.auctionId) {
+
+              // check if user has placed a bid on that auction
+              for (let b of a.bids) {
+                if (b.username === state.currentUser.username)
+                  console.log(b)
+                subscribedAuction = true
+                break;
+              }
               a.bids.push(bid)
               auctionTitle = a.title
             }
           })
 
           //  don't notify yourself
-          if (bid.username === state.currentUser.username) return;
+          if (bid.username === state.currentUser.username || !subscribedAuction) return;
+
           state.notificationBadge = true
           notify.icon = 'monetization_on'
           notify.title = `Utbudad på ${auctionTitle}`
@@ -112,19 +128,19 @@ export default new Vuex.Store({
           state.notifications.unshift(notify)
           break;
         case "message":
-          state.notificationBadge = true
           let message = data.payload
 
-          notify.icon = 'chat'
-          notify.title = 'Nytt meddelande'
-          notify.subtitle = message
-          notify.route = '/'
+          if (message.sender !== state.chatRecipient) {
+            notifyMessage(state, message)
+            return;
+          }
+          state.chatMessages.push(message)
 
-          state.notifications.unshift(notify)
-
-          console.log('Socket message: ', message)
+          if (message.sender !== state.currentUser.username)
+            notifyMessage(state, message)
           break;
       }
     }
   },
 })
+

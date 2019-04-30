@@ -7,7 +7,7 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
       >
-        <router-view :key="$route.fullPath" />
+        <router-view :key="$route.fullPath + $route.params.recipient" />
       </transition>
       <Navigation />
       <NavigationDrawer />

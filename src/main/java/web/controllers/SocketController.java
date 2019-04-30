@@ -41,29 +41,13 @@ public class SocketController extends TextWebSocketHandler {
         String recipient = clientData.get("recipient").toString();
         String text = clientData.get("text").toString();
 
-        System.err.printf(" Sender: %s \n Recipient: %s \n Text: %s \n",
-                sender,
-                recipient,
-                text);
-
-        Message msg = new Message(
-                sender,
-                recipient,
-                text);
-
-        System.out.println(msg);
-
-        socketService.saveMessage(msg);
-
-        socketService.sendToUser(sender, new SocketEvent("message", msg), SocketEvent.class);
+        Message msg = new Message(sender, recipient, text);
+        Message msgFromDB = socketService.saveMessage(msg);
+        socketService.sendToChat(sender,recipient, new SocketEvent("message", msgFromDB));
         break;
       default:
         System.err.println("No handler for action: " + clientData.get("action"));
     }
-
-//    for testing
-    Bid bid = new Bid(46, "loke", 25);
-    socketService.sendToAll(new SocketEvent("bid", bid), SocketEvent.class);
   }
 
   @Override

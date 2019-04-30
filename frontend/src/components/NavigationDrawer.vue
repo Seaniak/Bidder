@@ -5,6 +5,7 @@
           right
           clipped
           temporary
+          id="drawer"
   >
     <div class="nav-title my-3">
       <v-layout row align-center justify-center>
@@ -34,10 +35,10 @@
         <v-icon medium>account_box</v-icon>
       </v-btn>
       <v-btn
-        v-if="!$store.state.currentUser"
-        id="registerBtn"
-        to="/register"
-        flat
+              v-if="!$store.state.currentUser"
+              id="registerBtn"
+              to="/register"
+              flat
       >
         <span>Registera konto</span>
         <v-icon medium>account_box</v-icon>
@@ -49,6 +50,10 @@
       <v-btn v-if="$store.state.currentUser" to="/user-auctions" flat>
         <span>Mina auktioner</span>
         <v-icon dark medium>bookmarks</v-icon>
+      </v-btn>
+      <v-btn v-if="$store.state.currentUser" to="/openChats" flat>
+        <span>Meddelanden</span>
+        <v-icon dark medium>chat</v-icon>
       </v-btn>
       <!--<v-btn id="aboutBtn" to="/about" flat>-->
       <!--<span>Om oss</span>-->
@@ -112,6 +117,10 @@
 </script>
 
 <style scoped>
+  #drawer {
+    z-index: 1000;
+  }
+
   .nav-title {
     padding-bottom: 10px;
     border-bottom: solid 1px #bbb;

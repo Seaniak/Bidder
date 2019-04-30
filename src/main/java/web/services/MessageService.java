@@ -3,35 +3,51 @@ package web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.entities.Message;
-import web.entities.SocketEvent;
 import web.repositories.MessageRepo;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MessageService {
+  DateTimeFormatter timestampFormat = DateTimeFormatter.ofPattern("dd' 'MMM HH:mm");
 
   @Autowired
   private MessageRepo messageRepo;
-//  @Autowired
-//  private SocketService socketService;
-
-//  public List<Message> getChatMessages(Long chatId) {
-//    List<Message> Messages = messageRepo.findAllByChatId(chatId);
-//    return Messages == null ? new ArrayList<>() : Messages;
-//  }
 
   public List<Message> getAllMessages() {
     return messageRepo.findAll();
   }
 
+  public List<Message> getMessagesFromSenderOrRecipient(String currentUser, String recipient) {
+    List<Message> messages = messageRepo.findAllBySenderAndRecipient(currentUser, recipient);
+    List<Message> recipients = messageRepo.findAllBySenderAndRecipient(recipient, currentUser);
+    messages.addAll(recipients);
+
+    for (Message msg : messages) {
+      msg.setTime(msg.getTimestamp().toLocalDateTime().format(timestampFormat));
+    }
+    messages.sort((a, b) -> a.getTimestamp().compareTo(b.getTimestamp()));
+    return messages;
+  }
+
+  public List<String> getOngoingChats(String username) {
+    List<Object[]> messages = messageRepo.getChatList(username);
+    List<String> chats = new ArrayList<>();
+
+    for (Object[] message: messages) {
+      if(!message[0].equals(username) && !chats.contains(message[0].toString()))
+        chats.add(message[0].toString());
+      else if (!message[1].equals(username) &&!chats.contains(message[1].toString()))
+        chats.add(message[1].toString());
+    }
+    return chats;
+  }
+
   public Message insertMessage(Message message) {
     Message MessageFromDB = messageRepo.save(message);
-
-//    emits the new Message to all connected users
-//    to update auction
-//    socketService.sendToAll(new SocketEvent("Message", MessageFromDB), SocketEvent.class);
+    MessageFromDB.setTime(MessageFromDB.getTimestamp().toLocalDateTime().format(timestampFormat));
     return MessageFromDB;
   }
 

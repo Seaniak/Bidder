@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -19,6 +20,9 @@ public class User {
   private String name;
   private String surname;
 
+  @Transient
+  private List<String> ongoingChats;
+
   public User() {
   }
 
@@ -29,6 +33,14 @@ public class User {
     this.email = email;
     this.name = name;
     this.surname = surname;
+  }
+
+  public List<String> getOngoingChats() {
+    return ongoingChats;
+  }
+
+  public void setOngoingChats(List<String> ongoingChats) {
+    this.ongoingChats = ongoingChats;
   }
 
   public String getUsername() {

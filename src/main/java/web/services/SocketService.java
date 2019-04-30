@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import web.entities.Message;
-import web.entities.SocketEvent;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,13 +33,17 @@ public class SocketService {
   public void sendToOne(WebSocketSession webSocketSession, Object obj) throws IOException {
     sendToOne(webSocketSession, JSON(obj));
   }
-
+public void sendToChat(String sender, String recipient, Object obj) throws IOException {
+    sendToUser(sender, obj);
+    sendToUser(recipient, obj);
+}
   public void sendToUser(String username, Object obj) throws IOException {
     WebSocketSession userSession = loggedInSessions.get(username);
 
     if (userSession != null)
       sendToOne(userSession, JSON(obj));
   }
+
   public void sendToOthers(String username, Object obj){
     loggedInSessions.forEach((user, session) -> {
       if(!user.equals(username)) {
@@ -86,7 +89,7 @@ public class SocketService {
     sessions.remove(session);
   }
 
-  public void saveMessage(Message message){
-    messageService.insertMessage(message);
+  public Message saveMessage(Message message){
+    return messageService.insertMessage(message);
   }
 }

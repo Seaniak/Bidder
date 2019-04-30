@@ -48,6 +48,12 @@ module.exports = {
         target: "http://localhost:8070",
         changeOrigin: true,
         secure: false
+      },
+      "/api/messages": {
+        ws: true,
+        target: "http://localhost:8070",
+        changeOrigin: true,
+        secure: false
       }
     }
   },

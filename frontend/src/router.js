@@ -49,6 +49,27 @@ export default new Router({
         import(/* webpackChunkName: "register" */ "./views/Register.vue")
     },
     {
+      path: "/chat",
+      name: "chat",
+      props: true,
+      component: () =>
+        import(/* webpackChunkName: "chat" */ "./views/Chat.vue")
+    },
+    {
+      path: "/openChats",
+      name: "openChats",
+      props: true,
+      component: () =>
+        import(/* webpackChunkName: "openChats" */ "./views/OngoingChats.vue")
+    },
+    {
+      path: "/chat-reroute",
+      name: "chatReRoute",
+      props: true,
+      component: () =>
+        import(/* webpackChunkName: "chatReRoute" */ "./utilities/ChatReRoute.vue")
+    },
+    {
       path: "/user-auctions",
       name: "userAuctions",
       component: () =>

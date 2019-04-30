@@ -11,30 +11,30 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-//  TODO: fix inner join with chat
-//  @ManyToOne(fetch = FetchType.LAZY)
-//  @JoinColumn(name = "CHAT_ID")
-//  private Chat chatId;
-
-//  private long chatId;
   private String sender;
   private String recipient;
   private String text;
-  private Timestamp time;
+  private Timestamp timestamp;
 
-  public Message(long chatId, String sender, String recipient, String text, Timestamp time) {
-//    this.chatId = chatId;
-    this.sender = sender;
-    this.recipient = recipient;
-    this.text = text;
-    this.time = time;
-  }
+  @Transient
+  private String time;
 
   public Message(String sender, String recipient, String text) {
     this.sender = sender;
     this.recipient = recipient;
     this.text = text;
-    this.time = Timestamp.valueOf(LocalDateTime.now());
+    this.timestamp = Timestamp.valueOf(LocalDateTime.now());
+  }
+
+  public Message() {
+  }
+
+  public String getTime() {
+    return time;
+  }
+
+  public void setTime(String time) {
+    this.time = time;
   }
 
   public long getId() {
@@ -44,14 +44,6 @@ public class Message {
   public void setId(long id) {
     this.id = id;
   }
-
-//  public Chat getChatId() {
-//    return chatId;
-//  }
-
-//  public void setChatId(Chat chatId) {
-//    this.chatId = chatId;
-//  }
 
   public String getSender() {
     return sender;
@@ -77,11 +69,11 @@ public class Message {
     this.text = text;
   }
 
-  public Timestamp getTime() {
-    return time;
+  public Timestamp getTimestamp() {
+    return timestamp;
   }
 
-  public void setTime(Timestamp time) {
-    this.time = time;
+  public void setTimestamp(Timestamp timestamp) {
+    this.timestamp = timestamp;
   }
 }

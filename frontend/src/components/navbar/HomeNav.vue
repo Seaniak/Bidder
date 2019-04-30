@@ -47,4 +47,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  #nav-search{
+    max-width: 90% !important;
+  }
+</style>
