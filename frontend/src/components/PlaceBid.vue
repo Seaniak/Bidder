@@ -1,9 +1,9 @@
-<template>
+<template class="template">
   <v-layout row wrap class="bidBar">
-    <scroll-picker class="col-6"
-                   :placeholder="'Svajpa fram bud!'"
-                   :options="possibleBids"
-                   v-model="chosenBid"></scroll-picker>
+      <scroll-picker class="scroller col-6"
+                     :options="possibleBids"
+                     v-model="chosenBid">
+      </scroll-picker>
     <div class="text-xs-center">
       <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
@@ -67,7 +67,7 @@ export default {
         bids.push({value: possibleBid, name: possibleBid + " kr"});
         possibleBid += addSum;
       }
-      this.chosenBid = bids[0].value;
+      this.chosenBid = bids[2].value;
       return bids;
     },
     async placeBidClicked() {
@@ -107,40 +107,45 @@ export default {
 
 <style scoped>
 .bidBar {
-  height: 100%;
+  height: 10vh;
 }
 
 .scroller {
-  /*background-color: inherit;*/
 }
 .bidBar >>> .vue-scroll-picker {
   /*position: relative;*/
   width: 100%;
   height: 100%;
-  overflow: hidden; }
+  overflow: hidden;
+}
 
 .vue-scroll-picker >>> .vue-scroll-picker-list {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0; }
+  bottom: 0;
+}
 
 .vue-scroll-picker >>>  .vue-scroll-picker-list-rotator {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  padding-top: 4.4em; }
+  padding-top: 4.4em;
+}
+
 .vue-scroll-picker >>> .vue-scroll-picker-list-rotator.-transition {
-  transition: top ease 200ms; }
+  transition: top ease 200ms;
+}
 
 .vue-scroll-picker >>>  .vue-scroll-picker-item {
   text-align: center;
   height: 1.2em;
   line-height: 1.2em; }
 .vue-scroll-picker >>> .vue-scroll-picker-item.-placeholder {
-  color: #aaa; }
+  color: #aaa;
+}
 
 .vue-scroll-picker >>> .vue-scroll-picker-layer {
   position: absolute;
@@ -148,7 +153,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  height: 100%;
+  /*height: 100%;*/
 }
 .vue-scroll-picker >>>  .vue-scroll-picker-layer  .top,
 .vue-scroll-picker-layer  .middle,
@@ -157,23 +162,27 @@ export default {
 .vue-scroll-picker >>> .vue-scroll-picker-layer .top {
   box-sizing: border-box;
   border-bottom: 1px solid #c8c7cc;
-  background: linear-gradient(180deg, #fff 10%, rgba(255, 255, 255, 0.7));
+  background: linear-gradient(180deg, var(--scrollColor) 0%, rgba(0,0,0, 0.01));
   top: 0;
   left: 0;
   right: 0;
-  height: 33%;
-  cursor: pointer; }
+  height: 40%;
+  cursor: pointer;
+}
 .vue-scroll-picker >>> .vue-scroll-picker-layer .middle {
-  top: 33%;
+  top: 40%;
   left: 0;
   right: 0;
-  bottom: 33%; }
+  bottom: 40%;
+
+}
 .vue-scroll-picker >>> .vue-scroll-picker-layer .bottom {
   border-top: 1px solid #c8c7cc;
-  background: linear-gradient(0deg, #fff 10%, rgba(255, 255, 255, 0.7));
+  background: linear-gradient(0deg, var(--scrollColor) 40%, rgba(0,0,0, 0.01));
   bottom: 0;
   left: 0;
   right: 0;
-  height: 33%;
-  cursor: pointer; }
+  height: 40%;
+  cursor: pointer;
+}
 </style>
