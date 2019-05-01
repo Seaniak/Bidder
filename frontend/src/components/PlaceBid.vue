@@ -4,13 +4,6 @@
                    :placeholder="'Svajpa fram bud!'"
                    :options="possibleBids"
                    v-model="chosenBid"></scroll-picker>
-
-<!--    <smooth-picker-->
-<!--      class="scroller col-6"-->
-<!--      ref="smoothPicker"-->
-<!--      :data="possibleBids"-->
-<!--      :change="dataChange"-->
-<!--    />-->
     <div class="text-xs-center">
       <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
@@ -33,9 +26,6 @@
 </template>
 
 <script>
-//import { eventBus } from "@/main";
-// import "vue-smooth-picker/dist/css/style.css";
-// import { SmoothPicker } from "vue-smooth-picker";
 import "vue-scroll-picker/dist/style.css"
 import { ScrollPicker } from "vue-scroll-picker"
 export default {
@@ -47,9 +37,7 @@ export default {
   data() {
     return {
     	bidId: this.auctionId,
-      bidAuction: null,
       chosenBid: 0,
-      bids: [],
       sheet: false
     };
   },
@@ -73,21 +61,15 @@ export default {
     },
     newBids(currentBid) {
       let bids = [];
-      let bidStrings = [];
       let addSum = this.getAddSum(currentBid);
       let possibleBid = currentBid + addSum;
-      while (bidStrings.length < 20) {
-        bids.push(possibleBid);
-        bidStrings.push({value: possibleBid, name: possibleBid + " kr"});
+      while (bids.length < 20) {
+        bids.push({value: possibleBid, name: possibleBid + " kr"});
         possibleBid += addSum;
       }
-      this.bids = bids;
-      this.chosenBid = this.bids[0];
-      return bidStrings;
+      this.chosenBid = bids[0].value;
+      return bids;
     },
-    // dataChange(gIndex, iIndex) {
-    //   this.chosenBid = this.bids[iIndex - 1];
-    // },
     async placeBidClicked() {
       if (
         this.$store.state.currentUser === undefined ||
@@ -114,11 +96,7 @@ export default {
   },
   computed: {
     possibleBids() {
-      if (this.bidAuction == null) this.bidAuction = this.$store.state.activeAuction;
-      this.bidAuction.maxBid = (this.bidAuction.bids.length === 0) ?
-          this.bidAuction.startSum
-          : Math.max(...(this.bidAuction.bids.map(bid => bid.sum)));
-      return this.newBids(this.bidAuction === null ? 0 : this.bidAuction.maxBid);
+      return this.newBids(this.$store.getters.getAuction(this.auctionId) ? this.$store.getters.getAuction(this.auctionId).maxBid : 0);
     }
   },
   created() {
