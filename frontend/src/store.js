@@ -5,6 +5,10 @@ import { updateConnection, logoutConnection } from "./webSocket";
 Vue.use(Vuex);
 
 let noticeID = 0;
+let getMaxBid = (auction) => {
+  return (auction.bids.length > 0) ?
+      Math.max(...(auction.bids.map((bid) => bid.sum)))
+      : auction.startSum;};
 
 export default new Vuex.Store({
   state: {
@@ -33,20 +37,15 @@ export default new Vuex.Store({
     filterItems(state, searchResult) {
       searchResult.forEach((newAuction) => {
         if(!state.auctions[newAuction.id]) {
-          newAuction.maxBid = (newAuction.bids.length > 0) ?
-              Math.max(...(newAuction.bids.map((bid) => bid.sum)))
-              : newAuction.startSum;
-          state.auctions[newAuction.id] = newAuction;
-        }
-        state.filteredItems = searchResult;
+          newAuction.maxBid = getMaxBid(newAuction);
+          Vue.set(state.auctions, newAuction.id, newAuction);}
         });
+      state.filteredItems = searchResult;
     },
   addAuction(state, newAuction) {
     if(!state.auctions[newAuction.id]) {
-      newAuction.maxBid = (newAuction.bids.length > 0) ?
-          Math.max(...(newAuction.bids.map((bid) => bid.sum)))
-          : newAuction.startSum;
-      state.auctions[newAuction.id] = newAuction;
+      newAuction.maxBid = getMaxBid(newAuction);
+      Vue.set(state.auctions, newAuction.id, newAuction);
       console.log("ADDAUCTION", state.auctions[newAuction.id]);
     }
   },
@@ -63,9 +62,9 @@ export default new Vuex.Store({
     }
     // console.log('User: ', state.currentUser);
   },
-  setCurrentBid(state, bid) {
-    state.currentBid = bid;
-  },
+  // setCurrentBid(state, bid) {
+  //   state.currentBid = bid;
+  // },
   notificationToggle(state, value) {
     state.notificationBadge = value;
   },

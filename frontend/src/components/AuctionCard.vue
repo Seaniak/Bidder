@@ -44,19 +44,7 @@ export default {
 	  defaultThumbnail() {
 		  return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
 	  },
-	  // maxBid() {
-		//   let tempAuction = this.$store.getters.getAuction(this.auctionId);
-		//   return
-	  // },
 	  updateAuction() {
-		  // let auction = null;
-		  // if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
-		  // 	auction = this.$store.state.activeAuction;
-		  //   console.log("AUCTION SET BY COMPUTED() FROM STORE", auction);
-		  //   auction.maxBid = (auction.bids.length === 0) ?
-		  //       auction.startSum
-		  // 	  : Math.max(...(auction.bids.map(bid => bid.sum)));
-		  // }
 		  return this.$store.getters.getAuction(this.auctionId);
 	  },
   },

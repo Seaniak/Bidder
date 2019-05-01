@@ -38,7 +38,7 @@
       :hide-actions="pageControl"
       :must-sort="true"
       :no-data-text="'Inga bud är lagda!'"
-      :rows-per-page-text="'Antal bud'"
+      :rows-per-page-text="'Antal bud per sida'"
       :pagination.sync="pagination"
       :rows-per-page-items="pageController"
       class="border elevation-1"
@@ -46,7 +46,10 @@
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
         <td class="text-xs-right">{{ props.item.username }}</td>
-        <td class="text-xs-right">{{ getDateString(props.item.time) }}</td>
+        <td class="text-xs-right">{{ getBidDateString(props.item.time) }}</td>
+      </template>
+      <template v-slot:pageText="props">
+        Bud {{ props.pageStart }} - {{ props.pageStop }} av {{ props.itemsLength }}
       </template>
     </v-data-table>
   </v-container>
@@ -82,27 +85,20 @@ export default {
     };
   },
   methods: {
-    getDateString(bidTimeStamp) {
+    getBidDateString(bidTimeStamp) {
       let bidDate = new Date(bidTimeStamp);
       return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
     },
   },
   computed: {
   	pageControl() {
-		return !(this.$store.getters.getAuction(this.$route.params.id) !== undefined
-        && this.$store.getters.getAuction(this.$route.params.id).bids.length > 10);
-
-	},
-      updateAuction() {
-		// return this.$store.getters.getAuction(this.$route.params.id);
-        console.log("UPDATEAUCTION");
-		return this.$store.getters.getAuction(this.$route.params.id);
-
-	},
+		  return !(this.updateAuction !== undefined && this.updateAuction.bids.length > 10);
+	  },
+    updateAuction() {
+		  return this.$store.getters.getAuction(this.$route.params.id);
+	  },
   },
   async created() {
-  	console.log(this.$store.getters.getAuction(this.$route.params.id));
-	  console.log(this.$store.state.auctions[this.$route.params.id]);
 	  if(this.$store.getters.getAuction(this.$route.params.id) === undefined){
 		  let auction = await fetch("/api/auctions/" + this.$route.params.id);
 		  auction = await auction.json();
@@ -115,10 +111,6 @@ export default {
 <style>
 .border {
   border-radius: 4px;
-}
-
-.v-carousel__controls {
-  border-radius: 0 0 4px 4px;
 }
 
 .description {
