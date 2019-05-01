@@ -80,14 +80,16 @@ export default new Vuex.Store({
       state.notificationBadge = false;
     },
     webSocket(state, data) {
+      let bid;
+      let message;
       // update state depending on incoming action
       switch (data.action) {
         case "bid":
-          let bid = data.payload;
+          bid = data.payload;
           notifyBid(state, bid)
           break;
         case "message":
-          let message = data.payload
+          message = data.payload
 
           if (message.sender === state.chatRecipient || message.sender === state.currentUser.username) {
             state.chatMessages.push(message)
