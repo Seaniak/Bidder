@@ -1,10 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { updateConnection, logoutConnection } from "./webSocket";
+import {updateConnection, logoutConnection} from "./webSocket";
+import {notifyMessage} from "./utilities/SocketMessage";
+import {notifyBid} from "./utilities/SocketBid";
 
 Vue.use(Vuex);
 
-let noticeID = 0;
 let getMaxBid = (auction) => {
   return (auction.bids.length > 0) ?
       Math.max(...(auction.bids.map((bid) => bid.sum)))
@@ -17,13 +18,14 @@ export default new Vuex.Store({
     filteredItems: [],
     auctions: {},
     notificationBadge: false,
-    notifications: []
+    notifications: {},
+    chatRecipient: '',
+    chatMessages: []
   },
   actions: {
     async getAuctions(context) {
       let response = await fetch("/api/auctions");
       response = await response.json();
-      console.log("ASYNC GETAUC", response);
       context.commit("getAuctions", response);
       context.commit("filterItems", "-default-");
     },
@@ -49,48 +51,52 @@ export default new Vuex.Store({
       console.log("ADDAUCTION", state.auctions[newAuction.id]);
     }
   },
-  logoutUser(state) {
-    state.currentUser = null;
-    logoutConnection();
-    window.socketUsername = "anon";
-  },
-  loginUser(state, user) {
-    state.currentUser = user;
-    if (user) {
-      window.socketUsername = user.username;
-      updateConnection();
-    }
-    // console.log('User: ', state.currentUser);
-  },
-  // setCurrentBid(state, bid) {
-  //   state.currentBid = bid;
-  // },
-  notificationToggle(state, value) {
-    state.notificationBadge = value;
-  },
-  removeNotification(state, item) {
-    let index = state.notifications.indexOf(item);
-    state.notifications.splice(index, 1);
-  },
-  webSocket(state, data) {
-    // update state depending on incoming action
-    switch (data.action) {
-      case "bid":
-        state.notificationBadge = true;
-        // console.log('Socket bid: ', data.payload);
-        break;
-      case "message":
-        state.notificationBadge = true;
-        state.notifications.push({
-          id: noticeID,
-          title: "Nytt meddelande",
-          subtitle: data.payload
-        });
+    logoutUser(state) {
+      state.currentUser = null;
+      logoutConnection();
+      window.socketUsername = "anon";
+    },
+    loginUser(state, user) {
+      state.currentUser = user;
+      if (user) {
+        window.socketUsername = user.username;
+        updateConnection();
+      }
+    },
+    fetchMessages(state, value) {
+      state.chatMessages = value
+    },
+    addNewMessage(state, value) {
+      state.chatMessages.push(value)
+    },
+    currentRecipient(state, value) {
+      state.chatRecipient = value
+    },
+    notificationToggle(state, value) {
+      state.notificationBadge = value;
+    },
+    removeNotification(state, key) {
+      Vue.delete(state.notifications, key)
+      state.notificationBadge = false;
+    },
+    webSocket(state, data) {
+      // update state depending on incoming action
+      switch (data.action) {
+        case "bid":
+          let bid = data.payload;
+          notifyBid(state, bid)
+          break;
+        case "message":
+          let message = data.payload
 
-        noticeID++;
-
-        // console.log('Socket message: ', data.payload);
-        break;
+          if (message.sender === state.chatRecipient || message.sender === state.currentUser.username) {
+            state.chatMessages.push(message)
+          } else {
+            notifyMessage(state, message)
+          }
+          break;
+      }
     }
-  }}
-});
+  },
+})
+

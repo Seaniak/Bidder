@@ -10,14 +10,20 @@ public class UserService {
 
   @Autowired
   private UserRepo userRepo;
+  @Autowired
+  private MessageService messageService;
 
-  public User findByUsername(String username){ return userRepo.findByUsername(username);}
+  public User findByUsername(String username) {
+    User user = userRepo.findByUsername(username);
+    user.setOngoingChats(messageService.getOngoingChats(username));
+    return user;
+  }
 
-  public User insertUser(User user){
+  public User insertUser(User user) {
     return userRepo.save(user);
   }
 
-  public void deleteUser(User user){
+  public void deleteUser(User user) {
     userRepo.delete(user);
   }
 }

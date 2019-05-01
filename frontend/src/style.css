@@ -26,9 +26,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: var(--main-font-color);
-    padding-bottom: 80px;
+    padding-bottom: 40px;
+    min-height: 100vh;
 }
-
 #app > div {
     animation-duration: 100ms;
 }

@@ -6,7 +6,7 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 
 window.socketUsername = "anon";
-import "@/webSocket";
+import "./webSocket";
 
 Vue.use(Vuetify);
 

@@ -22,7 +22,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     http.csrf().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/api/users/*", "/upload", "/api/auctions/user**").hasRole("USER")
+            .antMatchers(HttpMethod.GET, "/api/users/*", "/api/messages/**", "/upload", "/api/auctions/user**").hasRole("USER")
             .antMatchers(HttpMethod.GET, "/api/**").permitAll()
             .antMatchers(HttpMethod.POST, "/api/register", "/api/auctions/search/*").permitAll()
             .antMatchers("/api/**").hasRole("USER")
@@ -39,12 +39,12 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     ;
   }
 
-  public DaoAuthenticationProvider authenticationProvider(){
+  public DaoAuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
     auth
             .setUserDetailsService(myUserDetailsService);
-            auth.setPasswordEncoder(myUserDetailsService.getEncoder());
-            return auth;
+    auth.setPasswordEncoder(myUserDetailsService.getEncoder());
+    return auth;
   }
 
   @Override

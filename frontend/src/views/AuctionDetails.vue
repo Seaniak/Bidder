@@ -19,7 +19,9 @@
       </v-card>
     </v-layout>
     <v-layout row wrap class="pt-2 justify-content-around">
-      <v-card class="border col-5">
+      <v-card
+              class="border col-5"
+              @click="startChat(updateAuction.username)">
         <h4>Säljare</h4>
         <h3 v-if="updateAuction !== undefined"> {{ updateAuction.username }}</h3>
       </v-card>
@@ -45,8 +47,8 @@
     >
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
-        <td class="text-xs-right">{{ props.item.username }}</td>
         <td class="text-xs-right">{{ getBidDateString(props.item.time) }}</td>
+        <td class="text-xs-right" @click="startChat(props.item.username)">{{ props.item.username }}</td>
       </template>
       <template v-slot:pageText="props">
         Bud {{ props.pageStart }} - {{ props.pageStop }} av {{ props.itemsLength }}
@@ -85,6 +87,14 @@ export default {
     };
   },
   methods: {
+    startChat(recipient){
+      this.$router.push({
+        name: 'chat',
+        params: {
+          recipient: recipient
+        }
+      })
+    },
     getBidDateString(bidTimeStamp) {
       let bidDate = new Date(bidTimeStamp);
       return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();

@@ -30,7 +30,7 @@ export default {
   computed: {
     auctions() {
       // console.log(this.$store.state.filteredItems);
-      return this.$store.state.filteredItems;
+      return this.$store.state.auctions;
     }
   }
 };
