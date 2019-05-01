@@ -58,8 +58,7 @@
 </template>
 
 <script>
-    import AuctionTimeCountDown from "../components/AuctionTimeCountDown";
-
+	import AuctionTimeCountDown from "../components/AuctionTimeCountDown";
 export default {
   components: {
   	AuctionTimeCountDown,
