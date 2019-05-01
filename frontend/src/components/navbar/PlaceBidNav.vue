@@ -1,5 +1,5 @@
 <template>
-  <PlaceBid :auctionId="auctionId"></PlaceBid>
+  <PlaceBid class="placeBidNav" :auctionId="auctionId"></PlaceBid>
 </template>
 
 <script>
@@ -18,4 +18,5 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

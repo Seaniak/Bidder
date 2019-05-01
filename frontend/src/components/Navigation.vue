@@ -41,7 +41,7 @@
   import RegisterNav from "./navbar/RegisterNav";
   import UploadAuction from "./navbar/UploadAuctionNav";
   import GoToLoginPageNav from "./navbar/GoToLoginPageNav";
-  import PlaceBidNav from "./navbar/PlaceBidNav";
+  import PlaceBid from "./PlaceBid";
   import ChatNav from "./navbar/ChatNav";
 
   export default {
@@ -72,7 +72,7 @@
           case "/upload":
             return UploadAuction;
           case "/auction":
-            return PlaceBidNav;
+            return PlaceBid;
           case "/chat":
             return ChatNav;
           default:
@@ -102,6 +102,9 @@
     height: 10vh;
     border-top: solid 1px #7c7e70;
     background-color: teal;
+    --scrollColor: rgb(0,128,128);
+  }
+  .scroller {
   }
 
   .v-badge__badge {

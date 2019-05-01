@@ -50,7 +50,11 @@ export default {
   },
 };
 </script>
-
+<style>
+  #auction-card {
+    --scrollColor: rgb(255,255,255);
+  }
+</style>
 <style scoped>
 * {
   text-decoration: none;
@@ -62,6 +66,8 @@ export default {
   animation-duration: 200ms;
 }
 
+#auction-card >>> bidBar {
+}
 #auction {
   display: flex;
   text-decoration: none;

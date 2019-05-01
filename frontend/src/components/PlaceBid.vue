@@ -1,13 +1,13 @@
-<template>
-  <v-layout row wrap class="bidBar">
-    <scroll-picker class="col-6"
-                   :placeholder="'Svajpa fram bud!'"
-                   :options="possibleBids"
-                   v-model="chosenBid"></scroll-picker>
+<template class="template">
+  <v-layout row wrap class="bidBar justify-center">
+      <scroll-picker class="scroller col-6"
+                     :options="possibleBids"
+                     v-model="chosenBid">
+      </scroll-picker>
     <div class="text-xs-center">
       <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
-          <v-btn color="purple" dark>
+          <v-btn color="purple" dark class="firstBidBtn" >
             Lägg Bud
           </v-btn>
         </template>
@@ -67,13 +67,13 @@ export default {
         bids.push({value: possibleBid, name: possibleBid + " kr"});
         possibleBid += addSum;
       }
-      this.chosenBid = bids[0].value;
+      this.chosenBid = bids[2].value;
       return bids;
     },
     async placeBidClicked() {
       if (
         this.$store.state.currentUser === undefined ||
-		    this.$store.getters.getAuction(this.auctionId).username ===
+		    this.$store.getters.getAuction(this.bidId).username ===
           this.$store.state.currentUser.username
       ) return;
 
@@ -96,7 +96,7 @@ export default {
   },
   computed: {
     possibleBids() {
-      return this.newBids(this.$store.getters.getAuction(this.auctionId) ? this.$store.getters.getAuction(this.auctionId).maxBid : 0);
+      return this.newBids(this.$store.getters.getAuction(this.bidId).maxBid);
     }
   },
   created() {
@@ -106,74 +106,26 @@ export default {
 </script>
 
 <style scoped>
-.bidBar {
-  height: 100%;
-}
-
-.scroller {
-  /*background-color: inherit;*/
-}
-.bidBar >>> .vue-scroll-picker {
-  /*position: relative;*/
-  width: 100%;
-  height: 100%;
-  overflow: hidden; }
-
-.vue-scroll-picker >>> .vue-scroll-picker-list {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0; }
-
-.vue-scroll-picker >>>  .vue-scroll-picker-list-rotator {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  padding-top: 4.4em; }
-.vue-scroll-picker >>> .vue-scroll-picker-list-rotator.-transition {
-  transition: top ease 200ms; }
-
-.vue-scroll-picker >>>  .vue-scroll-picker-item {
-  text-align: center;
-  height: 1.2em;
-  line-height: 1.2em; }
-.vue-scroll-picker >>> .vue-scroll-picker-item.-placeholder {
-  color: #aaa; }
-
-.vue-scroll-picker >>> .vue-scroll-picker-layer {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-}
-.vue-scroll-picker >>>  .vue-scroll-picker-layer  .top,
-.vue-scroll-picker-layer  .middle,
-.vue-scroll-picker-layer  .bottom {
-  position: absolute; }
-.vue-scroll-picker >>> .vue-scroll-picker-layer .top {
-  box-sizing: border-box;
-  border-bottom: 1px solid #c8c7cc;
-  background: linear-gradient(180deg, #fff 10%, rgba(255, 255, 255, 0.7));
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 33%;
-  cursor: pointer; }
-.vue-scroll-picker >>> .vue-scroll-picker-layer .middle {
-  top: 33%;
-  left: 0;
-  right: 0;
-  bottom: 33%; }
-.vue-scroll-picker >>> .vue-scroll-picker-layer .bottom {
-  border-top: 1px solid #c8c7cc;
-  background: linear-gradient(0deg, #fff 10%, rgba(255, 255, 255, 0.7));
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 33%;
-  cursor: pointer; }
+  .firstBidBtn {
+    margin-top: 2.2vh;
+    font-weight: bolder;
+  }
+  .bidBar {
+    height: 10vh;
+  }
+  .bidBar >>> .vue-scroll-picker {
+    height: 100%;
+  }
+  .bidBar >>> .vue-scroll-picker-list-rotator .-selected {
+    font-weight: bold;
+    font-size: larger;
+  }
+  .vue-scroll-picker >>> .vue-scroll-picker-layer .top {
+    background: linear-gradient(180deg, var(--scrollColor) 10%, rgba(0,0,0, 0.01));
+    height: 3.4vh;
+  }
+  .vue-scroll-picker >>> .vue-scroll-picker-layer .bottom {
+    background: linear-gradient(0deg, var(--scrollColor) 20%, rgba(0,0,0, 0.01));
+    height: 3.7vh;
+  }
 </style>
