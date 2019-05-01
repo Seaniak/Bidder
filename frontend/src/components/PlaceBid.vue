@@ -1,11 +1,9 @@
 <template>
   <v-layout row wrap class="bidBar">
-    <smooth-picker
-      class="scroller col-6"
-      ref="smoothPicker"
-      :data="possibleBids"
-      :change="dataChange"
-    />
+    <scroll-picker class="col-6"
+                   :placeholder="'Svajpa fram bud!'"
+                   :options="possibleBids"
+                   v-model="chosenBid"></scroll-picker>
     <div class="text-xs-center">
       <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
@@ -15,7 +13,7 @@
         </template>
         <v-card tile>
           <v-layout v-if="$store.state.currentUser" column>
-            <h3>Bud: {{ this.chosenBid }}kr</h3>
+            <h3>Bud: {{ chosenBid }}kr</h3>
             <v-btn @click="placeBidClicked">Lägg bud</v-btn>
           </v-layout>
           <v-layout v-else column>
@@ -28,21 +26,18 @@
 </template>
 
 <script>
-import "vue-smooth-picker/dist/css/style.css";
-import { SmoothPicker } from "vue-smooth-picker";
-
+import "vue-scroll-picker/dist/style.css"
+import { ScrollPicker } from "vue-scroll-picker"
 export default {
   name: "PlaceBid",
   props: ["auctionId"],
   components: {
-    SmoothPicker
+	  ScrollPicker,
   },
   data() {
     return {
     	bidId: this.auctionId,
-      bidAuction: null,
       chosenBid: 0,
-      bids: [],
       sheet: false
     };
   },
@@ -66,20 +61,14 @@ export default {
     },
     newBids(currentBid) {
       let bids = [];
-      let bidStrings = [];
       let addSum = this.getAddSum(currentBid);
       let possibleBid = currentBid + addSum;
-      while (bidStrings.length < 20) {
-        bids.push(possibleBid);
-        bidStrings.push(possibleBid + " kr");
+      while (bids.length < 20) {
+        bids.push({value: possibleBid, name: possibleBid + " kr"});
         possibleBid += addSum;
       }
-      this.bids = bids;
-      this.chosenBid = this.bids[0];
-      return bidStrings;
-    },
-    dataChange(gIndex, iIndex) {
-      this.chosenBid = this.bids[iIndex - 1];
+      this.chosenBid = bids[0].value;
+      return bids;
     },
     async placeBidClicked() {
       if (
@@ -107,16 +96,7 @@ export default {
   },
   computed: {
     possibleBids() {
-        let bidAuction =  this.$store.getters.getAuction(this.auctionId);
-      return [
-        {
-          currentIndex: 1,
-          flex: 6,
-          list: this.newBids(bidAuction ? bidAuction.maxBid : 0),
-          textAlign: "center",
-          className: "row-group"
-        }
-      ];
+      return this.newBids(this.$store.getters.getAuction(this.auctionId) ? this.$store.getters.getAuction(this.auctionId).maxBid : 0);
     }
   },
   created() {
@@ -126,70 +106,146 @@ export default {
 </script>
 
 <style scoped>
-bidBar {
-}
-
-vars {
-  --main-bg-color: inherit;
-}
-
-.smooth-picker[data-v-43f1648a] {
-  /*font-size: 1rem;*/
-  font-size: 1.2rem;
-  /*height: 10em;*/
+.bidBar {
   height: 100%;
-  position: relative;
-  /*background-color: #fff;*/
-  background-color: var(--main-bg-color);
-  overflow: hidden;
 }
 
-.smooth-picker .smooth-list[data-v-43f1648a] {
-  height: 6.25em;
-  position: relative;
-  top: 4em;
+.scroller {
+  /*background-color: inherit;*/
 }
-
-.smooth-picker .smooth-item[data-v-43f1648a] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
+.bidBar >>> .vue-scroll-picker {
+  /*position: relative;*/
   width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
-  text-align: center;
-  will-change: transform;
-  contain: strict;
-  height: 2em;
-  line-height: 2;
-  font-size: 1em;
-}
+  height: 100%;
+  overflow: hidden; }
 
-.smooth-picker .smooth-handle-layer[data-v-43f1648a] {
+.vue-scroll-picker >>> .vue-scroll-picker-list {
   position: absolute;
-  width: 100%;
-  height: calc(100% + 2px);
   left: 0;
   right: 0;
-  top: -1px;
-  bottom: -1px;
-}
+  top: 0;
+  bottom: 0; }
 
-.smooth-picker .smooth-handle-layer .smooth-top[data-v-43f1648a] {
+.vue-scroll-picker >>>  .vue-scroll-picker-list-rotator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding-top: 4.4em; }
+.vue-scroll-picker >>> .vue-scroll-picker-list-rotator.-transition {
+  transition: top ease 200ms; }
+
+.vue-scroll-picker >>>  .vue-scroll-picker-item {
+  text-align: center;
+  height: 1.2em;
+  line-height: 1.2em; }
+.vue-scroll-picker >>> .vue-scroll-picker-item.-placeholder {
+  color: #aaa; }
+
+.vue-scroll-picker >>> .vue-scroll-picker-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+}
+.vue-scroll-picker >>>  .vue-scroll-picker-layer  .top,
+.vue-scroll-picker-layer  .middle,
+.vue-scroll-picker-layer  .bottom {
+  position: absolute; }
+.vue-scroll-picker >>> .vue-scroll-picker-layer .top {
+  box-sizing: border-box;
   border-bottom: 1px solid #c8c7cc;
-  background: linear-gradient(180deg, #fff 10%, hsla(0, 0%, 100%, 0.7));
-  transform: translateZ(5.625em);
-}
-
-.smooth-picker .smooth-handle-layer .smooth-middle[data-v-43f1648a] {
-  height: 2em;
-}
-
-.smooth-picker .smooth-handle-layer .smooth-bottom[data-v-43f1648a] {
+  background: linear-gradient(180deg, #fff 10%, rgba(255, 255, 255, 0.7));
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 33%;
+  cursor: pointer; }
+.vue-scroll-picker >>> .vue-scroll-picker-layer .middle {
+  top: 33%;
+  left: 0;
+  right: 0;
+  bottom: 33%; }
+.vue-scroll-picker >>> .vue-scroll-picker-layer .bottom {
   border-top: 1px solid #c8c7cc;
-  background: linear-gradient(0deg, #fff 10%, hsla(0, 0%, 100%, 0.7));
-  transform: translateZ(5.625em);
-}
+  background: linear-gradient(0deg, #fff 10%, rgba(255, 255, 255, 0.7));
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 33%;
+  cursor: pointer; }
+
+
+/*# sourceMappingURL=style.css.map*/
+/*.smooth-picker[data-v-43f1648a] {*/
+/*  !*font-size: 1rem;*!*/
+/*  font-size: 1.2rem;*/
+/*  !*height: 10em;*!*/
+/*  height: 100%;*/
+/*  position: relative;*/
+/*  !*background-color: #fff;*!*/
+/*  !*background-color: var(--main-bg-color);*!*/
+/*  background-color: inherit;*/
+/*  overflow: hidden;*/
+/*}*/
+
+/*.smooth-picker >>> .smooth-list[data-v-43f1648a] {*/
+/*  height: auto;*/
+/*  position: relative;*/
+/*  top: 1.5em;*/
+/*  background-color: inherit;*/
+/*}*/
+
+/*.smooth-picker >>> .smooth-item[data-v-43f1648a] {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  bottom: 0;*/
+/*  left: 0;*/
+/*  overflow: hidden;*/
+/*  width: 100%;*/
+/*  text-overflow: ellipsis;*/
+/*  white-space: nowrap;*/
+/*  display: block;*/
+/*  text-align: center;*/
+/*  will-change: transform;*/
+/*  contain: strict;*/
+/*  height: 1em;*/
+/*  line-height: 1;*/
+/*  font-size: 1em;*/
+/*}*/
+
+/*.smooth-picker >>> .smooth-handle-layer[data-v-43f1648a] {*/
+/*  position: absolute;*/
+/*  width: 100%;*/
+/*  height: calc(100% + 2px);*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  top: -1px;*/
+/*  bottom: -1px;*/
+/*  background-color: inherit;*/
+/*}*/
+
+/*.smooth-picker >>> .smooth-handle-layer   .smooth-top[data-v-43f1648a] {*/
+/*  border-bottom: 1px solid #c8c7cc;*/
+/*  background-color: inherit;*/
+/*  !*background: linear-gradient(180deg, blue, black, transparent 30% );*!*/
+/*  !*background: linear-gradient(currentColor 10%, currentColor);*!*/
+/*  !*background-color: inherit;*!*/
+
+/*  !*background-color: blue;*!*/
+/*  transform: translateZ(5.625em);*/
+
+/*}*/
+
+/*.smooth-picker >>> .smooth-handle-layer  .smooth-middle[data-v-43f1648a] {*/
+/*  height: 1em;*/
+/*}*/
+
+/*.smooth-picker >>> .smooth-handle-layer  .smooth-bottom[data-v-43f1648a] {*/
+/*  border-top: 1px solid #c8c7cc;*/
+/*  background: linear-gradient(0deg, #fff 10%, hsla(0, 0%, 100%, 0.7));*/
+/*  transform: translateZ(-5.625em);*/
+/*}*/
 </style>

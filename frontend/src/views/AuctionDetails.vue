@@ -47,8 +47,8 @@
     >
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
-        <td class="text-xs-right">{{ getBidDateString(props.item.time) }}</td>
         <td class="text-xs-right" @click="startChat(props.item.username)">{{ props.item.username }}</td>
+        <td class="text-xs-right">{{ getBidDateString(props.item.time) }}</td>
       </template>
       <template v-slot:pageText="props">
         Bud {{ props.pageStart }} - {{ props.pageStop }} av {{ props.itemsLength }}
@@ -58,8 +58,7 @@
 </template>
 
 <script>
-    import AuctionTimeCountDown from "../components/AuctionTimeCountDown";
-
+	import AuctionTimeCountDown from "../components/AuctionTimeCountDown";
 export default {
   components: {
   	AuctionTimeCountDown,
