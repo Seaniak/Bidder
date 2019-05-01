@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="chat-window">
     <h1 id="chat-title">{{recipient}}</h1>
     <transition-group
             tag="div"
@@ -84,12 +84,12 @@
   }
 
   .left {
-    left: 0;
+    align-self: flex-start;
     background-color: #eee;
   }
 
   .right {
-    right: 0;
+    align-self: flex-end;
     background-color: #9eeee3;
   }
 
@@ -102,11 +102,10 @@
   }
 
   #message-area {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    max-height: 100%;
-    padding-bottom: 35px;
-    /*min-height: 100vh;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    min-height: 95vh;
   }
 </style>

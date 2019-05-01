@@ -19,14 +19,14 @@
 
     <v-badge
             overlap
-            left
             v-model="$store.state.notificationBadge"
             color="orange"
     >
       <template v-slot:badge>
-        <v-icon dark small>
-          notifications
-        </v-icon>
+        !
+        <!--<v-icon  color="orange" medium>-->
+          <!--notifications-->
+        <!--</v-icon>-->
       </template>
       <v-btn icon id="toggleDrawer" @click.stop="toggleDrawer">
         <v-icon color="white" large>menu</v-icon>
@@ -105,7 +105,12 @@
   }
 
   .v-badge__badge {
-    width: 2em;
-    height: 2em;
+    top: -15px !important;
+    right: -2px !important;
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 1.8em !important;
+    width: 1.4em !important;
+    height: 1.4em !important;
   }
 </style>

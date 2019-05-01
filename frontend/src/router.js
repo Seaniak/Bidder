@@ -7,6 +7,10 @@ Vue.use(Router);
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
+  // scrolls to top on route change
+  scrollBehavior(to, from, savedPosition) {
+    return {x: 0, y: 0}
+  },
   routes: [
     {
       path: "/",
@@ -20,62 +24,62 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "upload" */ "./views/Upload.vue")
+          import(/* webpackChunkName: "upload" */ "./views/Upload.vue")
     },
     {
       path: "/auction/:id",
       name: "auctionDetails",
       component: () =>
-        import(
-          /* webpackChunkName: "auctionDetails" */ "./views/AuctionDetails.vue"
-        )
+          import(
+              /* webpackChunkName: "auctionDetails" */ "./views/AuctionDetails.vue"
+              )
     },
     {
       path: "/about",
       name: "about",
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+          import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
       path: "/login",
       name: "login",
       component: () =>
-        import(/* webpackChunkName: "login" */ "./views/Login.vue")
+          import(/* webpackChunkName: "login" */ "./views/Login.vue")
     },
     {
       path: "/register",
       name: "register",
       component: () =>
-        import(/* webpackChunkName: "register" */ "./views/Register.vue")
+          import(/* webpackChunkName: "register" */ "./views/Register.vue")
     },
     {
       path: "/chat",
       name: "chat",
       props: true,
       component: () =>
-        import(/* webpackChunkName: "chat" */ "./views/Chat.vue")
+          import(/* webpackChunkName: "chat" */ "./views/Chat.vue")
     },
     {
       path: "/openChats",
       name: "openChats",
       props: true,
       component: () =>
-        import(/* webpackChunkName: "openChats" */ "./views/OngoingChats.vue")
+          import(/* webpackChunkName: "openChats" */ "./views/OngoingChats.vue")
     },
     {
-      path: "/chat-reroute",
+      path: "/chat-",
       name: "chatReRoute",
       props: true,
       component: () =>
-        import(/* webpackChunkName: "chatReRoute" */ "./utilities/ChatReRoute.vue")
+          import(/* webpackChunkName: "chatReRoute" */ "./utilities/ChatReRoute.vue")
     },
     {
       path: "/user-auctions",
       name: "userAuctions",
       component: () =>
-        import(
-          /* webpackChunkName: "userAuctions" */ "./views/UserAuctions.vue"
-        )
+          import(
+              /* webpackChunkName: "userAuctions" */ "./views/UserAuctions.vue"
+              )
     }
   ]
 });

@@ -39,7 +39,7 @@
         this.deleteItem()
       },
       deleteItem() {
-        this.$store.commit('removeNotification', this.item)
+        this.$store.commit('removeNotification', this.item.key)
       }
     }
   }

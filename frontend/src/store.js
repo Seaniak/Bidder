@@ -14,7 +14,7 @@ export default new Vuex.Store({
     filteredItems: [],
     auctions: [],
     notificationBadge: false,
-    notifications: [],
+    notifications: {},
     chatRecipient: '',
     chatMessages: []
   },
@@ -79,20 +79,11 @@ export default new Vuex.Store({
     notificationToggle(state, value) {
       state.notificationBadge = value;
     },
-    removeNotification(state, item) {
-      let index = state.notifications.indexOf(item);
-      state.notifications.splice(index, 1);
+    removeNotification(state, key) {
+      Vue.delete(state.notifications, key)
       state.notificationBadge = false;
     },
     webSocket(state, data) {
-      let notify = {
-        icon: '',
-        title: '',
-        subtitle: '',
-        route: '',
-        params: ''
-      }
-
       // update state depending on incoming action
       switch (data.action) {
         case "bid":
@@ -115,29 +106,31 @@ export default new Vuex.Store({
               auctionTitle = a.title
             }
           })
-
           //  don't notify yourself
           if (bid.username === state.currentUser.username || !subscribedAuction) return;
 
+          let notify = {
+            icon: 'monetization_on',
+            title: `Utbudad på ${auctionTitle}`,
+            subtitle: `Nytt bud: ${bid.sum}kr, av ${bid.username}`,
+            time: new Date(),
+            route: `/auction/${bid.auctionId}`,
+            key: bid.auctionId
+          }
+          // same as state.notifications[notify.key] = notify
+          //  but with Vue.set the object triggers reactivity
+          //  on update
+          Vue.set(state.notifications, notify.key, notify)
           state.notificationBadge = true
-          notify.icon = 'monetization_on'
-          notify.title = `Utbudad på ${auctionTitle}`
-          notify.subtitle = `Nytt bud: ${bid.sum}kr, av ${bid.username}`
-          notify.route = `/auction/${bid.auctionId}`
-
-          state.notifications.unshift(notify)
           break;
         case "message":
           let message = data.payload
 
-          if (message.sender !== state.chatRecipient) {
+          if (message.sender === state.chatRecipient || message.sender === state.currentUser.username) {
+            state.chatMessages.push(message)
+          } else {
             notifyMessage(state, message)
-            return;
           }
-          state.chatMessages.push(message)
-
-          if (message.sender !== state.currentUser.username)
-            notifyMessage(state, message)
           break;
       }
     }

@@ -1,5 +1,8 @@
 <template>
-  
+  <!--
+      This route is used to trigger created() hook
+      when switching between chats
+  -->
 </template>
 
 <script>
