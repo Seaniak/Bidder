@@ -12,7 +12,7 @@
         class="col-12 col-md-4"
         v-for="(auction, index) in auctions"
         :key="index"
-        :auction="auction"
+        :auctionId="auction.id"
       />
     </transition-group>
   </div>

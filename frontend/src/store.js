@@ -6,14 +6,17 @@ import {notifyBid} from "./utilities/SocketBid";
 
 Vue.use(Vuex);
 
+let getMaxBid = (auction) => {
+  return (auction.bids.length > 0) ?
+      Math.max(...(auction.bids.map((bid) => bid.sum)))
+      : auction.startSum;};
+
 export default new Vuex.Store({
   state: {
-    activeAuction: null,
-    currentAuctionId: null,
     currentUser: null,
     openNavDrawer: null,
     filteredItems: [],
-    auctions: [],
+    auctions: {},
     notificationBadge: false,
     notifications: {},
     chatRecipient: '',
@@ -25,34 +28,29 @@ export default new Vuex.Store({
       response = await response.json();
       context.commit("getAuctions", response);
       context.commit("filterItems", "-default-");
+    },
+  },
+  getters: {
+    getAuction: (state) => (auctionId) => {
+      return state.auctions[auctionId];
     }
   },
   mutations: {
     filterItems(state, searchResult) {
-      state.filteredItems = searchResult;
-      searchResult.forEach((res) => {
-        let exists = false;
-        state.auctions.forEach((auction) => {
-          if (res.id === auction.id) exists = true;
+      searchResult.forEach((newAuction) => {
+        if(!state.auctions[newAuction.id]) {
+          newAuction.maxBid = getMaxBid(newAuction);
+          Vue.set(state.auctions, newAuction.id, newAuction);}
         });
-        if (!exists) state.auctions.push(res);
-      })
-
+      state.filteredItems = searchResult;
     },
-    addAuction(state, value) {
-      let exists = false;
-      state.auctions.forEach((auction) => {
-        if (value.id === auction.id) exists = true;
-      });
-      if (!exists) state.auctions.push(value);
-    },
-    getAuctions(state, value) {
-      state.auctions = value;
-      console.log('Auctions: ', state.auctions);
-    },
-    setActiveAuction(state, activeAuction) {
-      state.activeAuction = activeAuction;
-    },
+  addAuction(state, newAuction) {
+    if(!state.auctions[newAuction.id]) {
+      newAuction.maxBid = getMaxBid(newAuction);
+      Vue.set(state.auctions, newAuction.id, newAuction);
+      console.log("ADDAUCTION", state.auctions[newAuction.id]);
+    }
+  },
     logoutUser(state) {
       state.currentUser = null;
       logoutConnection();
@@ -64,9 +62,6 @@ export default new Vuex.Store({
         window.socketUsername = user.username;
         updateConnection();
       }
-    },
-    setCurrentBid(state, bid) {
-      state.currentBid = bid;
     },
     fetchMessages(state, value) {
       state.chatMessages = value

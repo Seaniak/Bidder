@@ -1,26 +1,24 @@
 <template>
-  <v-card id="auction-card" class="mb-3 pt-1">
-    <div @click="$router.push('/auction/' + auction.id)">
-      <v-img
-          :src="auction.thumbnail ? auction.thumbnail : defaultThumbnail"
-          aspect-ratio="2.75"
-      ></v-img>
-      <v-card-title class="align-items-start" primary-title>
-        <div class="col-12">
-          <h3 class="col-12 mb-0">{{ auction.title }}</h3>
-        </div>
-        <div class="col-6">
-          <h5 class="col-12 mt-0">Bud</h5>
-          <p>{{ maxBid }}</p>
-        </div>
-        <div class="col-6 mt-0">
-          <h5 class="col-12">Tid kvar</h5>
-          <AuctionTimeCountDown :auctionEndTime="auction.endTime" />
-        </div>
-      </v-card-title>
-    </div>
+  <v-card v-if="updateAuction !== undefined" id="auction-card" :to="'/auction/' + auctionId" class="mb-3 pt-1">
+    <v-img
+      :src="updateAuction.thumbnail ? updateAuction.thumbnail : defaultThumbnail"
+      aspect-ratio="2.75"
+    ></v-img>
+    <v-card-title class="align-items-start" primary-title>
+      <div class="col-12">
+        <h3 class="col-12 mb-0">{{ updateAuction.title }}</h3>
+      </div>
+      <div class="col-6">
+        <h5 class="col-12 mt-0">Bud</h5>
+        <p>{{ updateAuction.maxBid }}</p>
+      </div>
+      <div class="col-6 mt-0">
+        <h5 class="col-12">Tid kvar</h5>
+        <AuctionTimeCountDown :auctionEndTime="updateAuction.endTime" />
+      </div>
+    </v-card-title>
     <v-content>
-      <place-bid :propAuction="auction"></place-bid>
+      <place-bid :auctionId="auctionId"></place-bid>
     </v-content>
   </v-card>
 </template>
@@ -35,26 +33,21 @@ export default {
     AuctionTimeCountDown,
     PlaceBid
   },
-	props: ["auction", "auctionEndTime"],
+	props: ["auctionId"],
 	data() {
     return {
-      // maxBid: "Placeholder"
     };
   },
   methods: {
   },
   computed: {
-    defaultThumbnail() {
-      return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
-    },
-    maxBid(){
-  	return (this.auction.bids.length > 0) ?
-        Math.max(...(this.auction.bids.map((bid) => bid.sum)))
-        : this.auction.startSum;
-    }
+	  defaultThumbnail() {
+		  return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
+	  },
+	  updateAuction() {
+		  return this.$store.getters.getAuction(this.auctionId);
+	  },
   },
-  created() {
-  }
 };
 </script>
 

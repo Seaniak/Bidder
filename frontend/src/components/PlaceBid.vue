@@ -1,5 +1,4 @@
 <template>
-  <!--  <v-btn @click="placeBidClicked" dark flat>Placera bud</v-btn>-->
   <v-layout row wrap class="bidBar">
     <smooth-picker
       class="scroller col-6"
@@ -29,18 +28,18 @@
 </template>
 
 <script>
-//import { eventBus } from "@/main";
 import "vue-smooth-picker/dist/css/style.css";
 import { SmoothPicker } from "vue-smooth-picker";
 
 export default {
   name: "PlaceBid",
-  props: ["propAuction"],
+  props: ["auctionId"],
   components: {
     SmoothPicker
   },
   data() {
     return {
+    	bidId: this.auctionId,
       bidAuction: null,
       chosenBid: 0,
       bids: [],
@@ -85,15 +84,16 @@ export default {
     async placeBidClicked() {
       if (
         this.$store.state.currentUser === undefined ||
-        this.$store.state.activeAuction.username ===
+		    this.$store.getters.getAuction(this.auctionId).username ===
           this.$store.state.currentUser.username
-      )
-        return;
+      ) return;
+
       let data = {
-        auctionId: this.bidAuction.id,
+        auctionId: this.bidId,
         username: this.$store.state.currentUser.username,
         sum: this.chosenBid
       };
+
       let bid = await fetch("/api/bids", {
         method: "POST",
         headers: {
@@ -101,23 +101,18 @@ export default {
         },
         body: JSON.stringify(data)
       });
-      console.log(await bid.json());
-      this.sheet = false;
+		this.sheet = false;
+		alert(await bid.json() ? "Bud registrerat!" : "Bud inte registrerat, försök igen!")
     }
   },
   computed: {
     possibleBids() {
-      if (this.bidAuction == null) this.bidAuction = this.$store.state.activeAuction;
-      this.bidAuction.maxBid = (this.bidAuction.bids.length === 0) ?
-          this.bidAuction.startSum
-          : Math.max(...(this.bidAuction.bids.map(bid => bid.sum)));
+        let bidAuction =  this.$store.getters.getAuction(this.auctionId);
       return [
         {
           currentIndex: 1,
           flex: 6,
-          list: this.newBids(
-            this.bidAuction === null ? 0 : this.bidAuction.maxBid
-          ),
+          list: this.newBids(bidAuction ? bidAuction.maxBid : 0),
           textAlign: "center",
           className: "row-group"
         }
@@ -125,8 +120,8 @@ export default {
     }
   },
   created() {
-    if (this.propAuction != null) this.bidAuction = this.propAuction;
-    }
+	  if (this.auctionId == null) this.bidId = this.$route.params.id;
+  }
 };
 </script>
 
