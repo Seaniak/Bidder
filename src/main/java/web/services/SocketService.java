@@ -1,9 +1,11 @@
 package web.services;
 
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import web.entities.Message;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,6 +15,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
 public class SocketService {
+
+  @Autowired
+  private MessageService messageService;
 
   private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
   private Map<String, WebSocketSession> loggedInSessions = new ConcurrentHashMap<>();
@@ -28,13 +33,17 @@ public class SocketService {
   public void sendToOne(WebSocketSession webSocketSession, Object obj) throws IOException {
     sendToOne(webSocketSession, JSON(obj));
   }
-
+public void sendToChat(String sender, String recipient, Object obj) throws IOException {
+    sendToUser(sender, obj);
+    sendToUser(recipient, obj);
+}
   public void sendToUser(String username, Object obj) throws IOException {
     WebSocketSession userSession = loggedInSessions.get(username);
 
     if (userSession != null)
       sendToOne(userSession, JSON(obj));
   }
+
   public void sendToOthers(String username, Object obj){
     loggedInSessions.forEach((user, session) -> {
       if(!user.equals(username)) {
@@ -78,5 +87,9 @@ public class SocketService {
 
   public void removeSession(WebSocketSession session) {
     sessions.remove(session);
+  }
+
+  public Message saveMessage(Message message){
+    return messageService.insertMessage(message);
   }
 }

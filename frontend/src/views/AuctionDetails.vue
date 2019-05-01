@@ -19,7 +19,9 @@
       </v-card>
     </v-layout>
     <v-layout row wrap class="pt-2 justify-content-around">
-      <v-card class="border col-5">
+      <v-card
+              class="border col-5"
+              @click="startChat(updateAuction.username)">
         <h4>Säljare</h4>
         <h3 v-if="updateAuction !== null"> {{ updateAuction.username }}</h3>
       </v-card>
@@ -45,7 +47,7 @@
     >
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
-        <td class="text-xs-right">{{ props.item.username }}</td>
+        <td class="text-xs-right" @click="startChat(props.item.username)">{{ props.item.username }}</td>
         <td class="text-xs-right">{{ getDateString(props.item.time) }}</td>
       </template>
     </v-data-table>
@@ -85,6 +87,14 @@ export default {
     };
   },
   methods: {
+    startChat(recipient){
+      this.$router.push({
+        name: 'chat',
+        params: {
+          recipient: recipient
+        }
+      })
+    },
     getDateString(bidTimeStamp) {
       let bidDate = new Date(bidTimeStamp);
       return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
@@ -101,7 +111,6 @@ export default {
   		let auction = null;
   		if(this.$store.state.activeAuction != null && this.compareAuctionId(this.$store.state.activeAuction.id)) {
   			auction = this.$store.state.activeAuction;
-		    console.log("AUCTION SET BY COMPUTED() FROM STORE", auction);
 		    auction.maxBid = (auction.bids.length === 0) ?
             auction.startSum
 				  : Math.max(...(auction.bids.map(bid => bid.sum)));
@@ -113,7 +122,6 @@ export default {
 	  this.$store.state.auctions.forEach((a) => {
 		if(this.compareAuctionId(a.id)) {
 	  		this.$store.commit("setActiveAuction", a);
-		    console.log("ACTIVEAUCTION SET BY CREATED() FROM STORE", a)
 	    }
 	  });
 
@@ -122,7 +130,6 @@ export default {
       auction = await auction.json();
 		  this.$store.commit("setActiveAuction", auction);
 		  this.$store.commit("addAuction", auction);
-		  console.log("ACTIVEAUCTION SET BY CREATED() FROM DATABASE", auction);
 	  }
   }
 };

@@ -49,6 +49,9 @@ export function sendMessage(message) {
   };
   ws.send(JSON.stringify(data));
 }
+export function sendData(data) {
+  ws.send(JSON.stringify(data));
+}
 
 export function updateConnection() {
   let data = {
