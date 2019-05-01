@@ -7,17 +7,20 @@
     <div class="text-xs-center">
       <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
-          <v-btn color="purple" dark class="firstBidBtn" >
+          <v-btn color="purple" dark class="firstBidBtn btn" >
             Lägg Bud
           </v-btn>
         </template>
-        <v-card tile>
-          <v-layout v-if="$store.state.currentUser" column>
-            <h3>Bud: {{ chosenBid }}kr</h3>
-            <v-btn @click="placeBidClicked">Lägg bud</v-btn>
+        <v-card tile id="bottomSheet">
+          <v-layout v-if="$store.state.currentUser" v-else column align-center justify-center fill-height>
+            <h2>Nytt bud på '{{$store.getters.getAuction(this.bidId).title}}'</h2>
+            <h3>Nuvarande bud: {{ $store.getters.getAuction(this.bidId).maxBid }} kr</h3>
+            <h3>Ditt bud: {{ chosenBid }} kr</h3>
+            <v-btn @click="placeBidClicked" class="purple btn" dark>Lägg bud</v-btn>
           </v-layout>
-          <v-layout v-else column>
-            <h2>Logga in för att lägga bud!</h2>
+          <v-layout v-else column align-center justify-center fill-height>
+            <h2>Du måste vara inloggad för att lägga bud!</h2>
+            <v-btn @click="$router.push('/login')" dark class="pb-10">Gå till inloggning</v-btn>
           </v-layout>
         </v-card>
       </v-bottom-sheet>
@@ -106,8 +109,15 @@ export default {
 </script>
 
 <style scoped>
+  #bottomSheet {
+    height: 20vh;
+    background: var(--main-background);
+  }
   .firstBidBtn {
     margin-top: 2.2vh;
+    /*font-weight: bolder;*/
+  }
+  .btn {
     font-weight: bolder;
   }
   .bidBar {
@@ -122,10 +132,10 @@ export default {
   }
   .vue-scroll-picker >>> .vue-scroll-picker-layer .top {
     background: linear-gradient(180deg, var(--scrollColor) 10%, rgba(0,0,0, 0.01));
-    height: 3.4vh;
+    height: 3.3vh;
   }
   .vue-scroll-picker >>> .vue-scroll-picker-layer .bottom {
     background: linear-gradient(0deg, var(--scrollColor) 20%, rgba(0,0,0, 0.01));
-    height: 3.7vh;
+    height: 3.4vh;
   }
 </style>
