@@ -1,23 +1,25 @@
 <template>
-  <v-card v-if="updateAuction !== undefined" id="auction-card" :to="'/auction/' + auctionId" class="mb-3 pt-1">
-    <v-img
-      :src="updateAuction.thumbnail ? updateAuction.thumbnail : defaultThumbnail"
-      aspect-ratio="2.75"
-    ></v-img>
-    <v-card-title class="align-items-start" primary-title>
-      <div class="col-12">
-        <h3 class="col-12 mb-0">{{ updateAuction.title }}</h3>
-      </div>
-      <div class="col-6">
-        <h5 class="col-12 mt-0">Bud</h5>
-        <p>{{ updateAuction.maxBid }}</p>
-      </div>
-      <div class="col-6 mt-0">
-        <h5 class="col-12">Tid kvar</h5>
-        <AuctionTimeCountDown :auctionEndTime="updateAuction.endTime" />
-      </div>
-    </v-card-title>
-    <v-content>
+  <v-card v-if="updateAuction !== undefined" id="auction-card" class="mb-3 pt-1">
+    <div id="cardInfo" @click="$router.push('/auction/' + auctionId)">
+      <v-img
+          :src="updateAuction.thumbnail ? updateAuction.thumbnail : defaultThumbnail"
+          aspect-ratio="2.75"
+      ></v-img>
+      <v-card-title class="align-items-start" primary-title>
+        <div class="col-12">
+          <h2 class="col-12 mb-0">{{ updateAuction.title }}</h2>
+        </div>
+        <div class="col-6">
+          <h3 class="col-12 mt-0">Bud</h3>
+          <p>{{ updateAuction.maxBid }} kr</p>
+        </div>
+        <div class="col-6 mt-0">
+          <h3 class="col-12">Avslutas</h3>
+          <AuctionTimeCountDown :auctionEndTime="updateAuction.endTime" />
+        </div>
+      </v-card-title>
+    </div>
+    <v-content id="bidder">
       <place-bid :auctionId="auctionId"></place-bid>
     </v-content>
   </v-card>
@@ -60,10 +62,14 @@ export default {
   text-decoration: none;
   color: var(--main-font-color);
 }
+#bidder {
+  margin-bottom: 2vh;
+}
 
 #auction-card {
   border-radius: 4px;
   animation-duration: 200ms;
+
 }
 
 #auction-card >>> bidBar {

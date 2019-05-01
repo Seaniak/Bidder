@@ -30,10 +30,11 @@
         <h3 v-if="updateAuction !== undefined">{{ updateAuction.category }}</h3>
       </v-card>
     </v-layout>
-    <div class="description py-3">
-      <h3>Beskrivning</h3>
-      <p v-if="updateAuction !== undefined">{{ updateAuction.description }}</p>
-    </div>
+      <v-card class="description border mt-2 col-12">
+        <h3>Beskrivning</h3>
+        <p v-if="updateAuction !== undefined && updateAuction.condition">Varans skick: {{ updateAuction.condition }}</p>
+        <p v-if="updateAuction !== undefined">{{ updateAuction.description }}</p>
+      </v-card>
     <v-data-table
       :headers="headers"
       :items="(updateAuction !== undefined) ? updateAuction.bids : []"
