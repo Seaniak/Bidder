@@ -2,6 +2,7 @@
   <v-list-tile
           two-line
           ripple
+          :id="item.key"
           @click="goToRoute"
   >
     <v-list-tile-action>
@@ -16,11 +17,16 @@
 </template>
 
 <script>
+  import Swipe from '@/utilities/Swipe'
+  import {eventBus} from "@/main";
+
   export default {
     name: "NotificationItem",
     props: ['item'],
     data() {
-      return {}
+      return {
+        leaveAnimation: 'pulse'
+      }
     },
     methods: {
       goToRoute() {
@@ -41,6 +47,18 @@
       deleteItem() {
         this.$store.commit('removeNotification', this.item.key)
       }
+    },
+    mounted() {
+      new Swipe(document.getElementById(this.item.key))
+          .onRight(() => {
+            eventBus.$emit('notify-leave-animation', 'slideOutRight')
+            this.deleteItem()
+          })
+          .onLeft(() => {
+            eventBus.$emit('notify-leave-animation', 'slideOutLeft')
+            this.deleteItem()
+          })
+          .run()
     }
   }
 </script>
