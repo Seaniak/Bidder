@@ -1,5 +1,6 @@
 <template>
-  <v-card v-if="updateAuction !== undefined" id="auction-card" class="mb-3 pt-1">
+  <v-card v-if="updateAuction !== undefined" id="auction-card" class="mb-3 pt-1"
+          :class="{closedAuction: closedAuction}">
     <div id="cardInfo" @click="$router.push('/auction/' + auctionId)">
       <v-img
           :src="updateAuction.thumbnail ? updateAuction.thumbnail : defaultThumbnail"
@@ -19,7 +20,7 @@
         </div>
       </v-card-title>
     </div>
-    <v-content id="bidder">
+    <v-content v-if="!getRoute" id="bidder">
       <place-bid :auctionId="auctionId"></place-bid>
     </v-content>
   </v-card>
@@ -35,9 +36,10 @@ export default {
     AuctionTimeCountDown,
     PlaceBid
   },
-	props: ["auctionId"],
+	props: ["auctionId", "auction"],
 	data() {
     return {
+      closedAuction: new Date(this.auction.endTime) < new Date()
     };
   },
   methods: {
@@ -47,8 +49,12 @@ export default {
 		  return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
 	  },
 	  updateAuction() {
-		  return this.$store.getters.getAuction(this.auctionId);
+		  // return this.$store.getters.getAuction(this.auctionId);
+		  return this.auction
 	  },
+    getRoute(){
+      return this.$route.path === '/user-auctions'
+    }
   },
 };
 </script>
@@ -61,6 +67,9 @@ export default {
 * {
   text-decoration: none;
   color: var(--main-font-color);
+}
+.closedAuction{
+  opacity: 0.6;
 }
 #bidder {
   margin-bottom: 2vh;

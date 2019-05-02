@@ -44,6 +44,7 @@
           v-model="email"
           :rules="emailRules"
           required
+          @keyup="listenForEnter"
         ></v-text-field>
         <v-btn @click="clear">Rensa formulär</v-btn>
       </v-form>
@@ -136,7 +137,7 @@ export default {
           return res.text();
         })
         .then(res => {
-          console.log(res);
+          console.log('Register User: ', res);
           if (res === "success") {
             this.errorMessage = "";
             this.successMessage = "Nytt konto registrerat!";
@@ -148,6 +149,10 @@ export default {
           }
         })
         .catch(e => console.log(e));
+    },
+    listenForEnter(e) {
+      if (e.keyCode == 13)
+        this.submit()
     }
   }
 };

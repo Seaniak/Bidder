@@ -18,8 +18,7 @@
                 absolute
                 fab
                 :color="iconColor"
-                id="user-icon"
-                @click="testSocketMessage">
+                id="user-icon">
           {{$store.state.currentUser.name.charAt(0).toUpperCase()}}
           {{$store.state.currentUser.surname.charAt(0).toUpperCase()}}
         </v-btn>
@@ -65,7 +64,6 @@
 </template>
 
 <script>
-  import {sendMessage, sendData} from "@/webSocket";
   import Notifications from './Notifications'
 
   export default {
@@ -88,15 +86,6 @@
       }
     },
     methods: {
-      testSocketMessage() {
-        let message = {
-          action: 'message',
-          sender: 'loke',
-          recipient: 'user',
-          text: 'Sample text, haha Rickard'
-        }
-        sendData(message)
-      },
       toggleDrawer() {
         this.$store.state.openNavDrawer = !this.$store.state.openNavDrawer;
       },

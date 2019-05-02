@@ -13,6 +13,7 @@
         v-for="(auction, index) in auctions"
         :key="index"
         :auctionId="auction.id"
+        :auction="auction"
       />
     </transition-group>
   </div>

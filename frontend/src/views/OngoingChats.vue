@@ -24,7 +24,8 @@
     name: "OngoingChats",
     data() {
       return {
-        searchUser: ''
+        searchUser: '',
+        userChats: []
       }
     },
     components: {
@@ -33,13 +34,17 @@
     computed: {
       ongoingChats() {
         let filter = new RegExp(this.searchUser, "i")
-        return this.$store.state.currentUser.ongoingChats.filter(u => u.match(filter))
+        return this.userChats.filter(u => u.match(filter))
       }
     },
-    created() {
+    async created() {
       eventBus.$on('search-chat-recipient', input => {
         this.searchUser = input
       })
+
+      let ongoingChats = await fetch('/api/messages/get-ongoing-chats&user=' + window.socketUsername)
+      ongoingChats = await ongoingChats.json()
+      this.userChats = ongoingChats
     },
     beforeDestroy() {
       eventBus.$off('search-chat-recipient')

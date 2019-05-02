@@ -15,7 +15,6 @@ public class UserService {
 
   public User findByUsername(String username) {
     User user = userRepo.findByUsername(username);
-    user.setOngoingChats(messageService.getOngoingChats(username));
     return user;
   }
 

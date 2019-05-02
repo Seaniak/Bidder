@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import web.entities.Message;
 import web.services.MessageService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,5 +27,14 @@ public class MessageController {
     if (!currentUser.equals(authentication.getName())) return null;
 
     return messageService.getMessagesFromSenderOrRecipient(currentUser, recipient);
+  }
+
+  @GetMapping("/get-ongoing-chats&user={username}")
+  public List<String> getOngoingChats(@PathVariable String username) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    // returns empty list if user is not logged in
+    if (!username.equals(authentication.getName())) return new ArrayList<>();
+
+    return messageService.getOngoingChats(username);
   }
 }
