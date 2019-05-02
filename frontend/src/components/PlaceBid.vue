@@ -82,8 +82,6 @@ export default {
           this.$store.state.currentUser.username ||
         new Date(this.$store.getters.getAuction(this.bidId).endTime)-Date.now() < 0
       ) return;
-      // let timeDifference = this.endDate - Date.now();
-      // timeDifference = Math.round(timeDifference);
       let data = {
         auctionId: this.bidId,
         username: this.$store.state.currentUser.username,
@@ -98,6 +96,7 @@ export default {
         body: JSON.stringify(data)
       });
 		this.sheet = false;
+		console.log(await bid.json);
     }
   },
   computed: {
