@@ -71,7 +71,6 @@
 <script>
   import FileUpload from "@/components/FileUpload";
   import {eventBus} from "@/main";
-  import Datepicker from "vuejs-datetimepicker";
   import {convertImage} from "@/utilities/ImageConverter";
   import {Datetime} from 'vue-datetime'
   import 'vue-datetime/dist/vue-datetime.css'
@@ -81,8 +80,7 @@
   export default {
     components: {
       FileUpload,
-      Datetime,
-      Datepicker
+      Datetime
     },
     data() {
       return {
@@ -145,7 +143,6 @@
           body: fileData
         });
         response = await response.text();
-        console.log(response);
         return response;
       },
       postAuction(imagePaths) {
@@ -162,7 +159,6 @@
           thumbnail: this.thumbnail,
           images: imagePaths
         };
-        console.log(data);
 
         fetch("/api/auctions", {
           method: "POST",
@@ -171,15 +167,14 @@
           },
           body: JSON.stringify(data)
         })
-            .then(res => {
-              return res.json();
-            })
-            .then(res => {
-              console.log(res);
-              this.$store.commit("addAuction", res);
-              this.$store.commit("filterItems");
-            })
-            .catch(e => console.log(e));
+            // .then(res => {
+            //   return res.json();
+            // })
+            // .then(res => {
+            //   this.$store.commit("addAuction", res);
+            //   this.$store.commit("filterItems");
+            // })
+            // .catch(e => console.log(e));
       },
       handleImage(imageData) {
         this.files = imageData.files;

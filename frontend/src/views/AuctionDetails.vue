@@ -48,7 +48,7 @@
     >
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
-        <td class="text-xs-right" @click="startChat(props.item.username)">{{ props.item.username }}</td>
+        <td id="user-bidder" class="text-xs-right" @click="startChat(props.item.username)">{{ props.item.username }}</td>
         <td class="text-xs-right">{{ getBidDateString(props.item.time) }}</td>
       </template>
       <template v-slot:pageText="props">
@@ -88,12 +88,13 @@ export default {
   },
   methods: {
     startChat(recipient){
-      this.$router.push({
-        name: 'chat',
-        params: {
-          recipient: recipient
-        }
-      })
+      if(recipient !== this.$store.state.currentUser.username)
+        this.$router.push({
+          name: 'chat',
+          params: {
+            recipient: recipient
+          }
+        })
     },
     getBidDateString(bidTimeStamp) {
       let bidDate = new Date(bidTimeStamp);
@@ -119,6 +120,10 @@ export default {
 </script>
 
 <style>
+  #user-bidder{
+    color: teal;
+    font-weight: bold;
+  }
 .border {
   border-radius: 4px;
 }

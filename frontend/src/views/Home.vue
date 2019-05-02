@@ -29,8 +29,15 @@ export default {
   },
   computed: {
     auctions() {
-      // console.log(this.$store.state.filteredItems);
-      return this.$store.state.auctions;
+      // sorts auctions to list descending time left
+      let auctions = this.$store.state.auctions
+      let timeSorted = []
+      for (let key in auctions) {
+        timeSorted.push(auctions[key])
+      }
+      timeSorted.sort((a, b) => new Date(a.endTime) - new Date(b.endTime))
+
+      return timeSorted;
     }
   }
 };
