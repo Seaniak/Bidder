@@ -95,7 +95,6 @@ export default {
         body: JSON.stringify(data)
       });
 		this.sheet = false;
-		alert(await bid.json() ? "Bud registrerat!" : "Bud inte registrerat, försök igen!")
     }
   },
   computed: {
