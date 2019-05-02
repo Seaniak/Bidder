@@ -76,13 +76,11 @@ export default {
       return bids;
     },
     async placeBidClicked() {
-      console.log("TEST", new Date(this.$store.getters.getAuction(this.bidId).endTime)-Date.now());
-    if(        new Date(this.$store.getters.getAuction(this.bidId).endTime)-Date.now() < 0) console.log("TIMEOUT");
       if (
         this.$store.state.currentUser === undefined ||
 		    this.$store.getters.getAuction(this.bidId).username ===
           this.$store.state.currentUser.username ||
-        this.$store.getters.getAuction(this.bidId).endDate-Date.now() < 0
+        new Date(this.$store.getters.getAuction(this.bidId).endTime)-Date.now() < 0
       ) return;
       // let timeDifference = this.endDate - Date.now();
       // timeDifference = Math.round(timeDifference);
