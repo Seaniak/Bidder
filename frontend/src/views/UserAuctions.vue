@@ -10,7 +10,7 @@
             :auction="auction"
             :auctionId="auction.id"
     />
-    <h2 v-if="closedAuctions.length > 0" class="pt-5 pb-3">Avslutade</h2>
+    <h2 v-if="!closedAuctions || closedAuctions.length > 0" class="pt-5 pb-3">Avslutade</h2>
     <AuctionCard
             class="col-12 col-md-4"
             v-for="(auction, index) in closedAuctions"

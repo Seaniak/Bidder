@@ -12,7 +12,6 @@
         class="col-12 col-md-4"
         v-for="(auction, index) in auctions"
         :key="index"
-        :auction="auction"
         :auctionId="auction.id"
       />
     </transition-group>
@@ -31,12 +30,12 @@ export default {
   computed: {
     auctions() {
       // sorts auctions to list descending time left
-      let auctions = this.$store.state.filteredItems
-      let timeSorted = []
+      let auctions = this.$store.state.filteredItems;
+      let timeSorted = [];
       for (let key in auctions) {
-        timeSorted.push(auctions[key])
+        timeSorted.push(auctions[key]);
       }
-      timeSorted.sort((a, b) => new Date(a.endTime) - new Date(b.endTime))
+      timeSorted.sort((a, b) => new Date(a.endTime) - new Date(b.endTime));
 
       return timeSorted;
     }

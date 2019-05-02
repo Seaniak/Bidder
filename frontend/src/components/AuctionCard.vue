@@ -1,6 +1,6 @@
 <template>
   <v-card v-if="updateAuction !== undefined" id="auction-card" class="mb-3 p-1"
-          :class="{closedAuction: closedAuction}">
+          :class="{closedAuction}">
     <div id="cardInfo" @click="$router.push('/auction/' + auctionId)">
       <v-img
           :src="updateAuction.thumbnail ? updateAuction.thumbnail : defaultThumbnail"
@@ -14,7 +14,7 @@
           <h3 class="col-12 mt-0">Bud</h3>
           <h4>{{ updateAuction.maxBid }} kr</h4>
         </div>
-        <div class="col-6 mt-0">
+        <div v-if="updateAuction !== undefined" class="col-6 mt-0">
           <h3 class="col-12">Avslutas</h3>
           <AuctionTimeCountDown :auctionEndTime="updateAuction.endTime" />
         </div>
@@ -36,16 +36,18 @@ export default {
     AuctionTimeCountDown,
     PlaceBid
   },
-	props: ["auctionId", "auction"],
+	props: ["auctionId"],
 	data() {
     return {
-      closedAuction: new Date(this.auction.endTime) < new Date()
     };
   },
   methods: {
   },
   computed: {
-	  defaultThumbnail() {
+    closedAuction() {
+      return new Date(this.$store.getters.getAuction(this.auctionId).endTime) < new Date();
+    },
+    defaultThumbnail() {
 		  return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
 	  },
 	  updateAuction() {

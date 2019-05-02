@@ -29,8 +29,7 @@ public class AuctionService {
   }
 
   public List<Auction> getUserAuctions(String username) {
-    return addThumbnails(
-            auctionRepo.findAllByUsername(username));
+    return loadAuctionData(auctionRepo.findAllByUsername(username));
   }
 
   public List<Auction> getAllAuctions() {
@@ -73,15 +72,16 @@ public class AuctionService {
     searchRes.addAll(auctionRepo.findAllByTitleContaining(searchQuery));
     filteredRes.addAll(searchRes);
     finalResult.addAll(filteredRes);
-    finalResult.forEach(auction -> {
-      List<String> images = imageService.getAuctionImageData(auction.getId());
-      auction.setImages(images);
-      List<Bid> bids = bidService.getAuctionBids(auction.getId());
-      auction.setBids(bids);
-      Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
-      if (thumbnail != null) auction.setThumbnail(thumbnail.getImage());
-      });
-    return finalResult;
+    return loadAuctionData(finalResult);
+//    finalResult.forEach(auction -> {
+//      List<String> images = imageService.getAuctionImageData(auction.getId());
+//      auction.setImages(images);
+//      List<Bid> bids = bidService.getAuctionBids(auction.getId());
+//      auction.setBids(bids);
+//      Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
+//      if (thumbnail != null) auction.setThumbnail(thumbnail.getImage());
+//      });
+//    return finalResult;
   }
 
   public Auction insertAuction(Auction auction) {
@@ -90,5 +90,17 @@ public class AuctionService {
 
   public void deleteAuction(Auction auction) {
     auctionRepo.delete(auction);
+  }
+
+  private List<Auction> loadAuctionData(List<Auction> auctionList){
+    auctionList.forEach(auction -> {
+      List<String> images = imageService.getAuctionImageData(auction.getId());
+      auction.setImages(images);
+      List<Bid> bids = bidService.getAuctionBids(auction.getId());
+      auction.setBids(bids);
+      Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
+      if (thumbnail != null) auction.setThumbnail(thumbnail.getImage());
+    });
+    return auctionList;
   }
 }
