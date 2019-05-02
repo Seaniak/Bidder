@@ -1,6 +1,7 @@
 <template class="template">
   <v-layout row wrap class="bidBar justify-center">
       <scroll-picker class="scroller col-6"
+                     :touch-sensitivity="0.9"
                      :class="getPath ? 'scrollTextWhite':'scrollTextBlack'"
                      :options="possibleBids"
                      v-model="chosenBid">

@@ -8,6 +8,7 @@
             :key="index + auction.title"
             :name="index"
             :auction="auction"
+            :auctionId="auction.id"
     />
     <h2 class="pt-5 pb-3">Avslutade</h2>
     <AuctionCard
@@ -16,6 +17,7 @@
             :key="auction.title + index"
             :name="index"
             :auction="auction"
+            :auctionId="auction.id"
     />
   </v-container>
 </template>

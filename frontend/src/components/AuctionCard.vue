@@ -1,12 +1,12 @@
 <template>
-  <v-card v-if="updateAuction !== undefined" id="auction-card" class="mb-3 pt-1"
+  <v-card v-if="updateAuction !== undefined" id="auction-card" class="mb-3 p-1"
           :class="{closedAuction: closedAuction}">
     <div id="cardInfo" @click="$router.push('/auction/' + auctionId)">
       <v-img
           :src="updateAuction.thumbnail ? updateAuction.thumbnail : defaultThumbnail"
           aspect-ratio="2.75"
       ></v-img>
-      <v-card-title class="align-items-start" primary-title>
+      <v-card-title class="align-items-start pt-2 p-0" primary-title>
         <div class="col-12">
           <h2 class="col-12 mb-0">{{ updateAuction.title }}</h2>
         </div>
@@ -36,7 +36,7 @@ export default {
     AuctionTimeCountDown,
     PlaceBid
   },
-	props: ["auction"],
+	props: ["auctionId", "auction"],
 	data() {
     return {
       closedAuction: new Date(this.auction.endTime) < new Date()
