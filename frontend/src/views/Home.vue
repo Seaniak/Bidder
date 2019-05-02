@@ -7,7 +7,7 @@
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
     >
-      <h1 class="col-12 mb-3" key="keyNeededToPreventError">Bidder</h1>
+      <h1 id="logo" class="col-12 mb-3" key="keyNeededToPreventError">Bidder</h1>
       <AuctionCard
         class="col-12 col-md-4"
         v-for="(auction, index) in auctions"
@@ -45,7 +45,16 @@ export default {
 </script>
 
 <style scoped>
-h3 {
+  @import url('https://fonts.googleapis.com/css?family=Pacifico');
+
+  h3 {
   animation-duration: 100ms;
 }
+  #logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 10vh;
+    color: coral;
+    text-shadow: 1px 1px 1px teal, 0 0 0.05em teal, 0 0 0.05em teal;
+    margin-bottom: 0vh;
+  }
 </style>
