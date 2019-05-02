@@ -27,7 +27,7 @@ public class BidController {
 	}
 
 	@PostMapping
-	public boolean publishBid(@RequestBody Bid bid) {
+	public Bid publishBid(@RequestBody Bid bid) {
 		AtomicBoolean correctBid = new AtomicBoolean(
 				!bid.getUsername().equals(auctionService.getAuctionById(bid.getAuctionId()).getUsername()));
 		if(correctBid.get()){
@@ -42,6 +42,7 @@ public class BidController {
 			bid.setTime(Timestamp.valueOf(LocalDateTime.now()));
 			correctBid.set(bidService.insertBid(bid) != null);
 		}
-		return correctBid.get();
+		if(correctBid.get()) return bid;
+		else return null;
 	}
 }

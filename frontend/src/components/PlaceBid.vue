@@ -1,6 +1,47 @@
 <template class="template">
   <v-layout row wrap class="bidBar justify-center">
-      <scroll-picker class="scroller col-6"
+    <div class="text-xs-center">
+      <v-dialog
+          v-model="dialog"
+          width="500"
+      >
+        <v-card>
+          <div v-if="successBid">
+            <v-card-title
+                dark
+                class="headline dark"
+                primary-title
+            >
+              Bud registrerat
+            </v-card-title>
+            <v-card-text class="text-xs-left">
+              <h4>Tid: {{getBidDateString(successBid.time)}}</h4>
+              <h4>Summa: {{successBid.sum}} kr</h4>
+              <h4>Användare: {{successBid.username}}</h4>
+            </v-card-text>
+          </div>
+          <v-card-title v-else
+                        dark
+              class="headlin"
+              primary-title
+          >
+            Nånting gick fel!
+          </v-card-title>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="primary"
+                flat
+                @click="dialog = false"
+            >
+              Stäng
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+    <scroll-picker class="scroller col-6"
                      :touch-sensitivity="0.9"
                      :class="getPath ? 'scrollTextWhite':'scrollTextBlack'"
                      :options="possibleBids"
@@ -43,10 +84,16 @@ export default {
     return {
     	bidId: this.auctionId,
       chosenBid: 0,
-      sheet: false
+      sheet: false,
+      dialog: false,
+      successBid: null,
     };
   },
   methods: {
+    getBidDateString(bidTimeStamp) {
+      let bidDate = new Date(bidTimeStamp);
+      return bidDate.toLocaleDateString() + " " + bidDate.toLocaleTimeString();
+    },
     getAddSum(currentBid) {
       let addSum = 0;
       if (currentBid < 200) addSum = 10;
@@ -81,7 +128,10 @@ export default {
 		    this.$store.getters.getAuction(this.bidId).username ===
           this.$store.state.currentUser.username ||
         new Date(this.$store.getters.getAuction(this.bidId).endTime)-Date.now() < 0
-      ) return;
+      ) {
+        this.sheet = false;
+        return;
+      }
       let data = {
         auctionId: this.bidId,
         username: this.$store.state.currentUser.username,
@@ -96,7 +146,12 @@ export default {
         body: JSON.stringify(data)
       });
 		this.sheet = false;
-		console.log(await bid.json);
+		if(await bid.json != null) {
+		  bid = await bid.json();
+		  console.log(bid);
+      this.successBid = bid;
+      this.dialog=true;
+      }
     }
   },
   computed: {
@@ -114,6 +169,10 @@ export default {
 </script>
 
 <style scoped>
+  .headline {
+    background: teal;
+    color: white;
+  }
   .auctionCard{
     background-color: teal;
     }
