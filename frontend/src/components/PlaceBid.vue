@@ -1,26 +1,27 @@
 <template class="template">
   <v-layout row wrap class="bidBar justify-center">
       <scroll-picker class="scroller col-6"
+                     :class="getPath ? 'scrollTextWhite':'scrollTextBlack'"
                      :options="possibleBids"
                      v-model="chosenBid">
       </scroll-picker>
     <div class="text-xs-center">
       <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
-          <v-btn color="purple" dark class="firstBidBtn btn" >
+          <v-btn flat dark class="firstBidBtn btn" >
             Lägg Bud
           </v-btn>
         </template>
         <v-card tile id="bottomSheet">
-          <v-layout v-if="$store.state.currentUser" v-else column align-center justify-center fill-height>
+          <v-layout v-if="$store.state.currentUser" column align-center justify-center fill-height>
             <h2>Nytt bud på '{{$store.getters.getAuction(this.bidId).title}}'</h2>
             <h3>Nuvarande bud: {{ $store.getters.getAuction(this.bidId).maxBid }} kr</h3>
             <h3>Ditt bud: {{ chosenBid }} kr</h3>
-            <v-btn @click="placeBidClicked" class="purple btn" dark>Lägg bud</v-btn>
+            <v-btn @click="placeBidClicked" class="teal btn" dark>Lägg bud</v-btn>
           </v-layout>
           <v-layout v-else column align-center justify-center fill-height>
             <h2>Du måste vara inloggad för att lägga bud!</h2>
-            <v-btn @click="$router.push('/login')" dark class="pb-10">Gå till inloggning</v-btn>
+            <v-btn @click="$router.push('/login')" color="teal" dark class="pb-10">Gå till inloggning</v-btn>
           </v-layout>
         </v-card>
       </v-bottom-sheet>
@@ -100,6 +101,9 @@ export default {
   computed: {
     possibleBids() {
       return this.newBids(this.$store.getters.getAuction(this.bidId).maxBid);
+    },
+    getPath(){
+      return this.$route.path.match(/\/[a-z]+/)
     }
   },
   created() {
@@ -109,6 +113,12 @@ export default {
 </script>
 
 <style scoped>
+  .scrollTextWhite{
+    color: white;
+  }
+  .scrollTextBlack{
+    color: black;
+  }
   #bottomSheet {
     height: 20vh;
     background: var(--main-background);

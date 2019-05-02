@@ -1413,6 +1413,11 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
+anypicker@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/anypicker/-/anypicker-2.0.9.tgz#30d2b6cd6cb64b117684cd4f0bcc8abd88d30fb6"
+  integrity sha1-MNK2zWy2SxF2hM1PC8yKvYjTD7Y=
+
 aproba@^1.0.3, aproba@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
