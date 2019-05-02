@@ -8,7 +8,7 @@
     <div class="text-xs-center">
       <v-bottom-sheet v-model="sheet">
         <template v-slot:activator>
-          <v-btn flat dark class="firstBidBtn btn" >
+          <v-btn flat dark class="firstBidBtn btn" :class="getPath ? 'auctionDetails':'auctionCard'" >
             Lägg Bud
           </v-btn>
         </template>
@@ -113,6 +113,12 @@ export default {
 </script>
 
 <style scoped>
+  .auctionCard{
+    background-color: teal;
+    }
+
+  auctioDetails{
+  }
   .scrollTextWhite{
     color: white;
   }
@@ -124,7 +130,7 @@ export default {
     background: var(--main-background);
   }
   .firstBidBtn {
-    margin-top: 2.2vh;
+    margin-top: 2.3vh;
     /*font-weight: bolder;*/
   }
   .btn {
@@ -145,7 +151,7 @@ export default {
     height: 3.3vh;
   }
   .vue-scroll-picker >>> .vue-scroll-picker-layer .bottom {
-    background: linear-gradient(0deg, var(--scrollColor) 20%, rgba(0,0,0, 0.01));
+    background: linear-gradient(0deg, var(--scrollColor) 10%, rgba(0,0,0, 0.01));
     height: 3.4vh;
   }
 </style>
