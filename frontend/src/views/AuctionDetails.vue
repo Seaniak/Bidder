@@ -10,7 +10,7 @@
     <h1 v-if="updateAuction !== undefined">{{ updateAuction.title }}</h1>
 
     <AuctionEnded
-            v-if="auctionEnded"
+            v-if="(updateAuction !== undefined) ? auctionEnded : null"
             :auction="updateAuction"/>
 
     <v-layout row wrap class="pt-2 justify-content-around">

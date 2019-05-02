@@ -34,9 +34,12 @@
     computed: {
       condition() {
         let lastIndex = this.auction.bids.length - 1;
-        let lastBid = this.auction.bids[lastIndex]
-        this.soldTo = lastBid.username;
-        this.soldPrice = lastBid.sum
+        let lastBid = this.auction.bids[lastIndex];
+        console.log(lastBid);
+        if(lastBid !== undefined) {
+          this.soldTo = lastBid.username;
+          this.soldPrice = lastBid.sum
+        } else lastBid = {sum: -1};
 
         if (lastBid.sum < this.auction.reservedSum)
           return 'price not reached'
