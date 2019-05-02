@@ -58,7 +58,13 @@
           "/api/auctions/user=" + window.socketUsername
       );
       response = await response.json();
-      this.userAuctions = response;
+      this.userAuctions = [];
+      for(let auction of response){
+        if (this.$store.getters.getAuction(auction.id) === undefined) {
+          this.$store.commit("addAuction", auction);
+        }
+        this.userAuctions.push(this.$store.getters.getAuction(auction.id));
+      }
     }
   };
 </script>

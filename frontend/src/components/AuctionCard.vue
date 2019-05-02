@@ -49,7 +49,7 @@ export default {
 		  return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
 	  },
 	  updateAuction() {
-		  return this.auction
+		  return this.$store.getters.getAuction(this.auctionId);
 	  },
     getRoute(){
       return this.$route.path === '/user-auctions'
