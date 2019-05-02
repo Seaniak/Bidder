@@ -9,7 +9,6 @@ export function notifyBid(state, bid){
     state.auctions[bid.auctionId].maxBid = bid.sum;
     for (let b of  state.auctions[bid.auctionId].bids) {
       if (b.username === state.currentUser.username){
-        console.log(b);
         subscribedAuction = true;
         break;
       }
