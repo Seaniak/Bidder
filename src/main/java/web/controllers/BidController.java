@@ -30,6 +30,11 @@ public class BidController {
 	public boolean publishBid(@RequestBody Bid bid) {
 		AtomicBoolean correctBid = new AtomicBoolean(
 				!bid.getUsername().equals(auctionService.getAuctionById(bid.getAuctionId()).getUsername()));
+		if(correctBid.get()){
+			if(Timestamp.valueOf(LocalDateTime.now()).after(auctionService.getAuctionById(bid.getAuctionId()).getEndTime())) {
+				correctBid.set(false);
+			}
+		}
 		if (correctBid.get()) bidService.getAuctionBids(bid.getAuctionId()).forEach(b -> {
 			if (b.getSum() >= bid.getSum()) correctBid.set(false);
 		});
