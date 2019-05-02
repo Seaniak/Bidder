@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p v-if="this.timeLeft.getTime() < 86400000">
+    <p v-if="this.timeLeft.getTime() < 0">Avslutad</p>
+    <p v-else-if="this.timeLeft.getTime() < 86400000">
       {{
         formatNumber(this.timeLeft.getHours()) +
           ":" +

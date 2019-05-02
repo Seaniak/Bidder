@@ -1,5 +1,5 @@
 <template>
-  <div id="upload" class="row">
+  <div id="upload" class="column align-items-center">
     <div class="mb-3">
       <input
         id="file-load"
