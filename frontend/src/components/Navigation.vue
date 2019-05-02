@@ -43,6 +43,7 @@
   import GoToLoginPageNav from "./navbar/GoToLoginPageNav";
   import PlaceBid from "./PlaceBid";
   import ChatNav from "./navbar/ChatNav";
+  import OngoingChatNav from "./navbar/OngoingChatNav";
 
   export default {
     name: "Navigation",
@@ -75,6 +76,8 @@
             return PlaceBid;
           case "/chat":
             return ChatNav;
+            case "/openChats":
+            return OngoingChatNav;
           default:
             return HomeNav;
         }

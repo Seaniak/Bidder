@@ -1,63 +1,54 @@
 <template>
-  <div>
-    <h1>Meddelanden</h1>
-    <v-list-tile
-            v-for="(chat, i) in ongoingChats"
-            :key="chat + i"
-            ripple
-            @click="goToChat(chat)"
+  <div id="ongoing-chat-list">
+    <h1 class="p-3">Meddelanden</h1>
+    <transition-group
+            class=""
+            name="animate-route"
+            mode="out-in"
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
     >
-      <v-list-tile-action>
-        <v-btn
-                fab
-                small
-                depressed
-                :color="iconColor">{{chat.charAt(0).toUpperCase()}}
-        </v-btn>
-      </v-list-tile-action>
-      <v-list-tile-content
-              class="border-bottom">
-        <v-list-tile-title v-text="chat"></v-list-tile-title>
-      </v-list-tile-content>
-    </v-list-tile>
+      <ChatUser
+              v-for="(recipient, i) in ongoingChats"
+              :key="recipient + i"
+              :recipient="recipient"/>
+    </transition-group>
   </div>
 </template>
 
 <script>
+  import ChatUser from '@/components/ChatUser'
+  import {eventBus} from "@/main";
+
   export default {
     name: "OngoingChats",
-    methods: {
-      goToChat(recipient) {
-        this.$router.push({
-          name: 'chat',
-          params: {
-            recipient: recipient
-          }
-        })
+    data() {
+      return {
+        searchUser: ''
       }
+    },
+    components: {
+      ChatUser
     },
     computed: {
       ongoingChats() {
-        return this.$store.state.currentUser.ongoingChats
-      },
-      iconColor() {
-        let colors = [
-          '#F2D600',
-          '#61BD4F',
-          '#C377E0',
-          '#FF9F1A',
-          '#FF78CB',
-          '#00C2E0'
-        ]
-        let randomColor = Math.round(Math.random() * colors.length)
-        return colors[randomColor]
+        let filter = new RegExp(this.searchUser, "i")
+        return this.$store.state.currentUser.ongoingChats.filter(u => u.match(filter))
       }
     },
+    created() {
+      eventBus.$on('search-chat-recipient', input => {
+        this.searchUser = input
+      })
+    },
+    beforeDestroy() {
+      eventBus.$off('search-chat-recipient')
+    }
   }
 </script>
 
 <style scoped>
-.border-bottom{
-  border-bottom: 1px solid lightgray;
+#ongoing-chat-list > span > div {
+  animation-duration: 100ms;
 }
 </style>
