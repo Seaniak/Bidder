@@ -36,7 +36,7 @@ export default {
     AuctionTimeCountDown,
     PlaceBid
   },
-	props: ["auctionId", "auction"],
+	props: ["auction"],
 	data() {
     return {
       closedAuction: new Date(this.auction.endTime) < new Date()
@@ -49,7 +49,6 @@ export default {
 		  return "https://cdn.starwebserver.se/shops/coolcard/files/cache/trainermix_grande.jpg?_=1475359673";
 	  },
 	  updateAuction() {
-		  // return this.$store.getters.getAuction(this.auctionId);
 		  return this.auction
 	  },
     getRoute(){
