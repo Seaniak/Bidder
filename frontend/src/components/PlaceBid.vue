@@ -5,11 +5,11 @@
           v-model="dialog"
           width="500"
       >
-        <v-card>
+        <v-card class="bidDialog">
           <div v-if="successBid">
             <v-card-title
                 dark
-                class="headline dark"
+                class="headline dark borderTop"
                 primary-title
             >
               Bud registrerat
@@ -169,6 +169,13 @@ export default {
 </script>
 
 <style scoped>
+  .borderTop {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .bidDialog {
+    border-radius: 10px;
+  }
   .headline {
     background: teal;
     color: white;
@@ -187,7 +194,7 @@ export default {
   }
   #bottomSheet {
     height: 20vh;
-    background: var(--main-background);
+    background-color: whitesmoke;
   }
   .firstBidBtn {
     margin-top: 2.3vh;

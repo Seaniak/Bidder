@@ -28,7 +28,7 @@
               class="border col-5"
               @click="startChat(updateAuction.username)">
         <h4>Säljare</h4>
-        <h3 v-if="updateAuction !== undefined"> {{ updateAuction.username }}</h3>
+        <h3 v-if="updateAuction !== undefined" class="user-bidder"> {{ updateAuction.username }}</h3>
       </v-card>
       <v-card class="border col-5">
         <h4>Kategori</h4>
@@ -53,7 +53,7 @@
     >
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
-        <td id="user-bidder" class="text-xs-right" @click="startChat(props.item.username)">{{ props.item.username }}
+        <td class="text-xs-right user-bidder" @click="startChat(props.item.username)">{{ props.item.username }}
         </td>
         <td class="text-xs-right">{{ getBidDateString(props.item.time) }}</td>
       </template>
@@ -133,7 +133,7 @@
 </script>
 
 <style>
-  #user-bidder {
+  .user-bidder {
     color: teal;
     font-weight: bold;
   }

@@ -12,7 +12,7 @@
         </div>
         <div class="col-6">
           <h3 class="col-12 mt-0">Bud</h3>
-          <p>{{ updateAuction.maxBid }} kr</p>
+          <h4>{{ updateAuction.maxBid }} kr</h4>
         </div>
         <div class="col-6 mt-0">
           <h3 class="col-12">Avslutas</h3>

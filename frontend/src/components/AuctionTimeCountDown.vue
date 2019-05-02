@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p v-if="this.timeLeft.getTime() < 0">Avslutad</p>
-    <p v-else-if="this.timeLeft.getTime() < 86400000">
+    <h4 v-if="this.timeLeft.getTime() < 0">Avslutad</h4>
+    <h4 v-else-if="this.timeLeft.getTime() < 86400000" class="red--text">
       {{
         formatNumber(this.timeLeft.getHours()) +
           ":" +
@@ -11,8 +11,8 @@
               formatNumber(this.timeLeft.getSeconds())
           )
       }}
-    </p>
-    <p v-else>
+    </h4>
+    <h4 v-else>
       {{
         new Intl.DateTimeFormat("sv-SE", {
           year: "numeric",
@@ -23,7 +23,7 @@
           second: "numeric"
         }).format(this.endDate)
       }}
-    </p>
+    </h4>
   </div>
 </template>
 
