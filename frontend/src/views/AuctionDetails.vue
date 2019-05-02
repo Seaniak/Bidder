@@ -36,7 +36,7 @@
       </v-card>
     </v-layout>
     <v-card class="description border mt-2 col-12">
-      <h3>Beskrivning</h3>
+      <h4>Beskrivning</h4>
       <p v-if="updateAuction !== undefined && updateAuction.condition">Varans skick: {{ updateAuction.condition }}</p>
       <p v-if="updateAuction !== undefined">{{ updateAuction.description }}</p>
     </v-card>

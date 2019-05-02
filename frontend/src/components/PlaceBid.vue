@@ -194,7 +194,6 @@ export default {
   }
   #bottomSheet {
     height: 20vh;
-    background-color: whitesmoke;
   }
   .firstBidBtn {
     margin-top: 2.3vh;
