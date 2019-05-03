@@ -63,7 +63,7 @@ public class AuctionController {
     thumbnailService.insertThumbnail(thumbnail);
 
     for (String image : auction.getImages()) {
-      Image img = new Image(auctionFromDb.getId(), false, image);
+      Image img = new Image(auctionFromDb.getId(), image);
       imageService.insertImage(img);
     }
 

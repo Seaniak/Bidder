@@ -2,15 +2,7 @@
   <div>
     <h4 v-if="this.timeLeft.getTime() < 0">Avslutad</h4>
     <h4 v-else-if="this.timeLeft.getTime() < 86400000" class="red--text">
-      {{
-        formatNumber(this.timeLeft.getHours()) +
-          ":" +
-          formatNumber(
-            this.timeLeft.getMinutes() +
-              ":" +
-              formatNumber(this.timeLeft.getSeconds())
-          )
-      }}
+      {{ formatTime(this.timeLeft) }}
     </h4>
     <h4 v-else>
       {{
@@ -28,7 +20,9 @@
 </template>
 
 <script>
-export default {
+  import {DateTime} from "luxon";
+
+  export default {
   name: "AuctionTimeCountDown.vue",
   data() {
     return {
@@ -38,19 +32,23 @@ export default {
       timeLeft: new Date()
     };
   },
-  components: {},
   props: ["auctionEndTime"],
   methods: {
     endTimeCountDown() {
       let timeDifference = this.endDate - Date.now();
-      timeDifference = Math.round(timeDifference);
       this.timeLeft = new Date(timeDifference);
     },
-    formatNumber(time) {
-      return time.toString().padStart(2, "0");
+    formatTime(time) {
+      return DateTime.fromJSDate(time).toFormat("HH:mm:ss");
+    },
+  },
+  watch:{
+    timeLeft(time){
+      if(time < 0)
+        this.$emit('auctionEnded', true)
     }
   },
-  mounted() {
+  created() {
     this.interval = setInterval(() => {
       this.endTimeCountDown();
     }, 1000);
