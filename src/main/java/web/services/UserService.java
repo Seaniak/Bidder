@@ -10,18 +10,19 @@ public class UserService {
 
   @Autowired
   private UserRepo userRepo;
+  @Autowired
+  private MessageService messageService;
 
-//  public List<Auction> getAllPosts(){
-//    return postRepo.findAll();
-//  }
+  public User findByUsername(String username) {
+    User user = userRepo.findByUsername(username);
+    return user;
+  }
 
-  public User findByUsername(String username){ return userRepo.findByUsername(username);}
-
-  public User insertUser(User user){
+  public User insertUser(User user) {
     return userRepo.save(user);
   }
 
-  public void deleteUser(User user){
+  public void deleteUser(User user) {
     userRepo.delete(user);
   }
 }

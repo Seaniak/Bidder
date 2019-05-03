@@ -41,16 +41,13 @@
 </template>
 
 <script>
-  import profilePic from "../assets/logo.png";
-
-  export default {
-    name: "About",
-    data() {
-      return {
-        profilePic: profilePic
-      }
-    }
+export default {
+  name: "About",
+  data() {
+    return {
+    };
   }
+};
 </script>
 
 <style scoped>

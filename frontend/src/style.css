@@ -1,5 +1,6 @@
 @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
 @import "https://fonts.googleapis.com/css?family=Montserrat:100,400,700";
+@import "./assets/bootstrap-grid.min.css";
 
 :root {
     /* global css variables.
@@ -25,9 +26,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: var(--main-font-color);
-    padding-bottom: 80px;
+    padding-bottom: 40px;
+    min-height: 100vh;
 }
-
 #app > div {
     animation-duration: 100ms;
 }

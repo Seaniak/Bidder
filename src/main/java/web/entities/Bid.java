@@ -1,55 +1,66 @@
 package web.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Bid {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-	private Timestamp time;
-	private long userId;
-	private int sum;
+  private long auctionId;
+  private Timestamp time;
+  private String username;
+  private int sum;
 
-	public Bid(){
+  public Bid(long auctionId, String username, int sum) {
+    this.auctionId = auctionId;
+    this.time = Timestamp.valueOf(LocalDateTime.now());
+    this.username = username;
+    this.sum = sum;
+  }
 
-	}
+  public Bid(){}
+  public String getUsername() {
+    return username;
+  }
 
-	public long getId() {
-		return id;
-	}
+  public void setUsername(String username) {
+    this.username = username;
+  }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+  public long getAuctionId() {
+    return auctionId;
+  }
 
-	public Timestamp getTime() {
-		return time;
-	}
+  public void setAuctionId(long auctionId) {
+    this.auctionId = auctionId;
+  }
 
-	public void setTime(Timestamp time) {
-		this.time = time;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public long getUserId() {
-		return userId;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+  public Timestamp getTime() {
+    return time;
+  }
 
-	public int getSum() {
-		return sum;
-	}
+  public void setTime(Timestamp time) {
+    this.time = time;
+  }
 
-	public void setSum(int sum) {
-		this.sum = sum;
-	}
+  public int getSum() {
+    return sum;
+  }
+
+  public void setSum(int sum) {
+    this.sum = sum;
+  }
 }

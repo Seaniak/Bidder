@@ -1,55 +1,57 @@
 package web.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 public class Image {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
 
-	private long acutionId;
-	private boolean thumbnail;
-	private String path;
+  private long auctionId;
+  private boolean thumbnail;
+  private String imageData;
 
-	public Image(){
+  public Image() {
+  }
 
-	}
+  public Image(long auctionId, boolean thumbnail, String imageData) {
+    this.auctionId = auctionId;
+    this.thumbnail = thumbnail;
+    this.imageData = imageData;
+  }
 
-	public long getId() {
-		return id;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+  public void setId(long id) {
+    this.id = id;
+  }
 
-	public long getAcutionId() {
-		return acutionId;
-	}
+  public long getAuctionId() {
+    return auctionId;
+  }
 
-	public void setAcutionId(long acutionId) {
-		this.acutionId = acutionId;
-	}
+  public void setAuctionId(long auctionId) {
+    this.auctionId = auctionId;
+  }
 
-	public boolean isThumbnail() {
-		return thumbnail;
-	}
+  public boolean isThumbnail() {
+    return thumbnail;
+  }
 
-	public void setThumbnail(boolean thumbnail) {
-		this.thumbnail = thumbnail;
-	}
+  public void setThumbnail(boolean thumbnail) {
+    this.thumbnail = thumbnail;
+  }
 
-	public String getPath() {
-		return path;
-	}
+  public String getImageData() {
+    return imageData;
+  }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+  public void setImageData(String imageData) {
+    this.imageData = imageData;
+  }
 }

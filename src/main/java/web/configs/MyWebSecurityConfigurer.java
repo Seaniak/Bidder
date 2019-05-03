@@ -3,6 +3,7 @@ package web.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -17,20 +18,13 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
   MyUserDetailsService myUserDetailsService;
 
   @Override
-  public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-            .userDetailsService(myUserDetailsService)
-            .passwordEncoder(myUserDetailsService.getEncoder());
-  }
-
-  @Override
   protected void configure(HttpSecurity http) throws Exception {
 
     http.csrf().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/api/users/*", "/upload").hasRole("USER")
+            .antMatchers(HttpMethod.GET, "/api/users/*", "/api/messages/**", "/upload").hasRole("USER")
             .antMatchers(HttpMethod.GET, "/api/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/api/register").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/register", "/api/auctions/search/*").permitAll()
             .antMatchers("/api/**").hasRole("USER")
             .and().formLogin()
             .loginPage("/login")
@@ -38,8 +32,24 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             .and()
             .logout()
             .logoutSuccessUrl("/login?logout")
-            .permitAll()
+            .deleteCookies("JSESSIONID")
+            .and()
+            .rememberMe().key("ultraUberUniqueAndSecret")
+            .tokenValiditySeconds(86400)
     ;
+  }
+
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+    auth
+            .setUserDetailsService(myUserDetailsService);
+    auth.setPasswordEncoder(myUserDetailsService.getEncoder());
+    return auth;
+  }
+
+  @Override
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(authenticationProvider());
   }
 
   @Override
