@@ -59,5 +59,5 @@ module.exports = {
   },
   publicPath: "",
   outputDir: "../src/main/resources/static",
-  assetsDir: "/assets"
+  // assetsDir: "assets"
 };

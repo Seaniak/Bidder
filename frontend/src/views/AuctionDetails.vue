@@ -20,12 +20,15 @@
       </v-card>
       <v-card class="border col-5">
         <h4>Avslutas</h4>
-        <AuctionTimeCountDown v-if="updateAuction !== undefined" :auctionEndTime="updateAuction.endTime"/>
+        <AuctionTimeCountDown
+                v-if="updateAuction !== undefined"
+                :auctionEndTime="updateAuction.endTime"
+                @auctionEnded="auctionEnded = $event"/>
       </v-card>
     </v-layout>
     <v-layout row wrap class="pt-2 justify-content-around">
       <v-card
-              class="border col-5"
+              class="pointer border col-5"
               @click="startChat(updateAuction.username)">
         <h4>Säljare</h4>
         <h3 v-if="updateAuction !== undefined" class="user-bidder"> {{ updateAuction.username }}</h3>
@@ -35,8 +38,8 @@
         <h3 v-if="updateAuction !== undefined">{{ updateAuction.category }}</h3>
       </v-card>
     </v-layout>
-    <v-card class="description border mt-2 col-12">
-      <h4>Beskrivning</h4>
+    <v-card class="description border py-1 mt-2 col-12">
+      <h3>Beskrivning</h3>
       <p v-if="updateAuction !== undefined && updateAuction.condition">Varans skick: {{ updateAuction.condition }}</p>
       <p v-if="updateAuction !== undefined">{{ updateAuction.description }}</p>
     </v-card>
@@ -53,7 +56,7 @@
     >
       <template v-slot:items="props">
         <td>{{ props.item.sum }}</td>
-        <td class="text-xs-right user-bidder" @click="startChat(props.item.username)">{{ props.item.username }}
+        <td class="text-xs-right pointer user-bidder" @click="startChat(props.item.username)">{{ props.item.username }}
         </td>
         <td class="text-xs-right">{{ getBidDateString(props.item.time) }}</td>
       </template>
@@ -78,6 +81,7 @@
     },
     data() {
       return {
+        auctionEnded: false,
         pageController: [10, 20, 30, {text: "Alla", value: -1}],
         endDateString: 0,
         pagination: {
@@ -117,10 +121,10 @@
       pageControl() {
         return !(this.updateAuction !== undefined && this.updateAuction.bids.length > 10);
       },
-      auctionEnded() {
-        let ended = new Date(this.updateAuction.endTime) < new Date()
-        return ended
-      },
+      // auctionEnded() {
+      //   let ended = new Date(this.updateAuction.endTime) < new Date()
+      //   return ended
+      // },
       updateAuction() {
         return this.$store.getters.getAuction(this.$route.params.id);
       },

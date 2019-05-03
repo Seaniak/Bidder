@@ -21,12 +21,12 @@ public class Auction {
   private int startSum;
   private int reservedSum;
 
-  @Transient
-  private String frontEndCreateTime;
+//  @Transient
+//  private String frontEndCreateTime;
   @Transient
   private String frontEndEndTime;
-  @Transient
-  private List<String> imagePaths;
+//  @Transient
+//  private List<String> imagePaths;
   @Transient
   private String thumbnail;
   @Transient
@@ -34,13 +34,13 @@ public class Auction {
   @Transient
   private List<Bid> bids;
 
-  public List<String> getImagePaths() {
-    return imagePaths;
-  }
+//  public List<String> getImagePaths() {
+//    return imagePaths;
+//  }
 
-  public void setImagePaths(List<String> imagePaths) {
-    this.imagePaths = imagePaths;
-  }
+//  public void setImagePaths(List<String> imagePaths) {
+//    this.imagePaths = imagePaths;
+//  }
 
   public List<String> getImages() {
     return images;
@@ -50,12 +50,11 @@ public class Auction {
     this.images = images;
   }
 
-  public Auction(String username, String title, String description, String frontEndCreateTime, String frontEndEndTime, int startSum,
+  public Auction(String username, String title, String description, String frontEndEndTime, int startSum,
 				 int reservedSum, String category, String auctionCondition) {
     this.username = username;
     this.title = title;
     this.description = description;
-    this.frontEndCreateTime = frontEndCreateTime;
     this.frontEndEndTime = frontEndEndTime;
     this.startSum = startSum;
     this.reservedSum = reservedSum;
@@ -162,14 +161,6 @@ public class Auction {
 	public void setAuctionCondition(String auctionCondition) {
 		this.auctionCondition = auctionCondition;
 	}
-
-   public String getFrontEndCreateTime() {
-      return frontEndCreateTime;
-   }
-
-   public void setFrontEndCreateTime(String frontEndCreateTime) {
-      this.frontEndCreateTime = frontEndCreateTime;
-   }
 
    public String getFrontEndEndTime() {
       return frontEndEndTime;
