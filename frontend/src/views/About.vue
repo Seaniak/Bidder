@@ -1,23 +1,32 @@
 <template>
   <v-container grid-list-xl pt-4>
     <v-layout column>
-      <h1>About me</h1>
+      <h1>Om Bidders</h1>
       <v-flex xs10 mt-3 ml-auto>
-        <img :src="profilePic"
-             alt="profile picture"
-        />
+          <i class="far fa-user"></i>
       </v-flex>
       <v-flex>
-        <h2>Title</h2>
+        <p>Bidders är ett av Sveriges ledande sida när det kommer till Auktioner där man kan sälja allt från kläder till leksaker till smycken och mycket mer.
+        På Bidders kan du enkelt lägga upp oönskde föremål som vem some helst sen kan hitta och kunna buda på. På Bidders så skänks 5% av vinsten till välgörenhet.</p>
       </v-flex>
-      <v-flex>
-        <p>lorem bla bla lorem bla bla lorem bla bla lorem bla bla lorem bla bla lorem bla bla lorem bla bla lorem bla
-          bla lorem bla bla </p>
-      </v-flex>
+        <v-flex>
+            <h2>
+                Historia
+            </h2>
+        </v-flex>
+        <v-flex>
+            <p>Bidders grundades år 2010 av Johan Wiren tillsammans med 3 andra. När vi bestämnde oss för att skapa Bidders visste vi att vi kunde överträffa de andra sidorna på marknaden
+             och inom 5 år så blev Bidders deklarerad som Sveriges bästa sida när det kommer till Auktioner. Vi har sedan dess bara blivit bättre och satsar allt på att hålla standarden hög och kundern nöjda. </p>
+        </v-flex>
       <v-flex>
         <h3>
-          Links and stuff
+          Kontakt
         </h3>
+      </v-flex>
+      <v-flex>
+        <p>Adress: Östra Kanalgatan 5</p>
+        <p>Telefonummer: 040-641 63 00</p>
+        <p>E-post: info@ecutbildning.se</p>
       </v-flex>
       <v-btn
               v-if="$store.state.loggedIn"
@@ -45,9 +54,9 @@
 </script>
 
 <style scoped>
-  img {
-    background-color: whitesmoke;
-    border-radius: 5px;
+    .far {
+    font-size: 70px;
+    margin-right: 110px;
   }
   button {
     position: fixed;
