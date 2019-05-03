@@ -96,7 +96,7 @@
         endTime: DateTime.fromJSDate(new Date()).plus({weeks: 1}).toISO(),
         startSum: null,
         reservedSum: null,
-        minDatetime: '' + DateTime.fromJSDate(new Date()),
+        minDatetime: DateTime.fromJSDate(new Date()).toString(),
         maxDatetime: DateTime.fromJSDate(new Date()).plus({months: 1}).toISO()
       };
     },
@@ -167,14 +167,6 @@
           },
           body: JSON.stringify(data)
         })
-            // .then(res => {
-            //   return res.json();
-            // })
-            // .then(res => {
-            //   this.$store.commit("addAuction", res);
-            //   this.$store.commit("filterItems");
-            // })
-            // .catch(e => console.log(e));
       },
       handleImage(imageData) {
         this.files = imageData.files;

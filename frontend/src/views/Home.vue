@@ -11,7 +11,7 @@
       <AuctionCard
         class="col-12 col-md-4"
         v-for="(auction, index) in auctions"
-        :key="index"
+        :key="auction.id"
         :compact="true"
         :auctionId="auction.id"
       />

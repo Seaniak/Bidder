@@ -1,5 +1,5 @@
 <template>
-  <div id="upload" class="column align-items-center">
+  <div id="upload" class="row align-items-center">
     <div class="mb-3">
       <input
         id="file-load"
@@ -20,6 +20,7 @@
         :src="image"
         :key="i"
         alt="profile picture"
+        class="border"
         :class="{ active: activeIndex === i }"
         @click="readThumbnail(i)"
       />
@@ -109,7 +110,7 @@ export default {
 
 <style scoped>
 .active {
-  border: 2px solid greenyellow;
+  border: 3px solid teal;
 }
 
 #image-files {
@@ -140,4 +141,7 @@ label {
   border-radius: 50px;
   background-color: teal;
 }
+  .border{
+    border-radius: 6px;
+  }
 </style>

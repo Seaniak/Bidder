@@ -10,6 +10,7 @@ import web.services.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,6 +67,7 @@ public class AuctionController {
       Image img = new Image(auctionFromDb.getId(), image);
       imageService.insertImage(img);
     }
+    auctionFromDb.setBids(new ArrayList<>());
 
     return auctionFromDb;
   }

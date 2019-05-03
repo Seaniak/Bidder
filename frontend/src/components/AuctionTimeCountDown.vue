@@ -6,14 +6,14 @@
     </h4>
     <h4 v-else>
       {{
-        new Intl.DateTimeFormat("sv-SE", {
-          year: "numeric",
-          month: "numeric",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric"
-        }).format(this.endDate)
+      new Intl.DateTimeFormat("sv-SE", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric"
+      }).format(this.endDate)
       }}
     </h4>
   </div>
@@ -23,44 +23,48 @@
   import {DateTime} from "luxon";
 
   export default {
-  name: "AuctionTimeCountDown.vue",
-  data() {
-    return {
-      endDate: new Date(this.auctionEndTime),
-      interval: null,
-      timer: 0,
-      timeLeft: new Date()
-    };
-  },
-  props: ["auctionEndTime"],
-  methods: {
-    endTimeCountDown() {
-      let timeDifference = this.endDate - Date.now();
-      this.timeLeft = new Date(timeDifference);
+    name: "AuctionTimeCountDown.vue",
+    data() {
+      return {
+        endDate: new Date(this.auctionEndTime),
+        interval: null,
+        timer: 0,
+        timeLeft: new Date()
+      };
     },
-    formatTime(time) {
-      return DateTime.fromJSDate(time).toFormat("HH:mm:ss");
+    props: ["auctionEndTime"],
+    methods: {
+      endTimeCountDown() {
+        let timeDifference = new Date(this.auctionEndTime).getTime() - Date.now();
+        this.timeLeft = new Date(timeDifference);
+      },
+      formatTime(time) {
+        // return time.toLocaleTimeString()
+        // return DateTime.fromJSDate(time).toFormat("HH:mm:ss");
+        return new Date(time - 3600000).toLocaleTimeString();
+      },
     },
-  },
-  watch:{
-    timeLeft(time){
-      if(time < 0)
-        this.$emit('auctionEnded', true)
+    watch: {
+      timeLeft(time) {
+        if (time < 0) {
+          this.$emit('auctionEnded', true)
+          clearInterval(this.interval);
+        }
+      }
+    },
+    created() {
+      this.interval = setInterval(() => {
+        this.endTimeCountDown();
+      }, 1000);
+    },
+    beforeDestroy() {
+      clearInterval(this.interval);
     }
-  },
-  created() {
-    this.interval = setInterval(() => {
-      this.endTimeCountDown();
-    }, 1000);
-  },
-  beforeDestroy() {
-    clearInterval(this.interval);
-  }
-};
+  };
 </script>
 
 <style scoped>
-  p{
+  p {
     margin: 0;
   }
 </style>
