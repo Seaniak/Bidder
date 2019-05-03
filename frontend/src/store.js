@@ -48,7 +48,6 @@ export default new Vuex.Store({
     if(!state.auctions[newAuction.id]) {
       newAuction.maxBid = getMaxBid(newAuction);
       Vue.set(state.auctions, newAuction.id, newAuction);
-      console.log("ADDAUCTION", state.auctions[newAuction.id]);
     }
   },
     logoutUser(state) {

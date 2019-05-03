@@ -61,16 +61,19 @@
         Bud {{ props.pageStart }} - {{ props.pageStop }} av {{ props.itemsLength }}
       </template>
     </v-data-table>
+    <SellerActiveAuctions :seller="updateAuction.username" :auctionId="updateAuction.id" />
   </v-container>
 </template>
 
 <script>
   import AuctionTimeCountDown from "../components/AuctionTimeCountDown";
   import AuctionEnded from '@/components/AuctionEnded'
+  import SellerActiveAuctions from '@/components/SellerActiveAuctions'
 
   export default {
     components: {
       AuctionTimeCountDown,
+      SellerActiveAuctions,
       AuctionEnded
     },
     data() {

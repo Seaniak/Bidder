@@ -30,7 +30,9 @@ public class UserController {
 
   @PostMapping("/api/register")
   public String addNewUser(@RequestBody User user) {
-    if (userService.findByUsername(user.getUsername()) != null) {
+    if (userService.findByUsername(user.getUsername()) != null
+    || user.getUsername().equals("anon")) {
+//      "anon" is reserved
       return "username taken";
     }
     if (user.getUsername() != null && user.getEmail() != null && user.getPassword() != null) {

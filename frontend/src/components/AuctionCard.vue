@@ -20,7 +20,7 @@
         </div>
       </v-card-title>
     </div>
-    <v-content v-if="!getRoute" id="bidder">
+    <v-content v-if="compact" id="bidder">
       <place-bid :auctionId="auctionId"></place-bid>
     </v-content>
   </v-card>
@@ -36,7 +36,7 @@ export default {
     AuctionTimeCountDown,
     PlaceBid
   },
-	props: ["auctionId"],
+	props: ["auctionId", "compact"],
 	data() {
     return {
     };

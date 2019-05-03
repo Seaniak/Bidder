@@ -12,6 +12,7 @@
         class="col-12 col-md-4"
         v-for="(auction, index) in auctions"
         :key="index"
+        :compact="true"
         :auctionId="auction.id"
       />
     </transition-group>
@@ -52,7 +53,7 @@ export default {
   #logo {
     font-family: 'Pacifico', cursive;
     font-size: 10vh;
-    color: coral;
+    color: gold;
     text-shadow: 1px 1px 1px teal, 0 0 0.05em teal, 0 0 0.05em teal;
     margin-bottom: 0vh;
   }

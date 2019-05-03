@@ -35,7 +35,6 @@
       condition() {
         let lastIndex = this.auction.bids.length - 1;
         let lastBid = this.auction.bids[lastIndex];
-        console.log(lastBid);
         if(lastBid !== undefined) {
           this.soldTo = lastBid.username;
           this.soldPrice = lastBid.sum
