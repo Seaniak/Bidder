@@ -55,11 +55,11 @@
           </v-btn>
         </template>
         <v-card tile id="bottomSheet">
-          <v-layout v-if="$store.getters.getAuction(this.bidId).username ===
+          <v-layout v-if="$store.state.currentUser && $store.getters.getAuction(this.bidId).username ===
                                 $store.state.currentUser.username" column align-center justify-center fill-height>
             <h2>Kan inte lägga bud på egna auktioner!</h2>
           </v-layout>
-          <v-layout v-else-if="$store.state.currentUser" column align-center justify-center fill-height>
+          <v-layout v-else-if=" $store.state.currentUser" column align-center justify-center fill-height>
             <h2>Nytt bud på '{{$store.getters.getAuction(this.bidId).title}}'</h2>
             <h3>Nuvarande bud: {{ $store.getters.getAuction(this.bidId).maxBid }} kr</h3>
             <h3>Ditt bud: {{ chosenBid }} kr</h3>
