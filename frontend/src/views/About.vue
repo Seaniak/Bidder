@@ -1,10 +1,7 @@
 <template>
   <v-container grid-list-xl pt-4>
     <v-layout column>
-      <h1>Om Bidders</h1>
-      <v-flex xs10 mt-3 ml-auto>
-          <i class="far fa-user"></i>
-      </v-flex>
+      <h1 id="logo">Bidder</h1>
       <v-flex>
         <p>Bidders är ett av Sveriges ledande sida när det kommer till Auktioner där man kan sälja allt från kläder till leksaker till smycken och mycket mer.
         På Bidders kan du enkelt lägga upp oönskde föremål som vem some helst sen kan hitta och kunna buda på. På Bidders så skänks 5% av vinsten till välgörenhet.</p>
@@ -60,4 +57,12 @@ export default {
     bottom: 70px;
     right: 20px;
   }
+
+    #logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 10vh;
+      color: gold;
+      text-shadow: 1px 1px 1px teal, 0 0 0.05em teal, 0 0 0.05em teal;
+      margin-bottom: 0vh;
+    }
 </style>

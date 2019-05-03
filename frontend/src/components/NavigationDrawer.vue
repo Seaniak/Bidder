@@ -54,10 +54,10 @@
         <span>Meddelanden</span>
         <v-icon dark medium>chat</v-icon>
       </v-btn>
-      <!--<v-btn id="aboutBtn" to="/about" flat>-->
-      <!--<span>Om oss</span>-->
-      <!--<v-icon medium>account_box</v-icon>-->
-      <!--</v-btn>-->
+      <v-btn id="aboutBtn" to="/about" flat>
+      <span>Om oss</span>
+      <v-icon medium>account_box</v-icon>
+      </v-btn>
       <Notifications/>
     </v-layout>
   </v-navigation-drawer>
