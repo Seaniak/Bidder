@@ -21,26 +21,14 @@ public class Auction {
   private int startSum;
   private int reservedSum;
 
-//  @Transient
-//  private String frontEndCreateTime;
   @Transient
   private String frontEndEndTime;
-//  @Transient
-//  private List<String> imagePaths;
   @Transient
   private String thumbnail;
   @Transient
   private List<String> images;
   @Transient
   private List<Bid> bids;
-
-//  public List<String> getImagePaths() {
-//    return imagePaths;
-//  }
-
-//  public void setImagePaths(List<String> imagePaths) {
-//    this.imagePaths = imagePaths;
-//  }
 
   public List<String> getImages() {
     return images;
