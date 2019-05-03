@@ -1,7 +1,6 @@
 package web.entities;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 public class Image {
@@ -11,15 +10,13 @@ public class Image {
   private long id;
 
   private long auctionId;
-  private boolean thumbnail;
   private String imageData;
 
   public Image() {
   }
 
-  public Image(long auctionId, boolean thumbnail, String imageData) {
+  public Image(long auctionId, String imageData) {
     this.auctionId = auctionId;
-    this.thumbnail = thumbnail;
     this.imageData = imageData;
   }
 
@@ -37,14 +34,6 @@ public class Image {
 
   public void setAuctionId(long auctionId) {
     this.auctionId = auctionId;
-  }
-
-  public boolean isThumbnail() {
-    return thumbnail;
-  }
-
-  public void setThumbnail(boolean thumbnail) {
-    this.thumbnail = thumbnail;
   }
 
   public String getImageData() {
