@@ -73,15 +73,6 @@ public class AuctionService {
     filteredRes.addAll(searchRes);
     finalResult.addAll(filteredRes);
     return loadAuctionData(finalResult);
-//    finalResult.forEach(auction -> {
-//      List<String> images = imageService.getAuctionImageData(auction.getId());
-//      auction.setImages(images);
-//      List<Bid> bids = bidService.getAuctionBids(auction.getId());
-//      auction.setBids(bids);
-//      Thumbnail thumbnail = thumbnailService.getAuctionThumbnail(auction.getId());
-//      if (thumbnail != null) auction.setThumbnail(thumbnail.getImage());
-//      });
-//    return finalResult;
   }
 
   public Auction insertAuction(Auction auction) {

@@ -27,7 +27,8 @@
     },
     async created() {
       let user = await fetch("/api/remember-me");
-      user = await user.json().catch(e => console.log("Not logged in"));
+      user = await user.json()
+          .catch(e => console.log("[Server] Not authenticated"));
 
       this.$store.commit("loginUser", user);
 

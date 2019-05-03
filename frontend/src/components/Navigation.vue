@@ -11,7 +11,7 @@
             leave-active-class="animated pulse"
     >
       <component
-              class="col-8"
+              class="col-10"
               id="custom-nav"
               :is="currentNavigation"
               :key="$route.fullPath"

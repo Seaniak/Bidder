@@ -12,7 +12,7 @@
               @focus="scrollToBottom"
       ></v-textarea>
     </div>
-    <v-btn class="ml-auto" icon dark @click="sendMessage">
+    <v-btn id="send-btn" class="ml-auto" icon dark @click="sendMessage">
       <v-icon dark large>send</v-icon>
     </v-btn>
   </div>
@@ -25,7 +25,7 @@
     name: "ChatNav",
     data() {
       return {
-        newMessage: ""
+        newMessage: "",
       };
     },
     methods: {
@@ -34,6 +34,10 @@
 
         eventBus.$emit("nav-new-message-clicked", this.newMessage);
         this.newMessage = ""
+
+        // reset multi row textarea
+        document.getElementById("nav-message").blur()
+        document.getElementById("nav-message").focus()
       },
       listenForEnter(e) {
         if (e.keyCode == 13 && !e.shiftKey)

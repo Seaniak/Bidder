@@ -100,7 +100,7 @@
     },
     methods: {
       startChat(recipient) {
-        if (recipient !== this.$store.state.currentUser.username)
+        if (this.$store.state.currentUser !== undefined && recipient !== this.$store.state.currentUser.username)
           this.$router.push({
             name: 'chat',
             params: {
@@ -147,5 +147,8 @@
 
   .description {
     text-align: start;
+  }
+  .v-carousel__controls{
+    border-radius: 0 0 4px 4px;
   }
 </style>

@@ -1,6 +1,5 @@
 <template>
-  <!-- :class="{ red: !valid, green: valid }" -->
-  <v-btn @click="registerClicked" dark flat>bekräfta registrering</v-btn>
+  <v-btn @click="registerClicked" dark flat>registrera</v-btn>
 </template>
 
 <script>
@@ -19,4 +18,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  button{
+    width: 65%;
+  }
+</style>

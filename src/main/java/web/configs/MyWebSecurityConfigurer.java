@@ -22,7 +22,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     http.csrf().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/api/users/*", "/api/messages/**", "/upload", "/api/auctions/user**").hasRole("USER")
+            .antMatchers(HttpMethod.GET, "/api/users/*", "/api/messages/**", "/upload").hasRole("USER")
             .antMatchers(HttpMethod.GET, "/api/**").permitAll()
             .antMatchers(HttpMethod.POST, "/api/register", "/api/auctions/search/*").permitAll()
             .antMatchers("/api/**").hasRole("USER")

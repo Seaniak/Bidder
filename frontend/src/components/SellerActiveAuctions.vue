@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="pt-5 pb-3">{{seller}}s andra auktioner</h2>
+    <h2 class="pt-5 pb-3">Andra auktioner av {{seller}}</h2>
     <AuctionCard
             class="col-12 col-md-4"
             v-for="(auction, index) in activeAuctions"
