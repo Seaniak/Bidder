@@ -40,8 +40,8 @@
     </v-layout>
     <v-card class="description border py-1 mt-2 col-12">
       <h3>Beskrivning</h3>
-      <p v-if="updateAuction !== undefined && updateAuction.condition">Varans skick: {{ updateAuction.condition }}</p>
       <p v-if="updateAuction !== undefined">{{ updateAuction.description }}</p>
+      <p v-if="updateAuction !== undefined && updateAuction.auctionCondition">Varans skick: {{ updateAuction.auctionCondition }}</p>
     </v-card>
     <v-data-table
             :headers="headers"

@@ -91,7 +91,7 @@
         title: "",
         description: "",
         auctionCondition: "",
-        categories: ["Fordon", "Teknik", "Konst", "Hus", "Inredning"],
+        categories: ["Övrigt", "Fordon", "Teknik", "Konst", "Hus", "Inredning"],
         chosenCategory: "Fordon",
         endTime: DateTime.fromJSDate(new Date()).plus({weeks: 1}).toISO(),
         startSum: null,
