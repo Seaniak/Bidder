@@ -10,8 +10,6 @@ public class UserService {
 
   @Autowired
   private UserRepo userRepo;
-  @Autowired
-  private MessageService messageService;
 
   public User findByUsername(String username) {
     User user = userRepo.findByUsername(username);
