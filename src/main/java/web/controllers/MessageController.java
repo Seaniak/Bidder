@@ -12,6 +12,7 @@ import web.services.MessageService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/messages")
@@ -30,7 +31,7 @@ public class MessageController {
   }
 
   @GetMapping("/get-ongoing-chats&user={username}")
-  public List<String> getOngoingChats(@PathVariable String username) {
+  public List<Map<String, String>> getOngoingChats(@PathVariable String username) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     // returns empty list if user is not logged in
     if (!username.equals(authentication.getName())) return new ArrayList<>();

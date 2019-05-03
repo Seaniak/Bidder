@@ -11,6 +11,6 @@ import java.util.List;
 public interface MessageRepo extends JpaRepository<Message, Long> {
   List<Message> findAllBySenderAndRecipient(String sender, String recipient);
 
-  @Query("SELECT DISTINCT m.sender, m.recipient FROM Message AS m WHERE m.sender = ?1 OR m.recipient = ?1")
+  @Query("SELECT DISTINCT m.sender, m.recipient, m.text FROM Message AS m WHERE m.sender = ?1 OR m.recipient = ?1 ORDER BY m.timestamp DESC")
   List<Object[]> getChatList(String username);
 }

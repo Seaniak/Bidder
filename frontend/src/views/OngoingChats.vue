@@ -10,7 +10,7 @@
     >
       <ChatUser
               v-for="(recipient, i) in ongoingChats"
-              :key="recipient + i"
+              :key="recipient.username + i"
               :recipient="recipient"/>
     </transition-group>
   </div>
@@ -34,7 +34,7 @@
     computed: {
       ongoingChats() {
         let filter = new RegExp(this.searchUser, "i")
-        return this.userChats.filter(u => u.match(filter))
+        return this.userChats.filter(u => u.username.match(filter))
       }
     },
     async created() {

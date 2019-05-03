@@ -7,7 +7,9 @@ import web.repositories.MessageRepo;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MessageService {
@@ -32,17 +34,34 @@ public class MessageService {
     return messages;
   }
 
-  public List<String> getOngoingChats(String username) {
+  public List<Map<String, String>> getOngoingChats(String username) {
     List<Object[]> messages = messageRepo.getChatList(username);
-    List<String> chats = new ArrayList<>();
+    List<Map<String, String>> chats = new ArrayList<>();
 
-    for (Object[] message: messages) {
-      if(!message[0].equals(username) && !chats.contains(message[0].toString()))
-        chats.add(message[0].toString());
-      else if (!message[1].equals(username) &&!chats.contains(message[1].toString()))
-        chats.add(message[1].toString());
+    for (Object[] message : messages) {
+      Map<String, String> chatObject = new HashMap();
+      if (!message[0].equals(username)) {
+        if (checkDuplicateUser(chats, message[0])) continue;
+
+        chatObject.putIfAbsent("username", message[0].toString());
+        chatObject.putIfAbsent("text", message[2].toString());
+
+        chats.add(chatObject);
+      } else if (!message[1].equals(username)) {
+        if (checkDuplicateUser(chats, message[1])) continue;
+
+        chatObject.putIfAbsent("username", message[1].toString());
+        chatObject.putIfAbsent("text", message[2].toString());
+
+        chats.add(chatObject);
+      }
     }
     return chats;
+  }
+
+  private boolean checkDuplicateUser(List<Map<String, String>> chats, Object obj){
+    return chats.stream()
+            .anyMatch(msg -> msg.get("username").equals(obj.toString()));
   }
 
   public Message insertMessage(Message message) {

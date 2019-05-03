@@ -1,6 +1,8 @@
 <template>
   <v-list-tile
+          class="pb-1"
           ripple
+          two-line
           @click="goToChat"
   >
     <v-list-tile-action>
@@ -8,12 +10,13 @@
               fab
               small
               depressed
-              :color="iconColor">{{recipient.charAt(0).toUpperCase()}}
+              :color="iconColor">{{recipient.username.charAt(0).toUpperCase()}}
       </v-btn>
     </v-list-tile-action>
     <v-list-tile-content
             class="border-bottom">
-      <v-list-tile-title v-text="recipient"></v-list-tile-title>
+      <v-list-tile-title v-text="recipient.username"></v-list-tile-title>
+      <v-list-tile-sub-title class="grey--text text--darken-1" v-text="recipient.text"></v-list-tile-sub-title>
     </v-list-tile-content>
   </v-list-tile>
 </template>
@@ -27,7 +30,7 @@
         this.$router.push({
           name: 'chat',
           params: {
-            recipient: this.recipient
+            recipient: this.recipient.username
           }
         })
       }

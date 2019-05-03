@@ -1,7 +1,7 @@
 <template>
   <nav id="bottom-nav">
     <v-btn to="/" icon :active-class="null">
-      <v-icon class="home-button" color="white" large>keyboard_arrow_left</v-icon>
+      <v-icon class="ml-2 home-button" color="white" large>keyboard_arrow_left</v-icon>
     </v-btn>
 
     <transition
@@ -11,6 +11,7 @@
             leave-active-class="animated pulse"
     >
       <component
+              class="col-8"
               id="custom-nav"
               :is="currentNavigation"
               :key="$route.fullPath"
@@ -18,6 +19,7 @@
     </transition>
 
     <v-badge
+            class="mr-2"
             overlap
             v-model="$store.state.notificationBadge"
             color="orange"
@@ -28,7 +30,10 @@
           <!--notifications-->
         <!--</v-icon>-->
       </template>
-      <v-btn icon id="toggleDrawer" @click.stop="toggleDrawer">
+      <v-btn
+              icon
+              id="toggleDrawer"
+              @click.stop="toggleDrawer">
         <v-icon color="white" large>menu</v-icon>
       </v-btn>
     </v-badge>
@@ -71,6 +76,8 @@
           case "/register-success":
             return GoToLoginPageNav;
           case "/upload":
+            return UploadAuction;
+          case "/user-auctions":
             return UploadAuction;
           case "/auction":
             return PlaceBid;

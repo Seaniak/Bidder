@@ -64,7 +64,6 @@
           `/api/messages/user=${this.$store.state.currentUser.username}&recipient=${this.recipient}`)
       response = await response.json()
       this.$store.commit('fetchMessages', response)
-
     },
     mounted() {
     }
